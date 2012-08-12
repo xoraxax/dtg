@@ -311,8 +311,10 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
               $(".task").removeClass("ui-state-highlight");
             } else if (is_task_list) {
               $(".context").removeClass("ui-state-highlight");
+            } else if (!multiprop && !is_task_list) {
+              $("#tasklist").data("docancel", 0);
             }
-            if (ui.item && !elem.data("docancel")) {
+            if (ui.item && elem.data("docancel") != 1) {
               var previous_item = ui.item.prev();
               var previous_item_id = -1;
               if (previous_item.length != 0)

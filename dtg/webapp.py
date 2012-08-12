@@ -216,11 +216,14 @@ def workspace_tags(workspace):
         edittitle = _("Edit tag") if tag else _("Add tag")
         if action == "move":
             previous_tag = Tag.query.filter_by(id=int(request.form.get("previous_id")), workspace=workspace).first()
+            old_index = workspace.tags.index(tag)
             if previous_tag is None:
                 new_index = 0
             else:
-                new_index = workspace.tags.index(previous_tag)
-            workspace.tags.pop(workspace.tags.index(tag))
+                new_index = workspace.tags.index(previous_tag) + 1
+                if old_index < new_index:
+                    new_index -= 1
+            workspace.tags.pop(old_index)
             workspace.tags.insert(new_index, tag)
         elif action == "editinitial":
             form = TagForm(obj=tag)
@@ -289,11 +292,14 @@ def workspace_contexts(workspace):
         edittitle = unicode(_("Edit context") if context else _("Add context"))
         if action == "move":
             previous_context = Context.query.filter_by(id=int(request.form.get("previous_id")), workspace=workspace).first()
+            old_index = workspace.contexts.index(context)
             if previous_context is None:
                 new_index = 0
             else:
-                new_index = workspace.contexts.index(previous_context)
-            workspace.contexts.pop(workspace.contexts.index(context))
+                new_index = workspace.contexts.index(previous_context) + 1
+                if old_index < new_index:
+                    new_index -= 1
+            workspace.contexts.pop(old_index)
             workspace.contexts.insert(new_index, context)
         elif action == "move_task":
             task = Task.query.filter_by(id=int(request.form.get("task_id"))).first()
@@ -429,13 +435,16 @@ def workspace_tasks(workspace):
         if action == "move":
             context = task.context
             previous_task = Task.query.filter_by(id=int(request.form.get("previous_id"))).first()
+            old_index = context.tasks.index(task)
             if previous_task is None:
                 new_index = 0
             else:
                 if previous_task.context.workspace != workspace:
                     return render_error(_("Wrong workspace"), True)
-                new_index = context.tasks.index(previous_task)
-            context.tasks.pop(context.tasks.index(task))
+                new_index = context.tasks.index(previous_task) + 1
+                if old_index < new_index:
+                    new_index -= 1
+            context.tasks.pop(old_index)
             context.tasks.insert(new_index, task)
             db.session.commit()
             return jsonify({})
