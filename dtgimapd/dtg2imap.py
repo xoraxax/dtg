@@ -31,10 +31,10 @@ class DTGUserAccount(imap4.MemoryAccount):
         self.proxy = proxy
         imap4.MemoryAccount.__init__(self, "DTG")
         self.addMailbox(r"Sent", DTGImapMailboxSent(proxy))
-        for item in proxy.contexts()["data"]:
+        for i, item in enumerate(proxy.contexts()["data"]):
             if proxy.state.first_context is None:
                 proxy.state.first_context = item["id"]
-            name = item["name"]
+            name = "%02i %s" % (i, item["name"])
             self.addMailbox(name, DTGImapMailbox(name, item["id"], proxy))
         proxy.state.account = self
 
