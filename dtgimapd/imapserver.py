@@ -89,7 +89,7 @@ if __name__ == "__main__":
     parser.add_option('-i', '--server-ip', dest='server_ip', action='store', type="string",
             help='ip/hostname to run the server on', default="0.0.0.0")
     parser.add_option('-p', '--server-port', dest='server_port', action='store',
-            type="int", help='port to run the server on', default=8080)
+            type="int", help='port to run the server on', default=1143)
 
     parser.add_option('-c', '--cert-file', dest='certfile', action='store',
             type="string", help='The file name of the certificate', default=None)
