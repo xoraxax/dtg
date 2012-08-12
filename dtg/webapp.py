@@ -174,7 +174,7 @@ def _workspace():
     action = request.form.get("action")
     if action == "create":
         w = Workspace(request.form.get("name"), request.user)
-        c = Context(_("Unsorted"))
+        c = Context(unicode(_("Unsorted")))
         w.contexts.append(c)
         db.session.add(w)
         db.session.commit()
