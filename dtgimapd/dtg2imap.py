@@ -295,7 +295,7 @@ class DTGImapMessage(object):
 
     def getHeaders(self, negate, *names):
         def make_header(t):
-            return Header(t.encode("utf-8"), "utf-8").encode()
+            return Header(t).encode()
 
         headers = {
             "to": "DTG User <>",
