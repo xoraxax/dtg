@@ -41,7 +41,8 @@ def main():
         parser.error("don't know what to do with additional arguments")
 
     # HACK! :)
-    sys.dtg_path_prefix = options.location
+
+    sys.dtg_db_path = lambda x: "sqlite:///" + os.path.abspath(options.location + x + ".db")
     sys.dtg_do_upgrade = options.migrate
     sys.dtg_debug = options.debug
 

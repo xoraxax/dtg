@@ -33,7 +33,7 @@ from dtg.version import __version__
 
 
 app = Flask("dtg")
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + sys.dtg_path_prefix + "main.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = sys.dtg_db_path("main")
 app.config["SQLALCHEMY_ECHO"] = sys.dtg_debug
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config['ASSETS_DEBUG'] = sys.dtg_debug
@@ -82,7 +82,7 @@ def before_commit(session):
 event.listen(db.Session, "before_commit", before_commit)
 
 # initialize session handling
-session_engine = create_engine("sqlite:///" + sys.dtg_path_prefix + "sessions.db")
+session_engine = create_engine(sys.dtg_db_path("sessions"))
 session_metadata = MetaData(bind=session_engine)
 store = SQLAlchemyStore(session_engine, session_metadata, 'kvstore')
 session_metadata.create_all()
