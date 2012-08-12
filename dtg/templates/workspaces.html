@@ -1,0 +1,50 @@
+{# 
+################################################################################
+# DTG.  The task management web application.
+#
+# Copyright (c) 2012 Alexander Schremmer <alex@alexanderweb.de>
+# Licensed under AGPL Version 3 or later. See LICENSE for details.
+################################################################################
+#}
+
+{% extends "base.html" %}
+{% block title %}{% trans %}Workspaces{% endtrans %}{% endblock %}
+{% block content %}
+<script type="text/javascript">
+  $(function() {
+    init_workspace_view();
+  });
+</script>
+<div class="row-fluid">
+  <div class="span5">
+<h4>{% trans %}Workspaces{% endtrans %}</h4>
+  <div class="hundredpercent">
+  <form class="form-inline" id="newworkspaceform">
+    <input type="text" class="eightypercent" placeholder="{% trans %}Create new workspace ...{% endtrans %}" id="newworkspacename">
+    <button type="submit" class="btn">{% trans %}Create{% endtrans %}</button>
+  </form>
+  </div>
+{% trans %}In which workspace do you want to work?{% endtrans %}
+<ul>
+  {% for workspace in request.user.workspaces %}
+    <li><a href="{{ url_for('index_workspace', workspace=workspace.name) }}">{{ workspace.name }}</a></li>
+  {% endfor %}
+</ul>
+</div>
+</div>
+<div class="modal hide editdialog fade">
+  <form id="editform" onsubmit="return false;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3><span id="editdialogtitle"></span></h3>
+  </div>
+  <div class="modal-body">
+    <div id="editdialogbody"></div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" id="cancelbutton" data-dismiss="modal" class="btn">{% trans %}Cancel{% endtrans %}</a>
+    <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</a>
+  </div>
+  </form>
+</div>
+{% endblock %}

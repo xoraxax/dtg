@@ -1,0 +1,8 @@
+.btn { display: none; }
+.nav-collapse { display: none; }
+.icon-bar { display: none; }
+.taskbody { display: block; }
+.row-fluid .tasksblock { width: 95%; }
+.row-fluid .settingsblock { display: none; }
+#newtaskform { display: none; }
+body { padding-top: 0; }

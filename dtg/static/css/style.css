@@ -1,0 +1,93 @@
+/* 
+################################################################################
+# DTG.  The task management web application.
+#
+# Copyright (c) 2012 Alexander Schremmer <alex@alexanderweb.de>
+# Licensed under AGPL Version 3 or later. See LICENSE for details.
+################################################################################
+*/
+
+body {
+  position: relative;
+  padding-top: 70px;
+}
+
+.selsortlist { list-style-type: none; margin: 0; padding: 0; }
+#contextlist > li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1em; cursor: move; }
+#taglist > li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1em; cursor: move; }
+#tasklist > li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1em; cursor: move; }
+.ui-selected { background: #F39814; color: white; }
+
+.clearrow { clear: both; }
+.template { display: none; }
+
+.taskbuttons { margin-top: 0.2em; margin-bottom: 0.3em; }
+.itembuttons { margin-top: 0.6em; }
+.rightbutton { float: right; }
+.buttondelimiter { margin-left: 1em; }
+.inclexcl { float: right; }
+.eightypercent { width: 80%; }
+.hundredpercent { width: 99%; }
+.btn-separated { border-left-width: 2px; border-left-color: rgba(0, 0, 0, 0.2); }
+
+.tasktags { display: inline; margin-left: 0; }
+.tasktags li { display: inline; padding-left: 1em; cursor: move; }
+.recurringmarker { margin-left: 1em; }
+.taskbodyseparator { margin-top: 5px; }
+.taskbody { max-height: 10em; overflow: auto; cursor: auto; }
+.movetarget { background: white !important; }
+
+#ajaxloading { visibility: hidden; display: block; float: left; padding: 9px 10px 11px; line-height: 19px; }
+
+.modal { top: 20em; }
+.modal-body { max-height: 1000px; }
+
+.completetxt { display: none; }
+.incompletetxt { display: none; }
+
+dl.well { margin-right: 1em; padding-top: 5px; }
+dl.well input:not([type = "checkbox"]) { width: 13em; }
+dl.well input[type = "checkbox"] { display: inline; }
+input + label { display: inline; }
+dl.well textarea { width: 100%; }
+dl.well select { width: 13em; }
+dl.well h4 { margin-bottom: 5px; }
+
+#tab2 { max-height: 9em; }
+
+.dueindays { 
+	background: none repeat scroll 0 0 black;
+	font-size: 85%;
+	padding: 3px;
+	margin-left: 5px;
+}
+.duesoon { background-color: green; color: white; }
+.duefuture { background-color: PaleGreen; color: black; }
+.duetoday { background-color: yellow; color: black; }
+.overdue { background-color: red; color: white; }
+
+
+.nav.recurnav { margin-bottom: 0; }
+
+.nav ul { display: block; }
+.nav ul li { display: inline; float: left; margin: 3px; padding: 3px; }
+
+h1 { margin-top: 0; margin-bottom: 0.4em; float: left; margin-right: 2em; }
+div h3 { margin-top: 1em; }
+.modal-header h3 { margin-top: 0; }
+div h3:first-child { margin-top: 0; margin-bottom: 0.1em; }
+
+.footer {
+  margin-top: 45px;
+  padding: 35px 0 36px;
+  border-top: 1px solid #e5e5e5;
+}
+.footer .version { color: #AAA; }
+.footer p {
+  margin-bottom: 0;
+  color: #555;
+}
+
+dl { margin-top: 0; }
+dl dt label { font-weight: bold; }
+

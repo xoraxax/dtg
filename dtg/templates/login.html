@@ -1,0 +1,38 @@
+{# 
+################################################################################
+# DTG.  The task management web application.
+#
+# Copyright (c) 2012 Alexander Schremmer <alex@alexanderweb.de>
+# Licensed under AGPL Version 3 or later. See LICENSE for details.
+################################################################################
+#}
+{% extends "base.html" %}
+{% block title %}{% trans %}Login{% endtrans %}{% endblock %}
+{% block content %}
+<h2>{% trans %}Login{% endtrans %}</h2>
+<div class="row-fluid">
+  <div class="span6">
+    <form action="" method="post" class="well form-horizontal">
+    <fieldset>
+    <div class="control-group">
+      <label class="control-label" for="username">{% trans %}Username{% endtrans %}</label>
+    <div class="controls">
+    <input type="text" id="username" name="username">
+    </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="password">{% trans %}Password{% endtrans %}</label>
+    <div class="controls">
+    <input type="password" name="password" id="password">
+    </div>
+    </div>
+    <div class="form-actions">
+    <input type="hidden" name="url" value="{{ request.args.url }}">
+    <button type="submit" class="btn btn-primary">{% trans %}Login{% endtrans %}</button>
+    </div>
+    </fieldset>
+  </form>
+</div>
+</div>
+{% endblock %}
+

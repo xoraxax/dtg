@@ -1,0 +1,94 @@
+{# 
+################################################################################
+# DTG.  The task management web application.
+#
+# Copyright (c) 2012 Alexander Schremmer <alex@alexanderweb.de>
+# Licensed under AGPL Version 3 or later. See LICENSE for details.
+################################################################################
+#}
+
+{% macro render_field(field) %}
+  {% if "csrf" in field.label.field_id %}
+  {% else %}
+  <dt title="{{ _(field.description) }}">{% if "checker" in kwargs %}{{ field(**kwargs) | safe }} {% endif %}{{ field.label }}</dt>
+  {% if not "checker" in kwargs %}<dd title="{{ _(field.description)}}">{{ field(**kwargs) | safe }}</dd>{% endif %}
+  {% if field.errors %}
+    {% for error in field.errors %}
+    <div class="alert alert-error">
+      {{ error }}
+    </div>
+    {% endfor %}
+  {% endif %}
+  </dd>
+  {% endif %}
+{% endmacro %}
+
+{% if type != "task" %}
+<dl>
+{% for field in form %}
+  {% if loop.first %}
+  {{ render_field(field, autofocus="autofocus") }}
+  {% else %}
+  {{ render_field(field) }}
+  {% endif %}
+{% endfor %}
+</dl>
+{% else %}
+<div class="row-fluid">
+  <div class="span6">
+<dl class="well">
+{{ render_field(form.context) }}
+{{ render_field(form.summary, autofocus="autofocus") }}
+</dl>
+<dl class="well">
+  <h4>{% trans %}Recurring tasks{% endtrans %}</h4>
+{% if task.master_task %}
+  {% trans %}This is a part of a series of recurring tasks.{% endtrans %} <a href="#" id="masterjump">{% trans %}Edit the task template instead.{% endtrans %}</a>
+{% else %}
+  <div class="tabbable">
+    <ul class="nav nav-tabs recurnav">
+      <li {{ 'class="active"' | safe if not form.recur_data.data }} title="{{ _(form.recur_procedure.description) }}"><a href="#tab1" data-toggle="tab">Easy</a></li>
+      <li {{ 'class="active"' | safe if form.recur_data.data }} title="{{ _(form.recur_data.description) }}"><a href="#tab2" data-toggle="tab">Expert</a></li>
+    </ul>
+    <div class="tab-content">
+    <div class="tab-pane{{ ' active' if not form.recur_data.data }}" id="tab1">
+      {{ render_field(form.recur_procedure) }}
+    </div>
+    <div class="tab-pane{{ ' active' if form.recur_data.data }}" id="tab2">
+      {{ render_field(form.recur_data) }}
+      {% trans %}The expert scheduling code has the following format: <tt>TIMESPAN;INTERVAL;name=value;name=value;...</tt>. <tt>TIMESPAN</tt> can be set to Y (year), M (month), W (week), or D (day). <tt>INTERVAL</tt> is an integer. <tt>value</tt> may be any valid json literal. <tt>name</tt> may be one of the keyword arguments explained in the <a target="_new" href="http://labix.org/python-dateutil/#head-470fa22b2db72000d7abe698a5783a46b0731b57">Python Dateutils</a> documentation. Example: <tt>Y;2;byeaster=0</tt> defines a recurring event for every second easter sunday.{% endtrans %}
+    </div>
+    </div>
+  </div>
+  {{ render_field(form.recur_hardschedule, checker=True) }}
+{% endif %}
+</dl>
+</div>
+  <div class="span6">
+<dl class="well">
+  <h4>{% trans %}Visibility and due dates{% endtrans %}</h4>
+{{ render_field(form.visible_from) }}
+{{ render_field(form.due) }}
+</dl>
+<dl class="well">
+  <h4>{% trans %}Various{% endtrans %}</h4>
+{{ render_field(form.notify, checker=True) }}
+{{ render_field(form.completed, checker=True) }}
+</dl>
+</div>
+</div>
+<div class="row-fluid">
+  <div class="span12">
+<dl class="well">
+{{ render_field(form.description) }}
+</dl>
+</div>
+</div>
+<script type="text/javascript">
+  $(function() {
+    $('#{{ form.description.id }}').on('keyup', function () {
+      $(this).height(0).height(this.scrollHeight < 20 ? 20 : (this.scrollHeight > 130 ? 130 : this.scrollHeight));
+    }).keyup();
+  });
+</script>
+{% endif %}

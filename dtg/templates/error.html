@@ -1,0 +1,17 @@
+{# 
+################################################################################
+# DTG.  The task management web application.
+#
+# Copyright (c) 2012 Alexander Schremmer <alex@alexanderweb.de>
+# Licensed under AGPL Version 3 or later. See LICENSE for details.
+################################################################################
+#}
+{% extends "base.html" %}
+{% block title %}{% trans %}Error{% endtrans %}{% endblock %}
+{% block content %}
+      <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+        <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+        <strong>{% trans %}Error:{% endtrans %}</strong> {{ error_msg }}</p>
+      </div>
+  <div class="errormessage"></div>
+{% endblock %}

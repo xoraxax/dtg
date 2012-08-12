@@ -1,0 +1,6 @@
+syntax: glob
+*.mo
+*.pyc
+.webassets-cache
+gen
+env

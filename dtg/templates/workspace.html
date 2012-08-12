@@ -1,0 +1,159 @@
+{# 
+################################################################################
+# DTG.  The task management web application.
+#
+# Copyright (c) 2012 Alexander Schremmer <alex@alexanderweb.de>
+# Licensed under AGPL Version 3 or later. See LICENSE for details.
+################################################################################
+#}
+
+{% extends "base.html" %}
+{% block title %}{{ workspace.name }}{% endblock %}
+{% block content %}
+<script type="text/javascript">
+  var workspace_rename_prompt = {{ _("New name of this workspace?") | tojson | safe }};
+  var workspace_name = {{ workspace.name | tojson | safe }};
+  $(function() {
+    init_mainview();
+  });
+</script>
+<div class="row-fluid">
+  <div class="span5 settingsblock">
+    <div class="row-fluid">
+      <div class="span9">
+        <h3><span title="{% trans %}Contexts are like folders, they let you organize tasks place- and time-wise{% endtrans %}">{% trans %}Contexts{% endtrans %}</span> <span class="buttondelimiter"></span><button class="btn btn-mini addcontext"><i class="icon-plus"></i> {% trans %}Add{% endtrans %}</button></h3>
+<ul id="contextlist" class="selsortlist">
+</ul>
+
+<h3><span title="{% trans %}Tags let you classify tasks with different facets. Just drag the tags onto the tasks.{% endtrans %}">{% trans %}Tags{% endtrans %}</span> <span class="buttondelimiter"></span><button class="btn btn-mini addtag"><i class="icon-plus"></i> {% trans %}Add{% endtrans %}</button>
+<span data-toggle="buttons-radio" class="inclexcl">
+  <button title="{% trans %}Every task must have a selected tag{% endtrans %}" class="btn btn-mini" id="btnincl">{% trans %}Incl{% endtrans %}</button>
+  <button title="{% trans %}Every task must have every selected tag{% endtrans %}" class="btn btn-mini active" id="btnexcl">{% trans %}Excl{% endtrans %}</button>
+</span>
+</h3>
+<ul id="taglist" class="selsortlist">
+</ul>
+</div>
+</div>
+<h3><span title="{% trans %}Filters let you narrow down the visible tasks{% endtrans %}">{% trans %}Filters{% endtrans %}</span></h3>
+<div class="btn-group" data-toggle="buttons-radio" id="kindfilter">
+  <button title="{% trans %}Tasks to be done{% endtrans %}" class="btn btn-small active" id="flttodo">{% trans %}To do{% endtrans %}</button>
+  <button title="{% trans %}Completed tasks{% endtrans %}" class="btn btn-small" id="fltdone">{% trans %}Completed{% endtrans %}</button>
+  <button title="{% trans %}Tasks that are not yet visible{% endtrans %}" class="btn btn-small" id="fltinvisible">{% trans %}Invisible{% endtrans %}</button>
+  <button title="{% trans %}Tasks templates for the recurring tasks{% endtrans %}" class="btn btn-small btn-separated" id="flttmpl">{% trans %}Recurrence templates{% endtrans %}</button>
+</div>
+<br />
+<div class="btn-group" data-toggle="buttons-radio" id="timefilter">
+  <button title="{% trans %}All tasks regardless of due date{% endtrans %}" class="btn btn-small active" id="fltall">{% trans %}All{% endtrans %}</button>
+  <button title="{% trans %}Tasks due today{% endtrans %}" class="btn btn-small" id="flttoday">{% trans %}Today{% endtrans %}</button>
+  <button title="{% trans %}Tasks due today or tomorrow{% endtrans %}" class="btn btn-small" id="fltplus1">{% trans %}+1{% endtrans %}</button>
+  <button title="{% trans %}Tasks due in the next 7 days{% endtrans %}" class="btn btn-small" id="fltplus7">{% trans %}+7{% endtrans %}</button>
+  <button title="{% trans %}Tasks without due date{% endtrans %}" class="btn btn-small" id="fltnodate">{% trans %}No date{% endtrans %}</button>
+</div>
+</div>
+<div class="span7 tasksblock">
+  <div class="hundredpercent">
+  <form class="form-inline" id="newtaskform">
+    <input type="text" class="eightypercent" title="{% trans %}Type here to create a new task. You may prefix the summary by a context name and use '#' to add tags.{% endtrans %}" autofocus placeholder="{% trans %}Create new task ...{% endtrans %}" id="newtasksummary">
+    <button type="submit" class="btn">{% trans %}Create{% endtrans %}</button>
+  </form>
+  </div>
+  <h3>{% trans %}Tasks{% endtrans %}</h3>
+    
+  <ul id="tasklist" class="selsortlist">
+  </ul>
+</div>
+</div>
+<ul class="template">
+  <li id="tagtmpl" class="taglabel">
+    <span class="tagname label"></span>
+  </li>
+  <li id="taskrowtmpl" class="task">
+  <span class="tasksummary"></span> <ul class="tasktags"></ul> <span class="dueindays"></span> <span class="recurringmarker label label-info">{% trans %}Recurring{% endtrans %}</span>
+  <div class="btn-group itembuttons">
+    <button class="btn btn-mini completetask"><span class="completetxt"><i class="icon-ok"></i> {% trans %}Complete{% endtrans %}</span><span class="incompletetxt"><i class="icon-refresh"></i> {% trans %}Reopen{% endtrans %}</span></button>
+    <button class="btn btn-mini postponetask" title="{% trans %}Postponing a task moves the due date to tomorrow or a day after its current due date, depending on whether it had a due date already.{% endtrans %}"><i class="icon-road"></i> {% trans %}Postpone{% endtrans %}</button>
+    <button class="btn btn-mini edittask"><i class="icon-pencil"></i> {% trans %}Edit{% endtrans %}</button>
+    <button class="btn btn-mini deletetask"><i class="icon-trash"></i> {% trans %}Delete{% endtrans %}</button>
+  </div>
+  <div class="taskbodyseparator"></div>
+  <div class="taskbody hide">
+    <div class="taskdescription"></div>
+    <span class="taskcompletion"><i>{% trans %}Completed: {% endtrans %}</i></span><span class="taskcompletiontime"></span>
+  </div>
+  </li>
+  <li id="tagrowtmpl" class="taglistitem draghandle">
+  <span class="tagname"></span>
+  <button class="btn btn-mini deletetag rightbutton" title="{% trans %}Delete{% endtrans %}"><i class="icon-trash"></i></button>
+  <button class="btn btn-mini edittag rightbutton" title="{% trans %}Edit{% endtrans %}"><i class="icon-pencil"></i></button>
+  </li>
+  <li id="contextrowtmpl" class="context draghandle">
+  <span class="contextname"></span>
+  <button class="btn btn-mini deletecontext rightbutton" title="{% trans %}Delete{% endtrans %}"><i class="icon-trash"></i></button>
+  <button class="btn btn-mini editcontext rightbutton" title="{% trans %}Edit{% endtrans %}"><i class="icon-pencil"></i></button>
+  </li>
+</ul>
+<div class="modal hide editdialog">
+  <form id="editform" onsubmit="return false;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3><span id="editdialogtitle"></span></h3>
+  </div>
+  <div class="modal-body">
+    <div id="editdialogbody"></div>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn cancelbutton">{% trans %}Cancel{% endtrans %}</a>
+    <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+  </div>
+  </form>
+</div>
+<div class="modal hide deletedialog fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>{% trans %}Delete?{% endtrans %}</h3>
+  </div>
+  <div class="modal-body">
+    {% trans %}Do you really want to delete the item? In the case of contexts, this will delete all related tasks. In the case of workspaces, it will delete everything in them.{% endtrans %}
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn cancelbutton">{% trans %}Cancel{% endtrans %}</a>
+    <button class="btn btn-primary deletebutton">{% trans %}Delete{% endtrans %}</button>
+  </div>
+</div>
+{#
+<div class="modal hide fade" id="hotkeyhelp">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>{% trans %}Hotkeys{% endtrans %}</h3>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{% trans %}Key{% endtrans %}</th>
+          <th>{% trans %}Behaviour{% endtrans %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>c</td><td>{% trans %}Add a new Context{% endtrans %}</td></tr>
+        <tr><td>i</td><td>{% trans %}Open the first context{% endtrans %}</td></tr>
+        <tr><td>Shift Page-Up/Shift Page-Down</td><td>{% trans %}Select a context{% endtrans %}</td></tr>
+        <tr><td>Shift Up/Shift Down</td><td>{% trans %}Select a task{% endtrans %}</td></tr>
+        <tr><td>t or n</td><td>{% trans %}Add a new task{% endtrans %}</td></tr>
+        <tr><td>f or /</td><td>{% trans %}Search{% endtrans %}</td></tr>
+        <tr><td>1-4</td><td>{% trans %}Select a filter (first row){% endtrans %}</td></tr>
+        <tr><td>* and then 1-5</td><td>{% trans %}Select a filter (second row){% endtrans %}</td></tr>
+        <tr><td>e</td><td>{% trans %}Edit selected task{% endtrans %}</td></tr>
+        <tr><td>#</td><td>{% trans %}Delete selected task{% endtrans %}</td></tr>
+        <tr><td>D</td><td>{% trans %}Complete selected task{% endtrans %}</td></tr>
+        <tr><td>h or ?</td><td>{% trans %}This help{% endtrans %}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <a href="#" data-dismiss="modal" class="btn btn-primary">{% trans %}OK{% endtrans %}</a>
+  </div>
+</div>
+#}
+{% endblock %}

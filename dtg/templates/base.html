@@ -1,0 +1,107 @@
+<!-- 
+################################################################################
+# DTG.  The task management web application.
+#
+# Copyright (c) 2012 Alexander Schremmer <alex@alexanderweb.de>
+# Licensed under AGPL Version 3 or later. See LICENSE for details.
+################################################################################
+-->
+<!doctype html>
+<head>
+  {% block head %}
+  {% assets "css_all" %}
+  <link rel="stylesheet" href="{{ ASSET_URL }}" />
+  {% endassets %}
+  <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css') }}" />
+  <!--[if lt IE 10]>
+    <script type="text/javascript">
+      alert("Internet Explorer is not supported, please use another browser like Firefox or Chromium.");
+    </script>
+  <![endif]-->
+  {% assets "js_lib" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}{% assets "js_app" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+  <script type="text/javascript">
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    var notice_title = "{% trans %}Notice{% endtrans %}";
+    var last_flash_id = {{ last_flash_id }};
+    if (last_flash_id != -42)
+      load_flashes();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %} – DTG</title>
+  {% endblock %}
+</head>
+<body>
+  <noscript>{% trans %}This site needs JavaScript to work properly!{% endtrans %}</noscript>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          {% if workspace %}
+          <a href="{{ url_for('index_workspace', workspace=workspace.name) }}" class="brand">{% trans %}DTG{% endtrans %}</a>
+          {% else %}
+          <a href="{{ url_for('index') }}" class="brand">{% trans %}DTG{% endtrans %}</a>
+          {% endif %}
+          <img src="{{ url_for('static', filename='img/ajaxloading.gif') }}" id="ajaxloading">
+          <div class="nav-collapse">
+            <ul class="nav">
+            {% if workspace %}
+            <li>
+              <a href="{{ url_for('index') }}">{% trans %}Choose workspace{% endtrans %}</a>
+            </li>
+            <li>
+              <a href="#" id="workspacerename">{% trans %}Rename this workspace{% endtrans %}</a>
+            </li>
+            <li>
+              <a href="#" id="workspacedelete">{% trans %}Delete this workspace{% endtrans %}</a>
+            </li>
+            {% endif %}
+            {% if not request.user %}
+            <li>
+            <a href="{{ url_for('login') }}">{% trans %}Log in{% endtrans %}</a>
+            </li>
+            {% else %}
+            <li>
+              <a href="#" id="preferences">{% trans %}Preferences{% endtrans %}</a>
+            </li>
+            <li>
+              <a href="{{ url_for('logout') }}">{% trans %}Log out{% endtrans %}</a>
+            </li>
+            {% endif %}
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+  <div class="container">
+    {% block content %}{% endblock %}
+
+   <footer class="footer">
+     <p>{% trans %}Done tasks gone{% endtrans %} – &copy; 2012 Alexander Schremmer</p>
+     <p class="version">{% trans %}Version{% endtrans %}: {{ version }}</p>
+   </footer>
+  </div>
+
+  <div class="modal hide errbox fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h3>{% trans %}Communication error{% endtrans %}</h3>
+    </div>
+    <div class="modal-body">
+      <p>{% trans %}Communication with the server failed:{% endtrans %}<span id="errmsg"></span></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" data-dismiss="modal" class="btn">{% trans %}Dismiss{% endtrans %}</a>
+      <a href="#" onclick="window.location.reload(); return false;" class="btn btn-primary">{% trans %}Reload{% endtrans %}</a>
+    </div>
+  </div>
+</body>

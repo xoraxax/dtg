@@ -1,0 +1,24 @@
+{# 
+################################################################################
+# DTG.  The task management web application.
+#
+# Copyright (c) 2012 Alexander Schremmer <alex@alexanderweb.de>
+# Licensed under AGPL Version 3 or later. See LICENSE for details.
+################################################################################
+#}
+<!doctype html>
+<body>
+  <h1>DTG: {{ workspace_name }}</h1>
+  {% for context in contexts %}
+  <h2>{{ context.name }}</h2>
+  <ul>
+    {% for task in context.tasks %}
+    <li>{{ task.name }} {% if task.tags %}({{ task.tags }}){% endif %} - {% if task.due_marker %}{{ task.due_marker[1] }}{% endif %} {% if task.is_recurring %}{% trans %}Recurring{% endtrans %}{% endif %}
+  <div class="taskbody">
+    {{ task.body | safe }}
+  </div>
+  </li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</body>
