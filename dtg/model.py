@@ -340,7 +340,7 @@ def generate_db_model(db):
                 try:
                     freq, args = get_rrule_args(localeEnglish, self.recur_procedure)
                 except ValueError, e:
-                    raise RecurInfoException((_("Invalid recurrence procedure, see examples")))
+                    raise RecurInfoException((_("Invalid recurrence procedure, see examples"), ()))
                 args.update(self.get_default_rrule_args())
                 return rrule(freq, **args)
 

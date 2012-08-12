@@ -83,7 +83,7 @@ def is_recur_proc(form, field):
     try:
         t.rrule
     except RecurInfoException, e:
-        raise ValidationError(_(e.message[0], e.message[1]))
+        raise ValidationError(_(e.args[0][0], e.args[0][1]))
 
 _ = lambda x, *args: x % args
 to_exclude = ["id", "position", "master_task_id", "context_id", "recur_last", "created_datetime", "completion_time"]
