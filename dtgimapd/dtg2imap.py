@@ -299,7 +299,7 @@ class DTGImapMessage(object):
 
         headers = {
             "to": "DTG User <>",
-            "from": make_header("DTG: %s <>" % (self.task["due_marker"][1] if self.task["due_marker"] else "No due date", )),
+            "from": make_header("DTG: %s" % (self.task["due_marker"][1] if self.task["due_marker"] else "No due date", )) + " <>",
             "date": "%s" % self.internal_date,
             "subject": make_header("%s" % self.task['name']),
             "message-id": "<%s@%s>" % (self.task["id"], self.proxy.hostname),
