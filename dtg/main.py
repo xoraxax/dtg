@@ -10,6 +10,7 @@
 import optparse
 import random
 import sys
+import os
 from getpass import getpass
 
 from paste.exceptions.errormiddleware import ErrorMiddleware
