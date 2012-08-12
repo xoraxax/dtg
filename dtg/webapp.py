@@ -219,7 +219,7 @@ def workspace_tags(workspace):
             if previous_tag is None:
                 new_index = 0
             else:
-                new_index = workspace.tags.index(previous_tag) + 1
+                new_index = workspace.tags.index(previous_tag)
             workspace.tags.pop(workspace.tags.index(tag))
             workspace.tags.insert(new_index, tag)
         elif action == "editinitial":
@@ -292,7 +292,7 @@ def workspace_contexts(workspace):
             if previous_context is None:
                 new_index = 0
             else:
-                new_index = workspace.contexts.index(previous_context) + 1
+                new_index = workspace.contexts.index(previous_context)
             workspace.contexts.pop(workspace.contexts.index(context))
             workspace.contexts.insert(new_index, context)
         elif action == "move_task":
@@ -434,7 +434,7 @@ def workspace_tasks(workspace):
             else:
                 if previous_task.context.workspace != workspace:
                     return render_error(_("Wrong workspace"), True)
-                new_index = context.tasks.index(previous_task) + 1
+                new_index = context.tasks.index(previous_task)
             context.tasks.pop(context.tasks.index(task))
             context.tasks.insert(new_index, task)
             db.session.commit()
