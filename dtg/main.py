@@ -72,7 +72,7 @@ def main():
     else:
         kwargs = {}
     app.wsgi_app = ErrorMiddleware(app.wsgi_app, **kwargs)
-    app.run(host=options.server_ip, port=options.server_port, threaded=True, use_reloader=True, passthrough_errors=True)
+    app.run(host=options.server_ip, port=options.server_port, threaded=True, use_reloader=options.debug, passthrough_errors=True)
 
 
 if __name__ == '__main__':
