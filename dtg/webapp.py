@@ -567,7 +567,7 @@ assets.register('js_lib', Bundle(*["js/" + name for name in (
                     "jquery-1.7.2.js", "jquery-ui-1.8.21.custom.js", "jquery.history.js",
                     "bootstrap.js", "jquery.pnotify.js", # "jquery.hotkeys.js",
                     "URI.js", "bootstrap-datepicker.js", "locales/bootstrap-datepicker.de.js")],
-                    filters=(minifier_strong, copyrighter_lib), output="gen/packed_lib.js"))
+                    filters=(minifier, copyrighter_lib), output="gen/packed_lib.js"))
 assets.register('js_app', Bundle("js/app.js", filters=(minifier, copyrighter_app), output="gen/packed_app.js"))
 
 css_all = Bundle(*["css/" + name for name in (
