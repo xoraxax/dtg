@@ -215,7 +215,7 @@ class DTGImapMailboxSent(object):
         raise imap4.MailboxException("Not implemented")
 
     def fetch(self, messages, uid):
-        raise StopIteration
+        return []
 
     def addListener(self, listener):
         self.listeners.append(listener)
