@@ -226,7 +226,9 @@ class DTGImapMailboxSent(object):
         return True
 
     def requestStatus(self, names):
-        return imap4.statusRequestHelper(self, names.replace("UIDNEXT", ""))
+        names = list(names)
+        names = names.pop("UIDNEXT")
+        return imap4.statusRequestHelper(self, names)
 
     def addMessage(self, msg, flags=None, date=None):
         headers = Parser().parse(msg)
