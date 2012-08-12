@@ -10,7 +10,7 @@ import random
 from datetime import datetime, timedelta, time, date
 from urllib2 import HTTPError
 from email.parser import Parser
-from email.header import decode_header
+from email.header import decode_header, Header
 from cStringIO import StringIO
 
 from twisted.mail import imap4
@@ -294,20 +294,20 @@ class DTGImapMessage(object):
         return self.internal_date
 
     def getHeaders(self, negate, *names):
+        def make_header(t):
+            return Header(t.encode("utf-8"), "utf-8").encode()
+
         headers = {
             "to": "DTG User <>",
-            "from": "DTG: %s <>" % (self.task["due_marker"][1] if self.task["due_marker"] else "No due date", ),
+            "from": make_header("DTG: %s <>" % (self.task["due_marker"][1] if self.task["due_marker"] else "No due date", )),
             "date": "%s" % self.internal_date,
-            "subject": "%s" % self.task['name'],
+            "subject": make_header("%s" % self.task['name']),
             "message-id": "<%s@%s>" % (self.task["id"], self.proxy.hostname),
             "content-type": 'text/plain; charset="UTF-8"',
             "mime-version": "1.0",
         }
         if self.task["master_task_id"]:
             headers["references"] = "<%s@%s>" % (self.task["master_task_id"], self.proxy.hostname)
-
-        for i in headers:
-            headers[i] = headers[i].encode('utf-8')
 
         return headers
 
