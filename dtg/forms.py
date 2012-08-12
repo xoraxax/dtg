@@ -24,7 +24,6 @@ def __call__(self, text=None, **kwargs):
     from dtg.transtools import _
     kwargs['for'] = self.field_id
     attributes = widgets.html_params(**kwargs)
-    print self.field_id, unicode(_(text or self.text))
     return widgets.HTMLString(u'<label %s>%s</label>' % (attributes, unicode(_(text or self.text))))
 Label.__call__ = __call__
 
