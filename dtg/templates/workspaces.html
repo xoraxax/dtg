@@ -23,13 +23,15 @@
     <input type="text" class="eightypercent" placeholder="{% trans %}Create new workspace ...{% endtrans %}" id="newworkspacename">
     <button type="submit" class="btn">{% trans %}Create{% endtrans %}</button>
   </form>
-  </div>
+</div>
+{% if request.user.workspaces %}
 {% trans %}In which workspace do you want to work?{% endtrans %}
 <ul>
   {% for workspace in request.user.workspaces %}
     <li><a href="{{ url_for('index_workspace', workspace=workspace.name) }}">{{ workspace.name }}</a></li>
   {% endfor %}
 </ul>
+{% endif %}
 </div>
 </div>
 <div class="modal hide editdialog fade">
