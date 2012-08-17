@@ -87,7 +87,7 @@ class IMAPFactory(protocol.Factory):
 if __name__ == "__main__":
     parser = optparse.OptionParser(usage="usage: %prog [options] DTGURL HOSTNAME")
     parser.add_option('-i', '--server-ip', dest='server_ip', action='store', type="string",
-            help='ip/hostname to run the server on', default="0.0.0.0")
+            help='ip/hostname to run the server on', default="::")
     parser.add_option('-p', '--server-port', dest='server_port', action='store',
             type="int", help='port to run the server on', default=1143)
 
