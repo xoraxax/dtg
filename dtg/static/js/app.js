@@ -93,7 +93,7 @@ var compose_url = function() {
 
 var load_flashes = function() {
   $.ajax({
-    url: $SCRIPT_ROOT + "_flashes?id=" + last_flash_id,
+    url: create_url("flashes") + "?id=" + last_flash_id,
     success: function (data) {
       $.each(data.data, function(_, item) {
         if (item.id > last_flash_id && item.id != undefined)

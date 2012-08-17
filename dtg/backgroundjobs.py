@@ -80,6 +80,7 @@ class NightlyMailer(DailyBackgroundJob):
             request.user = user
             for workspace in user.workspaces:
                 contexts = []
+                request.workspace = workspace
                 for context in workspace.contexts:
                     tasks = []
                     for task in context.tasks:

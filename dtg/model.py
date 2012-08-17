@@ -22,7 +22,7 @@ from dtg.transtools import _
 from dtg.recur import get_rrule_args, localeEnglish
 
 
-APP_DB_REV = 3
+APP_DB_REV = 4
 
 
 class RecurInfoException(Exception):
@@ -95,12 +95,12 @@ def generate_db_model(db):
     class FlashMessage(CreationTimeMixin, db.Model):
         id = db.Column(db.Integer, primary_key=True)
         text = db.Column(db.String(1024), nullable=False)
-        owner_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-        owner = db.relationship("User", backref=db.backref("flashes", order_by=[id]))
+        workspace_id = db.Column(db.Integer, db.ForeignKey("workspace.id"), nullable=False)
+        workspace = db.relationship("Workspace", backref=db.backref("flashes"))
 
-        def __init__(self, text, owner):
+        def __init__(self, text, workspace):
             self.text = text
-            self.owner = owner
+            self.workspace = workspace
 
     @make_global
     class Workspace(CreationTimeMixin, db.Model):
@@ -236,8 +236,11 @@ def generate_db_model(db):
             return task
 
         def compute_next_date(self):
-            if self.recur_last is None or not self.recur_hardschedule:
+            due_set = self.due is not None
+            if (self.recur_last is None and not due_set) or not self.recur_hardschedule:
                 self.recur_last = date.today()
+            elif due_set and self.recur_last is None:
+                return self.due
             rrule = self.rrule
             if not rrule:
                 return None

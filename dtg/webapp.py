@@ -16,11 +16,9 @@ from time import sleep
 from flask import Flask, request, session, redirect, url_for, render_template, jsonify, send_from_directory
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment, Bundle
-from flaskext.kvsession import KVSessionExtension
 from flaskext.babel import Babel, format_date
 import flaskext.babel
-from simplekv.db.sql import SQLAlchemyStore
-from sqlalchemy import create_engine, MetaData, event
+from sqlalchemy import event
 from sqlalchemy.exc import IntegrityError
 from migrate.versioning import genmodel, schemadiff
 import markdown
@@ -37,6 +35,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = sys.dtg_db_path("main")
 app.config["SQLALCHEMY_ECHO"] = sys.dtg_debug
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config['ASSETS_DEBUG'] = sys.dtg_debug
+app.config['SESSION_COOKIE_NAME'] = "dtgsession"
 SEQID_SLEEP = 10 # seconds
 NIGHTLY_RUNTIME = time(1, 42), time(2, 42)
 
@@ -51,10 +50,13 @@ if not SystemInfo.query.first():
 
 # setup secret key, do DB migrations
 sys_info = SystemInfo.query.first()
-app.secret_key = sys_info.secret_app_key
+app.secret_key = str(sys_info.secret_app_key)
 if sys_info.db_rev != APP_DB_REV:
     if not sys.dtg_do_upgrade:
         raise Exception("Old database version, please backup your database and enable DB migrations.")
+    if sys_info.db_rev == 3:
+        dict(db.metadata.tables)["flash_message"].drop(db.engine)
+        db.create_all()
     diff = schemadiff.getDiffOfModelAgainstDatabase(db.metadata, db.engine)
     genmodel.ModelGenerator(diff, db.engine).runB2A()
     sys_info = SystemInfo.query.first()
@@ -81,13 +83,6 @@ def before_commit(session):
         request.workspace.seqid += 1
 event.listen(db.Session, "before_commit", before_commit)
 
-# initialize session handling
-session_engine = create_engine(sys.dtg_db_path("sessions"))
-session_metadata = MetaData(bind=session_engine)
-store = SQLAlchemyStore(session_engine, session_metadata, 'kvstore')
-session_metadata.create_all()
-KVSessionExtension(store, app)
-
 # initialize i18n
 app.jinja_env.add_extension('jinja2.ext.i18n')
 app.babel_translations_dict = {}
@@ -112,13 +107,17 @@ def get_locale():
 
 
 def flash(message):
-    f = FlashMessage(unicode(message), request.user)
+    try:
+        workspace = request.workspace
+    except (RuntimeError, AttributeError):
+        return
+    f = FlashMessage(unicode(message), workspace)
     db.session.add(f)
 
 def get_last_flash_id():
-    if request.user is None:
+    if request.user is None or not getattr(request, "workspace", None):
         return -42
-    max_id = FlashMessage.query_class(db.func.max(FlashMessage.id), session=FlashMessage.query.session).filter_by(owner=request.user).first()[0]
+    max_id = FlashMessage.query_class(db.func.max(FlashMessage.id), session=FlashMessage.query.session).filter_by(workspace=request.workspace).first()[0]
     if max_id is None:
         return 0
     return max_id
@@ -179,6 +178,14 @@ def _workspace():
         db.session.add(w)
         db.session.commit()
     return jsonify({})
+
+@app.route('/<workspace>/flashes')
+@needs_login
+@gets_workspace
+def flashes(workspace):
+    last_id = int(request.args['id'])
+    flashes = FlashMessage.query.filter(db.and_(FlashMessage.id > last_id, FlashMessage.workspace == request.workspace)).all()
+    return jsonify({"data": [{"text": x.text, "id": x.id} for x in flashes]})
 
 @app.route('/<workspace>/delete', methods=["POST"])
 @needs_login
@@ -526,11 +533,6 @@ def logout():
     session.pop('username', None)
     return redirect(url_for("index"))
 
-@app.route('/_flashes')
-def flashes():
-    last_id = int(request.args['id'])
-    flashes = FlashMessage.query.filter(db.and_(FlashMessage.id > last_id, FlashMessage.owner == request.user)).all()
-    return jsonify({"data": [{"text": x.text, "id": x.id} for x in flashes]})
 
 @app.route('/favicon.ico')
 def favicon():
