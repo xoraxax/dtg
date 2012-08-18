@@ -72,8 +72,13 @@ var read_url = function(url) {
     dtgstate.timefilter = state.tf;
   if (state.kf != undefined)
     dtgstate.kindfilter = state.kf;
-  for (field in state.stg) {
-    dtgstate.selected_tags[field] = 1;
+  var stg = state["stg[]"];
+  if (typeof stg == "object") {
+    $.each(stg, function(_, item) {
+      dtgstate.selected_tags[item] = 1;
+    });
+  } else if (typeof stg == "string") {
+    dtgstate.selected_tags[stg] = 1;
   }
   if (state.sc)
     dtgstate.selected_context = state.sc;
