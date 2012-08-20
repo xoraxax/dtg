@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DTG v0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-08-12 02:46+0200\n"
-"PO-Revision-Date: 2012-08-12 02:46+0100\n"
+"POT-Creation-Date: 2012-08-20 20:23+0200\n"
+"PO-Revision-Date: 2012-08-20 20:23+0100\n"
 "Last-Translator: Alexander Schremmer <alex+translations@alexanderweb.de>\n"
 "Language-Team: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -17,140 +17,140 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: dtg/backgroundjobs.py:93
+#: dtg/backgroundjobs.py:94
 msgid " – Upcoming tasks"
 msgstr " – Anstehende Aufgaben"
 
-#: dtg/forms.py:95
+#: dtg/forms.py:94
 msgid "Visible from date must be earlier than due date."
 msgstr "\"Sichtbar ab\"-Datum muss vor dem Fälligkeitsdatum liegen."
 
-#: dtg/forms.py:96
+#: dtg/forms.py:95
 msgid "The task will be invisible until this day."
 msgstr "Die Aufgabe bleibt unsichtbar bis zu diesem Tag."
 
-#: dtg/forms.py:100
+#: dtg/forms.py:99
 msgid "Until when should the task be completed"
 msgstr "Bis wann die Aufgabe erledigt werden soll"
 
-#: dtg/forms.py:103
+#: dtg/forms.py:102
 msgid "Hard scheduling"
 msgstr "Regelmäßig ansetzen"
 
-#: dtg/forms.py:104
+#: dtg/forms.py:103
 msgid "If ticked, tasks will be rescheduled regardless of the completion. If not ticked, rescheduling happens when a task is completed."
 msgstr "Falls ausgewählt, werden Aufgaben in einem harten Rhythmus unabhängig davon, ob sie fertiggestellt wurden, erneut angesetzt. Falls nicht ausgewählt, werden sie erst neu angesetzt, wenn die Aufgabe abgeschlossen wurde."
 
-#: dtg/forms.py:107
+#: dtg/forms.py:106
 msgid "Expert scheduling code"
 msgstr "Expertenwiederholungs-Code"
 
-#: dtg/forms.py:108
+#: dtg/forms.py:107
 msgid "If you are an expert, you may compose a complex code that controls the schedule of this task."
 msgstr "Falls du ein Experte bist, kannst du einen komplexen Code erstellen, der den Zeitplan dieser Aufgabe steuert."
 
-#: dtg/forms.py:109
-#: dtg/forms.py:114
+#: dtg/forms.py:108
+#: dtg/forms.py:113
 msgid "Please enter either the easy or the expert string, but not both."
 msgstr "Bitte entweder den einfachen oder den Experten-String eingeben, aber nicht beide."
 
-#: dtg/forms.py:112
+#: dtg/forms.py:111
 msgid "Recurrence procedure"
 msgstr "Wiederholungsmuster"
 
-#: dtg/forms.py:113
+#: dtg/forms.py:112
 msgid "Here you may use your English words to describe the recurrence pattern. Supported examples include 'Every month', 'Every 3 months', 'Every Monday', 'Every 3 years', 'Every 42 weeks'."
 msgstr "Hier kannst du englische Wörter benutzen, um das Wiederholungsmuster zu beschreiben. Unterstützt werden z. B.  'Every month', 'Every 3 months', 'Every Monday', 'Every 3 years', 'Every 42 weeks'."
 
-#: dtg/forms.py:117
+#: dtg/forms.py:116
 msgid "Whether reminders should be generated for this task"
 msgstr "Ob Erinnerungen generiert werden sollen für diese Aufgabe"
 
-#: dtg/forms.py:120
+#: dtg/forms.py:119
 msgid "Detailed information about this task. In Markdown syntax."
 msgstr "Detaillierte Beschreibung dieser Aufgabe in Markdown syntax."
 
-#: dtg/forms.py:123
+#: dtg/forms.py:122
 msgid "Tick here if the task has been performed."
 msgstr "Markiere diese Option, falls die Aufgabe erledigt wurde."
 
-#: dtg/forms.py:127
+#: dtg/forms.py:126
 msgid "Description"
 msgstr "Beschreibung"
 
-#: dtg/forms.py:127
+#: dtg/forms.py:126
 msgid "Visible From"
 msgstr "Sichtbar ab"
 
-#: dtg/forms.py:127
+#: dtg/forms.py:126
 msgid "Due"
 msgstr "Fällig am"
 
-#: dtg/forms.py:127
+#: dtg/forms.py:126
 msgid "Notify"
 msgstr "Benachrichtigen"
 
-#: dtg/forms.py:127
+#: dtg/forms.py:126
 msgid "Context"
 msgstr "Kontext"
 
-#: dtg/forms.py:127
+#: dtg/forms.py:126
 msgid "Summary"
 msgstr "Zusammenfassung"
 
-#: dtg/forms.py:138
+#: dtg/forms.py:137
 msgid "Send nightly mail notifications"
 msgstr "Sende nächtliche Erinnerungsmails"
 
-#: dtg/forms.py:139
+#: dtg/forms.py:138
 msgid "You need to supply your e-mail address to use this feature!"
 msgstr "Du musst deine E-Mailadresse angeben, um dieses Feature zu benutzen!"
 
-#: dtg/forms.py:142
+#: dtg/forms.py:141
 msgid "E-mail"
 msgstr "E-Mail"
 
-#: dtg/forms.py:146
+#: dtg/forms.py:145
 msgid "Language"
 msgstr "Sprache"
 
-#: dtg/model.py:258
+#: dtg/model.py:261
 msgid "Rescheduled task"
 msgstr "Aufgabe wurde erneut geplant"
 
-#: dtg/model.py:280
+#: dtg/model.py:283
 #, python-format
 msgid "Overdue for %i days"
 msgstr "Überfällig seit %i Tagen"
 
-#: dtg/model.py:283
+#: dtg/model.py:286
 msgid "Due today"
 msgstr "Heute fällig"
 
-#: dtg/model.py:287
+#: dtg/model.py:290
 msgid "Due tomorrow"
 msgstr "Morgen fällig"
 
-#: dtg/model.py:289
+#: dtg/model.py:292
 #, python-format
 msgid "Due in %i days"
 msgstr "Fällig in %i Tagen"
 
-#: dtg/model.py:318
+#: dtg/model.py:321
 msgid "Invalid recurrence type"
 msgstr "Ungültiger recurrence type"
 
-#: dtg/model.py:327
+#: dtg/model.py:330
 #, python-format
 msgid "Invalid token '%(field)s', expected parameter name"
 msgstr "Ungültiges Token '%(field)s', es wurde ein Parametername erwartet"
 
-#: dtg/model.py:331
+#: dtg/model.py:334
 #, python-format
 msgid "Invalid data in field '%(field)s'"
 msgstr "Ungültige Daten in Feld '%(field)s'"
 
-#: dtg/model.py:343
+#: dtg/model.py:346
 msgid "Invalid recurrence procedure, see examples"
 msgstr "Ungültiges Wiederholungsmuster, siehe Beispiele"
 
@@ -158,123 +158,127 @@ msgstr "Ungültiges Wiederholungsmuster, siehe Beispiele"
 msgid "web browser default"
 msgstr "Vorgabe des Webbrowsers"
 
-#: dtg/webapp.py:139
+#: dtg/webapp.py:138
 msgid "Workspace not found"
 msgstr "Arbeitsplatz wurde nicht gefunden"
 
-#: dtg/webapp.py:177
+#: dtg/webapp.py:176
 msgid "Unsorted"
 msgstr "Unsortiert"
 
-#: dtg/webapp.py:216
+#: dtg/webapp.py:182
+msgid "Workspace already exists!"
+msgstr "Arbeitsfläche existiert schon!"
+
+#: dtg/webapp.py:226
 msgid "Edit tag"
 msgstr "Ändern des Tags"
 
-#: dtg/webapp.py:216
+#: dtg/webapp.py:226
 msgid "Add tag"
 msgstr "Tag hinzufügen"
 
-#: dtg/webapp.py:237
+#: dtg/webapp.py:250
 #, python-format
 msgid "Saved tag '%s'"
 msgstr "Tag '%s' gespeichert"
 
-#: dtg/webapp.py:241
-#: dtg/webapp.py:320
+#: dtg/webapp.py:254
+#: dtg/webapp.py:338
 msgid "Duplicate name"
 msgstr "Doppelter Name"
 
-#: dtg/webapp.py:244
+#: dtg/webapp.py:257
 #, python-format
 msgid "Deleted tag '%s'"
 msgstr "Tag '%s' gelöscht"
 
-#: dtg/webapp.py:254
+#: dtg/webapp.py:267
 #: dtg/templates/base.html:73
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: dtg/webapp.py:261
+#: dtg/webapp.py:276
 msgid "Saved preferences"
 msgstr "Einstellungen gespeichert"
 
-#: dtg/webapp.py:289
+#: dtg/webapp.py:304
 msgid "Edit context"
 msgstr "Ändern des Kontexts"
 
-#: dtg/webapp.py:289
+#: dtg/webapp.py:304
 msgid "Add context"
 msgstr "Kontext hinzufügen"
 
-#: dtg/webapp.py:301
-#: dtg/webapp.py:428
-#: dtg/webapp.py:436
+#: dtg/webapp.py:319
+#: dtg/webapp.py:446
+#: dtg/webapp.py:455
 msgid "Wrong workspace"
 msgstr "Falsche Arbeitsfläche"
 
-#: dtg/webapp.py:316
+#: dtg/webapp.py:334
 #, python-format
 msgid "Saved context '%s'"
 msgstr "Kontext '%s' wurde gespeichert"
 
-#: dtg/webapp.py:324
+#: dtg/webapp.py:342
 msgid "Last context cannot be deleted"
 msgstr "Der letzte Kontext kann nicht gelöscht werden"
 
-#: dtg/webapp.py:326
+#: dtg/webapp.py:344
 #, python-format
 msgid "Deleted context '%s'"
 msgstr "Kontext '%s' wurde gelöscht"
 
-#: dtg/webapp.py:375
+#: dtg/webapp.py:393
 msgid "Invalid filter name."
 msgstr "Ungültiger Filtername."
 
-#: dtg/webapp.py:409
+#: dtg/webapp.py:427
 #, python-format
 msgid "Created task '%s'"
 msgstr "Aufgabe '%s' wurde erstellt"
 
-#: dtg/webapp.py:443
+#: dtg/webapp.py:464
 msgid "Edit task"
 msgstr "Ändern der Aufgabe"
 
-#: dtg/webapp.py:443
+#: dtg/webapp.py:464
 msgid "Add task"
 msgstr "Aufgabe hinzufügen"
 
-#: dtg/webapp.py:455
+#: dtg/webapp.py:476
 #, python-format
 msgid "Saved task '%s'"
 msgstr "Aufgabe '%s' wurde gespeichert"
 
-#: dtg/webapp.py:460
+#: dtg/webapp.py:481
 #, python-format
 msgid "Deleted task '%s'"
 msgstr "Aufgabe '%s' wurde gelöscht"
 
-#: dtg/webapp.py:476
+#: dtg/webapp.py:497
 #, python-format
 msgid "Marked task '%s' as completed"
 msgstr "Aufgabe '%s' wurde als erledigt markiert"
 
-#: dtg/webapp.py:483
+#: dtg/webapp.py:504
 msgid "Set due date to tomorrow"
 msgstr "Fälligkeitsdatum auf morgen gesetzt"
 
-#: dtg/webapp.py:486
+#: dtg/webapp.py:507
 msgid "Postponed task by one day"
 msgstr "Aufgabe um einen Tag aufgeschoben"
 
-#: dtg/webapp.py:491
+#: dtg/webapp.py:512
 msgid "Unknown action"
 msgstr "Unbekannte Aktion"
 
-#: dtg/webapp.py:497
+#: dtg/webapp.py:518
 msgid "You are already logged in!"
 msgstr "Du bist schon eingeloggt!"
 
-#: dtg/webapp.py:505
+#: dtg/webapp.py:526
 msgid "Invalid credentials."
 msgstr "Ungültige Zugangsdaten."
 
@@ -559,12 +563,12 @@ msgstr "Abgeschlossen: "
 
 #: dtg/templates/workspace.html:106
 #: dtg/templates/workspace.html:120
-#: dtg/templates/workspaces.html:45
+#: dtg/templates/workspaces.html:47
 msgid "Cancel"
 msgstr "Abbrechen"
 
 #: dtg/templates/workspace.html:107
-#: dtg/templates/workspaces.html:46
+#: dtg/templates/workspaces.html:48
 msgid "Save"
 msgstr "Speichern"
 
@@ -585,7 +589,7 @@ msgstr "Arbeitsflächen"
 msgid "Create new workspace ..."
 msgstr "Erstelle eine neue Arbeitsfläche ..."
 
-#: dtg/templates/workspaces.html:27
+#: dtg/templates/workspaces.html:28
 msgid "In which workspace do you want to work?"
 msgstr "In welcher Arbeitsfläche willst du arbeiten?"
 

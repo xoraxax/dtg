@@ -22,7 +22,7 @@ from dtg.transtools import _
 from dtg.recur import get_rrule_args, localeEnglish
 
 
-APP_DB_REV = 4
+APP_DB_REV = 5
 
 
 class RecurInfoException(Exception):
@@ -56,7 +56,7 @@ def generate_db_model(db):
     @make_global
     class User(CreationTimeMixin, db.Model):
         id = db.Column(db.Integer, primary_key=True)
-        username = db.Column(db.String(80), unique=True)
+        username = db.Column(db.String(80), unique=True, nullable=False)
         password = db.Column(db.String(80), nullable=False)
         salt = db.Column(db.String(SALT_LENGTH), nullable=False)
         email = db.Column(db.String(256), nullable=False)
@@ -105,7 +105,7 @@ def generate_db_model(db):
     @make_global
     class Workspace(CreationTimeMixin, db.Model):
         id = db.Column(db.Integer, primary_key=True)
-        name = db.Column(db.String(80))
+        name = db.Column(db.String(80), nullable=False)
         owner_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
         owner = db.relationship("User", backref=db.backref("workspaces", order_by=[name]))
         seqid = db.Column(db.Integer, nullable=False, default=0)

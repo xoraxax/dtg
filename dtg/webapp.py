@@ -176,7 +176,10 @@ def _workspace():
         c = Context(unicode(_("Unsorted")))
         w.contexts.append(c)
         db.session.add(w)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError:
+            return jsonify({"message": _("Workspace already exists!")})
     return jsonify({})
 
 @app.route('/<workspace>/flashes')
@@ -268,9 +271,11 @@ def preferences():
     form = PreferencesForm(request.form, obj=request.user)
     if form.validate():
         form.populate_obj(request.user)
-        flash(_("Saved preferences"))
+        have_workspace = not not getattr(request, "workspace")
+        if have_workspace:
+            flash(_("Saved preferences"))
         db.session.commit()
-        return jsonify({"status": "LOCALECHANGE" if request.changed_locale else ""})
+        return jsonify({"status": "LOCALECHANGE" if request.changed_locale else ("" if have_workspace else "NOWORKSPACE")})
     return jsonify({"status": "AGAIN", "title": edittitle, "body": render_template("edit.html", form=form, type="prefs")})
 
 @app.route('/<workspace>/rename', methods=["POST"])

@@ -594,7 +594,7 @@ var setup_preferences_button = function() {
                 dialog.find(".cancelbutton").click();
                 if (data.status === "LOCALECHANGE") {
                   window.location.reload();
-                } else {
+                } else if (data.status != "NOWORKSPACE") {
                   load_flashes();
                 }
               }
@@ -745,7 +745,10 @@ var init_workspace_view = function() {
       url: create_url("_workspaces"),
       data: {action: "create", name: this.newworkspacename.value},
       success: function (data) {
-        window.location.reload();
+        if (data.message != undefined)
+          alert(data.message);
+        else
+          window.location.reload();
       }
     });
     return false;
