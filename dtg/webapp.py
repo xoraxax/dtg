@@ -201,7 +201,7 @@ def delete_workspace(workspace):
 @app.route('/<workspace>/seqid')
 @needs_login
 @gets_workspace
-def delete_workspace(workspace):
+def seqid(workspace):
     oldseqid = int(request.args.get("seqid"))
     slept = 0
     set_daemonic = False
