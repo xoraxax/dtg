@@ -109,6 +109,8 @@ def get_locale():
 def flash(message):
     try:
         workspace = request.workspace
+        if workspace is None:
+            return
     except (RuntimeError, AttributeError):
         return
     f = FlashMessage(unicode(message), workspace)
