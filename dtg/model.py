@@ -125,6 +125,8 @@ def generate_db_model(db):
                 context.delete()
             for tag in self.tags:
                 tag.delete()
+            for flashmsg in self.flashes:
+                db.session.delete(flashmsg)
             db.session.delete(self)
 
     @make_global
