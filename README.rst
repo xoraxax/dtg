@@ -14,7 +14,7 @@ Installation
 
  1. Install OpenSSL for Python, virtualenv, mercurial, and pip::
 
-      sudo apt-get install python-pip python-openssl python-virtualenv mercurial ssl-cert
+      sudo apt-get install python-pip python-openssl python-virtualenv mercurial ssl-cert python-dev
 
  2. Checkout the development version of DTG::
 
@@ -30,7 +30,10 @@ Installation
 
  5. Create a virtual environment::
 
-      virtualenv env
+      virtualenv --system-site-packages env
+
+      (Or call virtualenv without the '--system-site-packages' argument and manually
+      add a symlink for OpenSSL: ln -s /usr/lib/python2.7/dist-packages/OpenSSL/ env/lib/python2.7/site-packages/OpenSSL)
 
  6. Active the environment::
 
