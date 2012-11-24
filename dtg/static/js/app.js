@@ -42,6 +42,7 @@ var update_seqid_and_reload = function() {
           seqid = data.seqid;
           fetch_tags();
           fetch_contexts();
+          load_flashes();
         }
         in_seqid_loading = false;
       }
@@ -618,7 +619,7 @@ var ajax_setup = function() {
   $.ajaxSetup({
     error: function (jqXHR, status, error) {
       $("#errmsg").text(error);
-      $(".errbox").modal();       
+      $(".errbox").modal();
     },
     ajaxStart: function() {
       in_ajax = true;
