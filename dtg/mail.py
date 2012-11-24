@@ -32,7 +32,7 @@ def construct_html_message(subject, from_addr, to_addr, body_html, attachments):
     msg_alternative = MIMEMultipart('alternative')
     msg_root.attach(msg_alternative)
     msg_alternative.attach(MIMEText('You need an HTML compliant MUA to read this mail.'))
-    msg_alternative.attach(MIMEText(body_html, 'html'))
+    msg_alternative.attach(MIMEText(body_html, 'html', "utf-8"))
     
     for att in attachments:
         mime_att = MIMEText(att.blob, att.subtype)
