@@ -280,6 +280,8 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
             });
           } else {
             item.click(function(e) {
+              if (item.data("is_dragging"))
+                return;
               dtgstate[changedattr] = 1;
               if (dtgstate[selpropname][value.id]) {
                 item.removeClass("ui-state-active");
@@ -308,6 +310,7 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
             $(ui.placeholder).css({"height": ui.item.height()});
             if (multiprop && !is_task_list) {
               $(".task").addClass("ui-state-highlight");
+              ui.item.data("is_dragging", 1);
             } else if (is_task_list) {
               $(".context").addClass("ui-state-highlight");
             }
@@ -315,6 +318,7 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
           stop: function(event, ui) {
             if (multiprop && !is_task_list) {
               $(".task").removeClass("ui-state-highlight");
+              elem.data("is_dragging", 0);
             } else if (is_task_list) {
               $(".context").removeClass("ui-state-highlight");
             } else if (!multiprop && !is_task_list) {
