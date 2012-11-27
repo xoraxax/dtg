@@ -106,6 +106,13 @@ def get_locale():
     return request.user.locale
 
 
+def sanitize_workspacename(name):
+    name = name.replace("/", "|")
+    if name in ("_flashes", "login", "logout", "_workspaces", "preferences", ""):
+        name += "_"
+    return name
+
+
 def flash(message):
     try:
         workspace = request.workspace
@@ -174,7 +181,7 @@ def index_workspace(workspace):
 def _workspace():
     action = request.form.get("action")
     if action == "create":
-        w = Workspace(request.form.get("name"), request.user)
+        w = Workspace(sanitize_workspacename(request.form.get("name")), request.user)
         c = Context(unicode(_("Unsorted")))
         w.contexts.append(c)
         db.session.add(w)
@@ -286,9 +293,7 @@ def preferences():
 def workspace_rename(workspace):
     name = request.form.get("name")
     if name is not None:
-        name = name.replace("/", "")
-        if name in ("_flashes", "login", "logout", "_workspaces", "preferences", ""):
-            name += "_"
+        name = sanitize_workspacename(name)
         workspace.name = name
         db.session.commit()
     return jsonify({"name": name})
