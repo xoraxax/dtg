@@ -107,6 +107,8 @@ def get_locale():
 
 
 def sanitize_workspacename(name):
+    if name is None:
+        name = ""
     name = name.replace("/", "|")
     if name in ("_flashes", "login", "logout", "_workspaces", "preferences", ""):
         name += "_"
@@ -131,6 +133,12 @@ def get_last_flash_id():
         return 0
     return max_id
 
+def might_rollback_and_localize(func):
+    def innerfunc(*args, **kwargs):
+        get_translations()
+        return func(*args, **kwargs)
+    innerfunc.__name__ = func.__name__
+    return innerfunc
 
 def needs_login(func):
     def innerfunc(*args, **kwargs):
@@ -188,7 +196,7 @@ def _workspace():
         try:
             db.session.commit()
         except IntegrityError:
-            return jsonify({"message": _("Workspace already exists!")})
+            return jsonify({"message": unicode(_("Workspace '%s' already exists!", w.name))})
     return jsonify({})
 
 @app.route('/<workspace>/flashes')
@@ -292,12 +300,15 @@ def preferences():
 @app.route('/<workspace>/rename', methods=["POST"])
 @needs_login
 @gets_workspace
+@might_rollback_and_localize
 def workspace_rename(workspace):
     name = request.form.get("name")
-    if name is not None:
-        name = sanitize_workspacename(name)
-        workspace.name = name
+    name = sanitize_workspacename(name)
+    workspace.name = name
+    try:
         db.session.commit()
+    except IntegrityError:
+        return jsonify({"message": unicode(_("Workspace '%s' already exists!", name))})
     return jsonify({"name": name})
 
 @app.route('/<workspace>/contexts', methods=["POST", "GET"])

@@ -731,7 +731,10 @@ var init_mainview = function() {
       data: "name=" + encodeURIComponent(answer),
       url: create_url("rename"),
       success: function (data) {
-        window.location.href = $SCRIPT_ROOT + "/" + encodeURIComponent(data.name);
+        if (data.message == undefined)
+          window.location.href = $SCRIPT_ROOT + "/" + encodeURIComponent(data.name);
+        else
+          alert(data.message);
       }
     });
     return false;
