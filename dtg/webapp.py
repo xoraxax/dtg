@@ -370,6 +370,8 @@ def workspace_contexts(workspace):
 
 
 def get_filtered_tasks(workspace, tasks, form):
+    if form.get("tagexcl") is None:
+        return []
     tagexcl = bool(int(form.get("tagexcl")))
     timefilter = form.get("timefilter")
     kindfilter = form.get("kindfilter")
