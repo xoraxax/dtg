@@ -235,10 +235,10 @@ def seqid(workspace):
 @needs_login
 @gets_workspace
 def workspace_tags(workspace):
-    if request.method == "GET":
+    action = request.form.get("action")
+    if not action:
         return jsonify({"data": [{"name": tag.name, "id": tag.id} for tag in workspace.tags], "seqid": workspace.seqid})
     else:
-        action = request.form.get("action")
         tag = Tag.query.filter_by(id=int(request.form.get("id")), workspace=workspace).first()
         edittitle = _("Edit tag") if tag else _("Add tag")
         if action == "move":
@@ -315,11 +315,12 @@ def workspace_rename(workspace):
 @needs_login
 @gets_workspace
 def workspace_contexts(workspace):
-    if request.method == "GET":
-        return jsonify({"data": [{"name": context.name, "id": context.id} for context in workspace.contexts],
+    action = request.form.get("action")
+    if not action:
+        return jsonify({"data": [{"name": context.name, "id": context.id, "total": len([t for t in context.tasks if not t.completed]),
+                                  "count": len(get_filtered_tasks(workspace, context.tasks, request.form))} for context in workspace.contexts],
                         "seqid": workspace.seqid})
     else:
-        action = request.form.get("action")
         context = Context.query.filter_by(id=int(request.form.get("id")), workspace=workspace).first()
         edittitle = unicode(_("Edit context") if context else _("Add context"))
         if action == "move":
@@ -368,57 +369,62 @@ def workspace_contexts(workspace):
         return jsonify({"result": "OK"})
 
 
+def get_filtered_tasks(workspace, tasks, form):
+    tagexcl = bool(int(form.get("tagexcl")))
+    timefilter = form.get("timefilter")
+    kindfilter = form.get("kindfilter")
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+    dayaftertomorrow = tomorrow + timedelta(days=1)
+    inaweek = tomorrow + timedelta(days=7)
+    if kindfilter == "flttodo":
+        def fltr(item):
+            return not item.completed and not (item.recur_procedure or item.recur_data)
+    elif kindfilter == "fltdone":
+        def fltr(item):
+            return item.completed
+    elif kindfilter == "fltinvisible":
+        def fltr(item):
+            return not item.completed and not (item.recur_procedure or item.recur_data)
+    elif kindfilter == "flttmpl":
+        def fltr(item):
+            return not item.completed and (item.recur_procedure or item.recur_data)
+
+    if timefilter == "fltall":
+        def fltr2(item):
+            if kindfilter == "flttmpl":
+                return True
+            return (item.visible_from is not None and item.visible_from > today) if kindfilter == "fltinvisible" else (item.visible_from is None or item.visible_from <= today)
+    elif timefilter == "flttoday":
+        def fltr2(item):
+            return not item.completed and (item.due is None or item.due < tomorrow) and (item.visible_from is None or item.visible_from < tomorrow)
+    elif timefilter == "fltplus1":
+        def fltr2(item):
+            return not item.completed and (item.due is None or item.due < dayaftertomorrow) and (item.visible_from is None or item.visible_from < dayaftertomorrow)
+    elif timefilter == "fltplus7":
+        def fltr2(item):
+            return not item.completed and (item.due is None or item.due < inaweek) and (item.visible_from is None or item.visible_from < inaweek)
+    elif timefilter == "fltnodate":
+        def fltr2(item):
+            return not item.completed and not item.due and (item.visible_from is None or item.visible_from < tomorrow)
+    else:
+        return render_error(_("Invalid filter name."), True)
+    tags = set(Tag.query.filter_by(id=int(key), workspace=workspace).first() for key in form.getlist("selected_tags[]"))
+    func = tags.__ge__ if tagexcl else lambda tasktags: not tags or (tags & tasktags)
+    return [task for task in tasks if fltr(task) and fltr2(task) and func(set(task.tags))]
+
+
 @app.route('/<workspace>/tasks', methods=["POST"])
 @needs_login
 @gets_workspace
 def workspace_tasks(workspace):
     action = request.form.get("action", None)
     if action is None:
-        tagexcl = bool(int(request.form.get("tagexcl")))
-        timefilter = request.form.get("timefilter")
-        kindfilter = request.form.get("kindfilter")
-        today = date.today()
-        tomorrow = today + timedelta(days=1)
-        dayaftertomorrow = tomorrow + timedelta(days=1)
-        inaweek = tomorrow + timedelta(days=7)
-        if kindfilter == "flttodo":
-            def fltr(item):
-                return not item.completed and not (item.recur_procedure or item.recur_data)
-        elif kindfilter == "fltdone":
-            def fltr(item):
-                return item.completed
-        elif kindfilter == "fltinvisible":
-            def fltr(item):
-                return not item.completed and not (item.recur_procedure or item.recur_data)
-        elif kindfilter == "flttmpl":
-            def fltr(item):
-                return not item.completed and (item.recur_procedure or item.recur_data)
-
-        if timefilter == "fltall":
-            def fltr2(item):
-                return (item.visible_from is not None and item.visible_from > today) if kindfilter == "fltinvisible" else (item.visible_from is None or item.visible_from <= today)
-        elif timefilter == "flttoday":
-            def fltr2(item):
-                return not item.completed and (item.due is None or item.due < tomorrow) and (item.visible_from is None or item.visible_from < tomorrow)
-        elif timefilter == "fltplus1":
-            def fltr2(item):
-                return not item.completed and (item.due is None or item.due < dayaftertomorrow) and (item.visible_from is None or item.visible_from < dayaftertomorrow)
-        elif timefilter == "fltplus7":
-            def fltr2(item):
-                return not item.completed and (item.due is None or item.due < inaweek) and (item.visible_from is None or item.visible_from < inaweek)
-        elif timefilter == "fltnodate":
-            def fltr2(item):
-                return not item.completed and not item.due and (item.visible_from is None or item.visible_from < tomorrow)
-        else:
-            return render_error(_("Invalid filter name."), True)
         context = Context.query.filter_by(id=int(request.form.get("selected_context")), workspace=workspace).first()
-        tags = set(Tag.query.filter_by(id=int(key), workspace=workspace).first() for key in request.form.getlist("selected_tags[]"))
-        func = tags.__ge__ if tagexcl else lambda tasktags: not tags or (tags & tasktags)
         return jsonify({"data": [{"name": task.summary, "id": task.id, "due_marker": task.due_marker, "is_recurring": task.master_task is not None,
                                   "body": markdown.markdown(task.description, safe_mode="escape"), "completion_time": task.completion_time.isoformat() if task.completion_time else None,
                                   "completed": task.completed, "master_task_id": task.master_task.id if task.master_task is not None else None,
-                                  "tags": [{"name": tag.name, "id": tag.id} for tag in task.tags]} for task in context.tasks
-                                            if fltr(task) and fltr2(task) and func(set(task.tags))],
+                                  "tags": [{"name": tag.name, "id": tag.id} for tag in task.tags]} for task in get_filtered_tasks(workspace, context.tasks, request.form)],
                         "seqid": workspace.seqid})
     else:
         if action == "create":

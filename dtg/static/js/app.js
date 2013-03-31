@@ -157,17 +157,14 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
     var tmplelem = $(tmplname);
     var selfreloader = func;
     params = "";
-    type = "GET";
-    if (is_task_list) {
-      sels = [];
-      for (field in dtgstate.selected_tags) {
-        if (dtgstate.selected_tags[field])
-          sels.push(field);
-      }
-      params = {selected_context: dtgstate.selected_context, selected_tags: sels, tagexcl: dtgstate.tagexcl, timefilter: dtgstate.timefilter,
-                kindfilter: dtgstate.kindfilter};
-      type = "POST";
+    sels = [];
+    for (field in dtgstate.selected_tags) {
+      if (dtgstate.selected_tags[field])
+        sels.push(field);
     }
+    params = {selected_context: dtgstate.selected_context, selected_tags: sels, tagexcl: dtgstate.tagexcl, timefilter: dtgstate.timefilter,
+              kindfilter: dtgstate.kindfilter};
+    type = "POST";
     $.ajax({
       type: type,
       url: create_url(url),
@@ -453,6 +450,8 @@ var delete_tag = create_deleter("tags", function() { dtgstate.selected_tags = Ob
 var delete_task = create_deleter("tasks", function() { dtgstate.selected_task = null; fetch_tasks(); });
 var fill_context = function(item, data) {
   item.find(".contextname").text(data.name);
+  item.find(".contextcount").text(data.count);
+  item.find(".contexttotal").text(data.total);
   item.find(".editcontext").click(make_edit_callable(item, edit_context));
   item.find(".deletecontext").click(make_edit_callable(item, delete_context));
 }
@@ -574,7 +573,7 @@ var fill_task = function(item, data) {
   });
 }
 fetch_contexts = create_fetcher("#contextlist", "#contextrowtmpl", "contexts", "contextlist-", "contexts", "selected_context", "changed_contexts", reload_tasks, fill_context);
-fetch_tags = create_fetcher("#taglist", "#tagrowtmpl", "tags", "tagslist-", "tags", "selected_tags", "changed_tags", reload_tasks, fill_tag, 1);
+fetch_tags = create_fetcher("#taglist", "#tagrowtmpl", "tags", "tagslist-", "tags", "selected_tags", "changed_tags", fetch_contexts, fill_tag, 1);
 fetch_tasks = create_fetcher("#tasklist", "#taskrowtmpl", "tasks", "tasklist-", "tasks", "selected_task", "meow", reload_tasks, fill_task, 0, 1);
 
 var setup_preferences_button = function() {
@@ -676,14 +675,14 @@ var init_mainview = function() {
   $("#btnexcl").click(function() {
     if (dtgstate.tagexcl != 1) {
       dtgstate.tagexcl = 1;
-      reload_tasks();
+      fetch_contexts();
       push_state();
     }
   });
   $("#btnincl").click(function() {
     if (dtgstate.tagexcl != 0) {
       dtgstate.tagexcl = 0;
-      reload_tasks();
+      fetch_contexts();
       push_state();
     }
   });
@@ -693,7 +692,7 @@ var init_mainview = function() {
         var newstate = $(handle).children(".active").attr("id");
         if (dtgstate[propname] != newstate) {
           dtgstate[propname] = newstate;
-          reload_tasks();
+          fetch_contexts();
           push_state();
         }
       });
