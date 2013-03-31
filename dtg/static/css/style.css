@@ -39,7 +39,6 @@ body {
 
 #ajaxloading { visibility: hidden; display: block; float: left; padding: 9px 10px 11px; line-height: 19px; }
 
-.modal { top: 20em; }
 .modal-body { max-height: 1000px; }
 
 .completetxt { display: none; }

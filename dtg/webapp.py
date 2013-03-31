@@ -587,7 +587,7 @@ See https://bitbucket.org/xoraxax/dtg/raw/tip/LICENSE for details.
 
 assets = Environment(app)
 assets.register('js_lib', Bundle(*["js/" + name for name in (
-                    "jquery-1.7.2.js", "jquery-ui-1.8.21.custom.js", "jquery.history.js",
+                    "jquery-1.8.3.js", "jquery-ui-1.9.2.custom.js", "jquery.history.js",
                     "bootstrap.js", "jquery.pnotify.js", # "jquery.hotkeys.js",
                     "URI.js", "bootstrap-datepicker.js", "locales/bootstrap-datepicker.de.js")],
                     filters=(minifier_strong, copyrighter_lib), output="gen/packed_lib.js"))
