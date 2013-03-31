@@ -559,6 +559,8 @@ def setup_user():
     request.changed_locale = False
     if "username" in session:
         request.user = User.query.filter_by(username=session["username"]).first()
+        if request.user is None:
+            del session["username"]
     else:
         request.user = None
 
