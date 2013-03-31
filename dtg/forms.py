@@ -9,7 +9,8 @@
 from datetime import date
 from wtforms import Form, ValidationError
 from wtforms import widgets
-from wtforms.fields import TextField, SelectField, Label
+from wtforms.validators import EqualTo, Required
+from wtforms.fields import TextField, SelectField, Label, PasswordField
 from wtforms.widgets import TextInput
 from wtforms.ext.sqlalchemy.orm import model_form
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
@@ -139,9 +140,11 @@ PreferencesBaseForm = model_form(User, Form, exclude=["id", "username", "passwor
         },
     "email": {
         "label": _("E-mail"),
-    }
+    },
 })
 class PreferencesForm(PreferencesBaseForm):
     locale = SelectField(_("Language"), choices=locale_choices)
+    pwd1 = PasswordField(_('New Password'), [EqualTo('pwd2', message=_('Passwords must match'))])
+    pwd2  = PasswordField(_('Repeat Password'))
 
 from dtg.transtools import _

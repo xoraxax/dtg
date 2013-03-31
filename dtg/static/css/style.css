@@ -39,12 +39,13 @@ body {
 
 #ajaxloading { visibility: hidden; display: block; float: left; padding: 9px 10px 11px; line-height: 19px; }
 
+.modal { top: 5%; }
 .modal-body { max-height: 1000px; }
 
 .completetxt { display: none; }
 .incompletetxt { display: none; }
 
-dl.well { margin-right: 1em; padding-top: 5px; }
+dl.well { margin-right: 1em; padding-top: 5px; margin-bottom: 8px; padding-bottom: 8px; }
 dl.well input:not([type = "checkbox"]) { width: 13em; }
 dl.well input[type = "checkbox"] { display: inline; }
 input + label { display: inline; }
@@ -88,5 +89,7 @@ div h3:first-child { margin-top: 0; margin-bottom: 0.1em; }
 }
 
 dl { margin-top: 0; }
+
 dl dt label { font-weight: bold; }
 
+.btn-group { display: block; }
