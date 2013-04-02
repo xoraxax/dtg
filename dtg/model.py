@@ -22,7 +22,7 @@ from dtg.transtools import _
 from dtg.recur import get_rrule_args, localeEnglish
 
 
-APP_DB_REV = 5
+APP_DB_REV = 8
 
 
 class RecurInfoException(Exception):
@@ -62,6 +62,14 @@ def generate_db_model(db):
         email = db.Column(db.String(256), nullable=False)
         do_notify = db.Column(db.Boolean, nullable=False)
         locale = db.Column(db.String(64), nullable=False)
+        tutorial_idx = db.Column(db.Integer)
+        @property
+        def tutorial_index(self):
+            return self.tutorial_idx if self.tutorial_idx is not None else 1
+        feature_idx = db.Column(db.Integer)
+        @property
+        def feature_index(self):
+            return self.feature_idx if self.feature_idx is not None else 0
 
         def __init__(self, username, password, email="", do_notify=False, locale=""):
             self.username = username

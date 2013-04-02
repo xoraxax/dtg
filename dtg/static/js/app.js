@@ -17,7 +17,7 @@ dtgstate.changed_contexts = 0;
 dtgstate.selected_task = null;
 var replaced_state = 0;
 var seqid = -1;
-var in_ajax = false;
+var in_ajax = 0;
 var in_seqid_loading = false;
 var initing = true;
 var tooltip_opts = {placement: "bottom", delay: { show: 800, hide: 100 }};
@@ -28,7 +28,28 @@ var fetch_tags;
 var reload_tasks = function() {
   fetch_tasks();
   $(".tooltip").remove();
-}
+};
+var nop = function() {};
+var tutorial_hooks;
+
+var reset_tutorial_hooks = function() {
+  tutorial_hooks = {move_task: nop, assign_tag: nop, tasks_loaded: nop, tags_loaded: nop,
+                      editor_loaded: nop, reorder_tasks: nop, contexts_loaded: nop};
+};
+reset_tutorial_hooks();
+
+var shift_tutorial_hook = function(from, to) {
+  tutorial_hooks[to] = tutorial_hooks[from];
+  tutorial_hooks[from] = nop;
+};
+
+var run_tutorial_hook = function(name) {
+  console.log("Running " + name);
+  tutorial_hooks[name]();
+  tutorial_hooks[name] = nop;
+  console.log("State ", tutorial_hooks);
+};
+
 
 var update_seqid_and_reload = function() {
   if (!in_ajax && !in_seqid_loading) {
@@ -228,7 +249,7 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
                     }
                   }
                 },
-                drop: function( event, ui ) {
+                drop: function(event, ui) {
                   if (ui.draggable.hasClass("task")) {
                     if (item.hasClass("movetarget")) {
                       item.removeClass("movetarget")
@@ -243,6 +264,7 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
                         $("#tasklist").data("docancel", 0);
                         selfreloader();
                         push_state();
+                        shift_tutorial_hook("move_task", "tasks_loaded");
                       }
                     });
                   }
@@ -334,9 +356,10 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
                   if (!data.result == "OK")
                     alert("Moving failed");
                   dtgstate[changedattr] = 1;
-                  if (is_task_list)
+                  if (is_task_list) {
+                    shift_tutorial_hook("reorder_tasks", "tasks_loaded");
                     selfreloader();
-                  else if (multiprop) // tag order can also change in the tasks display
+                  } else if (multiprop) // tag order can also change in the tasks display
                     reload_tasks();
                   push_state();
                 }
@@ -357,6 +380,13 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
             initing = false;
           }
         }
+        if (is_task_list) {
+          run_tutorial_hook("tasks_loaded");
+        } else if (multiprop) {
+          run_tutorial_hook("tags_loaded");
+        } else {
+          run_tutorial_hook("contexts_loaded");
+        }
       }
     });
   };
@@ -370,7 +400,7 @@ var make_edit_callable = function(item, func) {
   };
 };
 
-var create_editor = function(url, reloader, selpropname) {
+var create_editor = function(url, reloader, zindex) {
   return function(item, create_or_id) {
     var internalid;
     if (create_or_id != undefined) {
@@ -397,8 +427,6 @@ var create_editor = function(url, reloader, selpropname) {
                 dialog.find("#editdialogbody").html(data.body).find("*[title]").tooltip(tooltip_opts);
               } else {
                 dialog.find(".cancelbutton").click();
-                if (create_or_id != undefined && create_or_id != -1 && selpropname != undefined)
-                  dtgstate[selpropname][data.id] = 1;
                 reloader();
                 load_flashes();
               }
@@ -416,6 +444,9 @@ var create_editor = function(url, reloader, selpropname) {
           window.setTimeout(function() { edit_task(0, item.attr("master-task-id")); }, 1500); // XXX ugly
         });
         dialog.modal();
+        dialog.zIndex(zindex);
+        run_tutorial_hook("editor_loaded");
+        dialog.find("*[autofocus]").focus();
       }
     });
   };
@@ -442,9 +473,9 @@ var create_deleter = function(url, reloader) {
   };
 };
 
-var edit_context = create_editor("contexts", function() { fetch_contexts(); });
-var edit_tag = create_editor("tags", function() { fetch_tags(); }, "selected_tags");
-var edit_task = create_editor("tasks", function() { fetch_tasks(); });
+var edit_context = create_editor("contexts", function() { fetch_contexts(); }, 3000);
+var edit_tag = create_editor("tags", function() { fetch_tags(); }, "selected_tags", 3000);
+var edit_task = create_editor("tasks", function() { fetch_tasks(); }, 1050);
 var delete_context = create_deleter("contexts", function() { dtgstate.selected_context = undefined; fetch_contexts(); });
 var delete_tag = create_deleter("tags", function() { dtgstate.selected_tags = Object(); fetch_tags(); });
 var delete_task = create_deleter("tasks", function() { dtgstate.selected_task = null; fetch_tasks(); });
@@ -523,6 +554,7 @@ var fill_task = function(item, data) {
           url: create_url("tasks"),
           data: {action: "add_tag", id: data.id, tag_id: ui.draggable.attr("internalid")},
           success: function (data) {
+            shift_tutorial_hook("assign_tag", "tasks_loaded");
             fetch_tasks();
           }
         });
@@ -625,16 +657,17 @@ var ajax_setup = function() {
       $(".errbox").modal();
     },
     ajaxStart: function() {
-      in_ajax = true;
+      in_ajax++;
     },
     ajaxStop: function() {
-      in_ajax = false;
+      in_ajax--;
     }
   });
   $('#ajaxloading').ajaxStart(function() {
     $(this).css("visibility", "visible");
   }).ajaxComplete(function() {
-    $(this).css("visibility", "hidden");
+    if (!in_ajax)
+      $(this).css("visibility", "hidden");
   });
 };
 
@@ -646,12 +679,15 @@ var init_mainview = function() {
   fetch_contexts();
   $("#newtaskform").submit(function() {
     if (this.newtasksummary.value) {
+      $(this.newtasksummary).attr("disabled", "disabled");
+      $(this.createtaskbtn).attr("disabled", "disabled");
       $.ajax({
         type: "POST",
         url: create_url("tasks"),
         data: {action: "create", summary: this.newtasksummary.value, selected_context: dtgstate.selected_context},
         success: function (data) {
-          $("#newtasksummary").val("");
+          $("#newtasksummary").removeAttr("disabled").val("");
+          $("#createtaskbtn").removeAttr("disabled");
           load_flashes();
           reload_tasks();
         }
@@ -660,13 +696,13 @@ var init_mainview = function() {
     return false;
   });
   $("#newtasksummary").typeahead({
-    source: function(typeahead, query) {
+    source: function(query, process) {
       $.ajax({
         type: "POST",
         url: create_url("tasks"),
         data: {action: "typeahead", summary: query},
         success: function (data) {
-          typeahead.process(data.list);
+          process(data.list);
         }
       });
       return false;
@@ -706,6 +742,7 @@ var init_mainview = function() {
   });
   $(".addtag").click(function() {
     edit_tag(0, -1);
+    shift_tutorial_hook("click_added_tag", "tags_loaded");
   });
   setup_preferences_button();
   $("#workspacedelete").click(function() {
@@ -755,7 +792,7 @@ var init_workspace_view = function() {
         if (data.message != undefined)
           alert(data.message);
         else
-          window.location.reload();
+          window.location = data.url;
       }
     });
     return false;

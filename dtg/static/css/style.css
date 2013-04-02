@@ -22,6 +22,7 @@ body {
 .template { display: none; }
 
 .taskbuttons { margin-top: 0.2em; margin-bottom: 0.3em; }
+.popover-content { background-color: lightyellow; }
 .itembuttons { margin-top: 0.6em; }
 .rightbutton { float: right; }
 .buttondelimiter { margin-left: 1em; }

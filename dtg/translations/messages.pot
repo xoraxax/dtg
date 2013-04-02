@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2012 ORGANIZATION
+# Copyright (C) 2013 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2012-08-20 20:23+0200\n"
+"POT-Creation-Date: 2013-04-02 14:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,142 +21,158 @@ msgstr ""
 msgid " – Upcoming tasks"
 msgstr ""
 
-#: dtg/forms.py:94
+#: dtg/forms.py:105
 msgid "Visible from date must be earlier than due date."
 msgstr ""
 
-#: dtg/forms.py:95
+#: dtg/forms.py:106
 msgid "The task will be invisible until this day."
 msgstr ""
 
-#: dtg/forms.py:99
+#: dtg/forms.py:110
 msgid "Until when should the task be completed"
 msgstr ""
 
-#: dtg/forms.py:102
+#: dtg/forms.py:113
 msgid "Hard scheduling"
 msgstr ""
 
-#: dtg/forms.py:103
+#: dtg/forms.py:114
 msgid ""
 "If ticked, tasks will be rescheduled regardless of the completion. If not"
 " ticked, rescheduling happens when a task is completed."
 msgstr ""
 
-#: dtg/forms.py:106
+#: dtg/forms.py:117
 msgid "Expert scheduling code"
 msgstr ""
 
-#: dtg/forms.py:107
+#: dtg/forms.py:118
 msgid ""
 "If you are an expert, you may compose a complex code that controls the "
 "schedule of this task."
 msgstr ""
 
-#: dtg/forms.py:108 dtg/forms.py:113
+#: dtg/forms.py:119 dtg/forms.py:124
 msgid "Please enter either the easy or the expert string, but not both."
 msgstr ""
 
-#: dtg/forms.py:111
+#: dtg/forms.py:119 dtg/forms.py:124
+msgid "Please set a due date before setting the recurrence interval!"
+msgstr ""
+
+#: dtg/forms.py:122
 msgid "Recurrence procedure"
 msgstr ""
 
-#: dtg/forms.py:112
+#: dtg/forms.py:123
 msgid ""
 "Here you may use your English words to describe the recurrence pattern. "
 "Supported examples include 'Every month', 'Every 3 months', 'Every "
 "Monday', 'Every 3 years', 'Every 42 weeks'."
 msgstr ""
 
-#: dtg/forms.py:116
+#: dtg/forms.py:127
 msgid "Whether reminders should be generated for this task"
 msgstr ""
 
-#: dtg/forms.py:119
+#: dtg/forms.py:130
 msgid "Detailed information about this task. In Markdown syntax."
 msgstr ""
 
-#: dtg/forms.py:122
+#: dtg/forms.py:133
 msgid "Tick here if the task has been performed."
 msgstr ""
 
-#: dtg/forms.py:126
+#: dtg/forms.py:137
 msgid "Description"
 msgstr ""
 
-#: dtg/forms.py:126
+#: dtg/forms.py:137
 msgid "Visible From"
 msgstr ""
 
-#: dtg/forms.py:126
+#: dtg/forms.py:137
 msgid "Due"
 msgstr ""
 
-#: dtg/forms.py:126
+#: dtg/forms.py:137
 msgid "Notify"
 msgstr ""
 
-#: dtg/forms.py:126
+#: dtg/forms.py:137
 msgid "Context"
 msgstr ""
 
-#: dtg/forms.py:126
+#: dtg/forms.py:137
 msgid "Summary"
 msgstr ""
 
-#: dtg/forms.py:137
+#: dtg/forms.py:148
 msgid "Send nightly mail notifications"
 msgstr ""
 
-#: dtg/forms.py:138
+#: dtg/forms.py:149
 msgid "You need to supply your e-mail address to use this feature!"
 msgstr ""
 
-#: dtg/forms.py:141
+#: dtg/forms.py:152
 msgid "E-mail"
 msgstr ""
 
-#: dtg/forms.py:145
+#: dtg/forms.py:156
 msgid "Language"
 msgstr ""
 
-#: dtg/model.py:261
+#: dtg/forms.py:157
+msgid "New Password"
+msgstr ""
+
+#: dtg/forms.py:157
+msgid "Passwords must match"
+msgstr ""
+
+#: dtg/forms.py:158
+msgid "Repeat Password"
+msgstr ""
+
+#: dtg/model.py:271
 msgid "Rescheduled task"
 msgstr ""
 
-#: dtg/model.py:283
+#: dtg/model.py:293
 #, python-format
 msgid "Overdue for %i days"
 msgstr ""
 
-#: dtg/model.py:286
+#: dtg/model.py:296
 msgid "Due today"
 msgstr ""
 
-#: dtg/model.py:290
+#: dtg/model.py:300
 msgid "Due tomorrow"
 msgstr ""
 
-#: dtg/model.py:292
+#: dtg/model.py:302
 #, python-format
 msgid "Due in %i days"
 msgstr ""
 
-#: dtg/model.py:321
+#: dtg/model.py:331
 msgid "Invalid recurrence type"
 msgstr ""
 
-#: dtg/model.py:330
+#: dtg/model.py:340
 #, python-format
 msgid "Invalid token '%(field)s', expected parameter name"
 msgstr ""
 
-#: dtg/model.py:334
+#: dtg/model.py:344
 #, python-format
 msgid "Invalid data in field '%(field)s'"
 msgstr ""
 
-#: dtg/model.py:346
+#: dtg/model.py:356
 msgid "Invalid recurrence procedure, see examples"
 msgstr ""
 
@@ -164,124 +180,261 @@ msgstr ""
 msgid "web browser default"
 msgstr ""
 
-#: dtg/webapp.py:138
+#: dtg/webapp.py:155
 msgid "Workspace not found"
 msgstr ""
 
-#: dtg/webapp.py:176
+#: dtg/webapp.py:193
 msgid "Unsorted"
 msgstr ""
 
-#: dtg/webapp.py:182
-msgid "Workspace already exists!"
+#: dtg/webapp.py:199 dtg/webapp.py:312
+#, python-format
+msgid "Workspace '%s' already exists!"
 msgstr ""
 
-#: dtg/webapp.py:226
+#: dtg/webapp.py:244
 msgid "Edit tag"
 msgstr ""
 
-#: dtg/webapp.py:226
+#: dtg/webapp.py:244
 msgid "Add tag"
 msgstr ""
 
-#: dtg/webapp.py:250
+#: dtg/webapp.py:268
 #, python-format
 msgid "Saved tag '%s'"
 msgstr ""
 
-#: dtg/webapp.py:254 dtg/webapp.py:338
+#: dtg/webapp.py:272 dtg/webapp.py:360
 msgid "Duplicate name"
 msgstr ""
 
-#: dtg/webapp.py:257
+#: dtg/webapp.py:275
 #, python-format
 msgid "Deleted tag '%s'"
 msgstr ""
 
-#: dtg/webapp.py:267 dtg/templates/base.html:73
+#: dtg/webapp.py:285 dtg/templates/base.html:73
 msgid "Preferences"
 msgstr ""
 
-#: dtg/webapp.py:276
+#: dtg/webapp.py:296
 msgid "Saved preferences"
 msgstr ""
 
-#: dtg/webapp.py:304
+#: dtg/webapp.py:326
 msgid "Edit context"
 msgstr ""
 
-#: dtg/webapp.py:304
+#: dtg/webapp.py:326
 msgid "Add context"
 msgstr ""
 
-#: dtg/webapp.py:319 dtg/webapp.py:446 dtg/webapp.py:455
+#: dtg/webapp.py:341 dtg/webapp.py:495 dtg/webapp.py:504
 msgid "Wrong workspace"
 msgstr ""
 
-#: dtg/webapp.py:334
+#: dtg/webapp.py:356
 #, python-format
 msgid "Saved context '%s'"
 msgstr ""
 
-#: dtg/webapp.py:342
+#: dtg/webapp.py:364
 msgid "Last context cannot be deleted"
 msgstr ""
 
-#: dtg/webapp.py:344
+#: dtg/webapp.py:366
 #, python-format
 msgid "Deleted context '%s'"
 msgstr ""
 
-#: dtg/webapp.py:393
+#: dtg/webapp.py:414
 msgid "Invalid filter name."
-msgstr ""
-
-#: dtg/webapp.py:427
-#, python-format
-msgid "Created task '%s'"
-msgstr ""
-
-#: dtg/webapp.py:464
-msgid "Edit task"
-msgstr ""
-
-#: dtg/webapp.py:464
-msgid "Add task"
 msgstr ""
 
 #: dtg/webapp.py:476
 #, python-format
+msgid "Created task '%s'"
+msgstr ""
+
+#: dtg/webapp.py:513
+msgid "Edit task"
+msgstr ""
+
+#: dtg/webapp.py:513
+msgid "Add task"
+msgstr ""
+
+#: dtg/webapp.py:525
+#, python-format
 msgid "Saved task '%s'"
 msgstr ""
 
-#: dtg/webapp.py:481
+#: dtg/webapp.py:530
 #, python-format
 msgid "Deleted task '%s'"
 msgstr ""
 
-#: dtg/webapp.py:497
+#: dtg/webapp.py:546
 #, python-format
 msgid "Marked task '%s' as completed"
 msgstr ""
 
-#: dtg/webapp.py:504
+#: dtg/webapp.py:553
 msgid "Set due date to tomorrow"
 msgstr ""
 
-#: dtg/webapp.py:507
+#: dtg/webapp.py:556
 msgid "Postponed task by one day"
 msgstr ""
 
-#: dtg/webapp.py:512
+#: dtg/webapp.py:561
 msgid "Unknown action"
 msgstr ""
 
-#: dtg/webapp.py:518
+#: dtg/webapp.py:567
 msgid "You are already logged in!"
 msgstr ""
 
-#: dtg/webapp.py:526
+#: dtg/webapp.py:575
 msgid "Invalid credentials."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:6
+msgid ""
+"Welcome to <em>Done Tasks Gone</em>! Using this tutorial, you will learn "
+"most of the nifty features of DTG. Note that even outside the tutorial, "
+"you can always hover your mouse over a particular element to see a short "
+"description. <br><a href=\"#\" class=\"btn\" "
+"id=\"continuetutorial\">Start the tutorial!</a>"
+msgstr ""
+
+#: dtg/static/js/tutorial.js:7
+msgid ""
+"Create a new task by entering its summary and pressing Return or the "
+"<em>Create</em> button."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:8
+msgid "Create a new context by clicking the <em>Add</em> button."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:9
+msgid ""
+"Move your new task by dragging and dropping it onto your newly created "
+"context."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:10
+msgid "Select your newly created context by clicking it."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:11
+msgid "Create a tag by clicking the <em>Add</em> button."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:12
+msgid "Assign the new tag by dragging it and dropping it on the task"
+msgstr ""
+
+#: dtg/static/js/tutorial.js:13
+msgid "Deselect your tag to see how tasks with tags can be excluded."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:14
+msgid "Select your tag again."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:15
+msgid ""
+"Postpone your task - this is useful if you do not want to complete it on "
+"the planned due date."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:16
+msgid "You are done with your task, click <em>Complete</em>."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:17
+msgid "You want to see the completed tasks, click <em>Completed</em>."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:18
+msgid "You want to see the active tasks again, click <em>To do</em>."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:19 dtg/static/js/tutorial.js:29
+msgid "Create a new task again."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:20
+msgid "Now you want to edit the details of the task, click <em>Edit</em>."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:21
+msgid ""
+"Your task should be hidden until a certain day has begun. Set the "
+"<em>visible from</em> date to the future."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:22
+msgid ""
+"Your task should also be due on some date. Set the <em>due date</em> date"
+" to the future and past the visible from date."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:23
+msgid ""
+"You want to store details of the task, edit the <em>description</em>. You"
+" may use Markdown markup (look it up if you do not know it!)."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:24
+msgid ""
+"Your task should repeat itself. Think about an interval like 'every 1 "
+"day<b>s</b>' and enter it."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:25
+msgid "Save your changes."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:26
+msgid ""
+"Now the original task was converted to a recurrence template and a slave "
+"task was created. Switch to <em>recurrence templates</em> to view your "
+"master task."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:27
+msgid "In order to view your assigned description, click the task."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:28
+msgid "Switch to <em>To Do</em> again to be able to work with new tasks."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:30
+msgid "Create another task."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:31
+msgid ""
+"Reorder your tasks by using drag and drop. You can also reorder tags and "
+"contexts."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:32
+msgid ""
+"Thank you for completing this tutorial! We hope that you can now enjoy "
+"DTG to a better extent."
+msgstr ""
+
+#: dtg/static/js/tutorial.js:36
+msgid ""
+"DTG now supports a tutorial that will present the basic features to the "
+"user!"
 msgstr ""
 
 #: dtg/templates/base.html:28
@@ -394,7 +547,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: dtg/templates/mail.html:16 dtg/templates/workspace.html:72
+#: dtg/templates/mail.html:16 dtg/templates/workspace.html:77
 msgid "Recurring"
 msgstr ""
 
@@ -402,190 +555,218 @@ msgstr ""
 msgid "New name of this workspace?"
 msgstr ""
 
-#: dtg/templates/workspace.html:24
+#: dtg/templates/workspace.html:16
+msgid "Tutorial"
+msgstr ""
+
+#: dtg/templates/workspace.html:17
+msgid "Skip this step"
+msgstr ""
+
+#: dtg/templates/workspace.html:17
+msgid "Stop the tutorial"
+msgstr ""
+
+#: dtg/templates/workspace.html:18
+msgid "New feature"
+msgstr ""
+
+#: dtg/templates/workspace.html:19
+msgid "Cool!"
+msgstr ""
+
+#: dtg/templates/workspace.html:29
 msgid ""
 "Contexts are like folders, they let you organize tasks place- and time-"
 "wise"
 msgstr ""
 
-#: dtg/templates/workspace.html:24
+#: dtg/templates/workspace.html:29
 msgid "Contexts"
 msgstr ""
 
-#: dtg/templates/workspace.html:24 dtg/templates/workspace.html:28
+#: dtg/templates/workspace.html:29 dtg/templates/workspace.html:33
 msgid "Add"
 msgstr ""
 
-#: dtg/templates/workspace.html:28
+#: dtg/templates/workspace.html:33
 msgid ""
 "Tags let you classify tasks with different facets. Just drag the tags "
 "onto the tasks."
 msgstr ""
 
-#: dtg/templates/workspace.html:28
+#: dtg/templates/workspace.html:33
 msgid "Tags"
 msgstr ""
 
-#: dtg/templates/workspace.html:30
+#: dtg/templates/workspace.html:35
 msgid "Every task must have a selected tag"
 msgstr ""
 
-#: dtg/templates/workspace.html:30
+#: dtg/templates/workspace.html:35
 msgid "Incl"
 msgstr ""
 
-#: dtg/templates/workspace.html:31
+#: dtg/templates/workspace.html:36
 msgid "Every task must have every selected tag"
 msgstr ""
 
-#: dtg/templates/workspace.html:31
+#: dtg/templates/workspace.html:36
 msgid "Excl"
 msgstr ""
 
-#: dtg/templates/workspace.html:38
+#: dtg/templates/workspace.html:43
 msgid "Filters let you narrow down the visible tasks"
 msgstr ""
 
-#: dtg/templates/workspace.html:38
+#: dtg/templates/workspace.html:43
 msgid "Filters"
 msgstr ""
 
-#: dtg/templates/workspace.html:40
+#: dtg/templates/workspace.html:45
 msgid "Tasks to be done"
 msgstr ""
 
-#: dtg/templates/workspace.html:40
+#: dtg/templates/workspace.html:45
 msgid "To do"
 msgstr ""
 
-#: dtg/templates/workspace.html:41
+#: dtg/templates/workspace.html:46
 msgid "Completed tasks"
 msgstr ""
 
-#: dtg/templates/workspace.html:41
+#: dtg/templates/workspace.html:46
 msgid "Completed"
 msgstr ""
 
-#: dtg/templates/workspace.html:42
+#: dtg/templates/workspace.html:47
 msgid "Tasks that are not yet visible"
 msgstr ""
 
-#: dtg/templates/workspace.html:42
+#: dtg/templates/workspace.html:47
 msgid "Invisible"
 msgstr ""
 
-#: dtg/templates/workspace.html:43
+#: dtg/templates/workspace.html:48
 msgid "Tasks templates for the recurring tasks"
 msgstr ""
 
-#: dtg/templates/workspace.html:43
+#: dtg/templates/workspace.html:48
 msgid "Recurrence templates"
 msgstr ""
 
-#: dtg/templates/workspace.html:47
+#: dtg/templates/workspace.html:52
 msgid "All tasks regardless of due date"
 msgstr ""
 
-#: dtg/templates/workspace.html:47
+#: dtg/templates/workspace.html:52
 msgid "All"
 msgstr ""
 
-#: dtg/templates/workspace.html:48
+#: dtg/templates/workspace.html:53
 msgid "Tasks due today"
 msgstr ""
 
-#: dtg/templates/workspace.html:48
+#: dtg/templates/workspace.html:53
 msgid "Today"
 msgstr ""
 
-#: dtg/templates/workspace.html:49
+#: dtg/templates/workspace.html:54
 msgid "Tasks due today or tomorrow"
 msgstr ""
 
-#: dtg/templates/workspace.html:49
+#: dtg/templates/workspace.html:54
 msgid "+1"
 msgstr ""
 
-#: dtg/templates/workspace.html:50
+#: dtg/templates/workspace.html:55
 msgid "Tasks due in the next 7 days"
 msgstr ""
 
-#: dtg/templates/workspace.html:50
+#: dtg/templates/workspace.html:55
 msgid "+7"
 msgstr ""
 
-#: dtg/templates/workspace.html:51
+#: dtg/templates/workspace.html:56
 msgid "Tasks without due date"
 msgstr ""
 
-#: dtg/templates/workspace.html:51
+#: dtg/templates/workspace.html:56
 msgid "No date"
 msgstr ""
 
-#: dtg/templates/workspace.html:57
+#: dtg/templates/workspace.html:62
 msgid ""
 "Type here to create a new task. You may prefix the summary by a context "
 "name and use '#' to add tags."
 msgstr ""
 
-#: dtg/templates/workspace.html:57
+#: dtg/templates/workspace.html:62
 msgid "Create new task ..."
 msgstr ""
 
-#: dtg/templates/workspace.html:58 dtg/templates/workspaces.html:24
+#: dtg/templates/workspace.html:63 dtg/templates/workspaces.html:24
 msgid "Create"
 msgstr ""
 
-#: dtg/templates/workspace.html:61
+#: dtg/templates/workspace.html:66
 msgid "Tasks"
 msgstr ""
 
-#: dtg/templates/workspace.html:74
+#: dtg/templates/workspace.html:80
 msgid "Complete"
 msgstr ""
 
-#: dtg/templates/workspace.html:74
+#: dtg/templates/workspace.html:80
 msgid "Reopen"
 msgstr ""
 
-#: dtg/templates/workspace.html:75
+#: dtg/templates/workspace.html:81
 msgid ""
 "Postponing a task moves the due date to tomorrow or a day after its "
 "current due date, depending on whether it had a due date already."
 msgstr ""
 
-#: dtg/templates/workspace.html:75
+#: dtg/templates/workspace.html:81
 msgid "Postpone"
 msgstr ""
 
-#: dtg/templates/workspace.html:76 dtg/templates/workspace.html:88
-#: dtg/templates/workspace.html:93
+#: dtg/templates/workspace.html:82 dtg/templates/workspace.html:95
+#: dtg/templates/workspace.html:100
 msgid "Edit"
 msgstr ""
 
-#: dtg/templates/workspace.html:77 dtg/templates/workspace.html:87
-#: dtg/templates/workspace.html:92 dtg/templates/workspace.html:121
+#: dtg/templates/workspace.html:83 dtg/templates/workspace.html:94
+#: dtg/templates/workspace.html:99 dtg/templates/workspace.html:129
 msgid "Delete"
 msgstr ""
 
-#: dtg/templates/workspace.html:82
+#: dtg/templates/workspace.html:89
 msgid "Completed: "
 msgstr ""
 
-#: dtg/templates/workspace.html:106 dtg/templates/workspace.html:120
+#: dtg/templates/workspace.html:101
+msgid "Filtered tasks in this context"
+msgstr ""
+
+#: dtg/templates/workspace.html:101
+msgid "Total active tasks in this context"
+msgstr ""
+
+#: dtg/templates/workspace.html:114 dtg/templates/workspace.html:128
 #: dtg/templates/workspaces.html:47
 msgid "Cancel"
 msgstr ""
 
-#: dtg/templates/workspace.html:107 dtg/templates/workspaces.html:48
+#: dtg/templates/workspace.html:115 dtg/templates/workspaces.html:48
 msgid "Save"
 msgstr ""
 
-#: dtg/templates/workspace.html:114
+#: dtg/templates/workspace.html:122
 msgid "Delete?"
 msgstr ""
 
-#: dtg/templates/workspace.html:117
+#: dtg/templates/workspace.html:125
 msgid ""
 "Do you really want to delete the item? In the case of contexts, this will"
 " delete all related tasks. In the case of workspaces, it will delete "

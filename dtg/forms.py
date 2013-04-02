@@ -60,6 +60,16 @@ class ExclusiveWith(object):
         if other_field.data and field.data:
             raise ValidationError(_(self.message))
 
+class IfSetRequiresOtherField(object):
+    def __init__(self, fieldname, message):
+        self.fieldname = fieldname
+        self.message = message
+
+    def __call__(self, form, field):
+        other_field = form[self.fieldname]
+        if field.data and not other_field.data:
+            raise ValidationError(_(self.message))
+
 class RequireField(object):
     def __init__(self, fieldname, message):
         self.fieldname = fieldname
@@ -106,12 +116,12 @@ TaskFormBase = model_form(Task, Form, exclude=to_exclude,
             "recur_data": {
                 "label": _("Expert scheduling code"),
                 "description": _("If you are an expert, you may compose a complex code that controls the schedule of this task."),
-                "validators": [is_recur_info, ExclusiveWith("recur_procedure", _("Please enter either the easy or the expert string, but not both."))],
+                "validators": [is_recur_info, ExclusiveWith("recur_procedure", _("Please enter either the easy or the expert string, but not both.")), IfSetRequiresOtherField("due", _("Please set a due date before setting the recurrence interval!"))],
                 },
             "recur_procedure": {
                 "label": _("Recurrence procedure"),
                 "description": _("Here you may use your English words to describe the recurrence pattern. Supported examples include 'Every month', 'Every 3 months', 'Every Monday', 'Every 3 years', 'Every 42 weeks'."),
-                "validators": [is_recur_proc, ExclusiveWith("recur_data", _("Please enter either the easy or the expert string, but not both."))],
+                "validators": [is_recur_proc, ExclusiveWith("recur_data", _("Please enter either the easy or the expert string, but not both.")), IfSetRequiresOtherField("due", _("Please set a due date before setting the recurrence interval!"))],
                 },
             "notify": {
                 "description": _("Whether reminders should be generated for this task"),
@@ -133,7 +143,7 @@ TaskForm.context.creation_counter = -1
 
 ContextForm = model_form(Context, Form, exclude=["id", "position", "workspace_id", "created_datetime"])
 TagForm = model_form(Tag, Form, exclude=["id", "position", "workspace_id", "created_datetime"])
-PreferencesBaseForm = model_form(User, Form, exclude=["id", "username", "password", "salt", "created_datetime"], field_args={
+PreferencesBaseForm = model_form(User, Form, exclude=["id", "username", "password", "salt", "created_datetime", "feature_idx", "tutorial_idx"], field_args={
     "do_notify": {
         "label": _("Send nightly mail notifications"),
         "validators": [RequireField("email", _("You need to supply your e-mail address to use this feature!"))],

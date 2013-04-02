@@ -197,6 +197,7 @@ def _workspace():
             db.session.commit()
         except IntegrityError:
             return jsonify({"message": unicode(_("Workspace '%s' already exists!", w.name))})
+        return jsonify({"url": url_for('index_workspace', workspace=w.name)})
     return jsonify({})
 
 @app.route('/<workspace>/flashes')
@@ -416,6 +417,26 @@ def get_filtered_tasks(workspace, tasks, form):
     return [task for task in tasks if fltr(task) and fltr2(task) and func(set(task.tags))]
 
 
+# two methods for the tutorial
+@app.route("/_translate", methods=["POST"])
+@needs_login
+def translate():
+    txt = request.form.get("txt")
+    return jsonify({"txt": unicode(_(txt))})
+
+@app.route("/_update_idx", methods=["POST"])
+@needs_login
+def update_idx():
+    idx = int(request.form.get("idx"))
+    is_feature = request.form.get("kind") == "feature"
+    if is_feature:
+        request.user.feature_idx = idx
+    else:
+        request.user.tutorial_idx = idx
+    db.session.commit()
+    return jsonify({})
+
+
 @app.route('/<workspace>/tasks', methods=["POST"])
 @needs_login
 @gets_workspace
@@ -614,7 +635,7 @@ assets.register('js_lib', Bundle(*["js/" + name for name in (
                     "bootstrap.js", "jquery.pnotify.js", # "jquery.hotkeys.js",
                     "URI.js", "bootstrap-datepicker.js", "locales/bootstrap-datepicker.de.js")],
                     filters=(minifier_strong, copyrighter_lib), output="gen/packed_lib.js"))
-assets.register('js_app', Bundle("js/app.js", filters=(minifier, copyrighter_app), output="gen/packed_app.js"))
+assets.register('js_app', Bundle("js/app.js", "js/tutorial.js", filters=(minifier, copyrighter_app), output="gen/packed_app.js"))
 
 css_all = Bundle(*["css/" + name for name in (
                     "bootstrap.css", "bootstrap-responsive.css", "style.css",

@@ -13,8 +13,13 @@
 <script type="text/javascript">
   var workspace_rename_prompt = {{ _("New name of this workspace?") | tojson | safe }};
   var workspace_name = {{ workspace.name | tojson | safe }};
+  var tutorial_title = "<h3>" + {{ _("Tutorial") | tojson | safe }} + "</h3>";
+  var tutorial_trailer = "<br><br><div class='btn-group'><button class='btn' id='skiptutorialstep'>{% trans %}Skip this step{% endtrans %}</button><button class='btn' id='stoptutorial'>{% trans %}Stop the tutorial{% endtrans %}</button></div>";
+  var feature_title = "<h3>" + {{ _("New feature") | tojson | safe }} + "</h3>";
+  var feature_trailer = "<br><br><div class='btn-group'><button class='btn' id='nextfeature'>{% trans %}Cool!{% endtrans %}</button></div>";
   $(function() {
     init_mainview();
+    run_featureinfo_and_tutorial({{ request.user.feature_index }}, {{ request.user.tutorial_index }});
   });
 </script>
 <div class="row-fluid">
@@ -54,8 +59,8 @@
 <div class="span7 tasksblock">
   <div class="hundredpercent">
   <form class="form-inline" id="newtaskform">
-    <input type="text" class="eightypercent" title="{% trans %}Type here to create a new task. You may prefix the summary by a context name and use '#' to add tags.{% endtrans %}" autofocus placeholder="{% trans %}Create new task ...{% endtrans %}" id="newtasksummary">
-    <button type="submit" class="btn">{% trans %}Create{% endtrans %}</button>
+    <input type="text" class="eightypercent" title="{% trans %}Type here to create a new task. You may prefix the summary by a context name and use '#' to add tags.{% endtrans %}" autofocus autocomplete="off" placeholder="{% trans %}Create new task ...{% endtrans %}" id="newtasksummary">
+    <button type="submit" class="btn" id="createtaskbtn">{% trans %}Create{% endtrans %}</button>
   </form>
   </div>
   <h3>{% trans %}Tasks{% endtrans %}</h3>
@@ -70,11 +75,13 @@
   </li>
   <li id="taskrowtmpl" class="task">
   <span class="tasksummary"></span> <ul class="tasktags"></ul> <span class="dueindays"></span> <span class="recurringmarker label label-info">{% trans %}Recurring{% endtrans %}</span>
-  <div class="btn-group itembuttons">
+  <div class="itembuttons">
+  <div class="btn-group">
     <button class="btn btn-mini completetask"><span class="completetxt"><i class="icon-ok"></i> {% trans %}Complete{% endtrans %}</span><span class="incompletetxt"><i class="icon-refresh"></i> {% trans %}Reopen{% endtrans %}</span></button>
     <button class="btn btn-mini postponetask" title="{% trans %}Postponing a task moves the due date to tomorrow or a day after its current due date, depending on whether it had a due date already.{% endtrans %}"><i class="icon-road"></i> {% trans %}Postpone{% endtrans %}</button>
     <button class="btn btn-mini edittask"><i class="icon-pencil"></i> {% trans %}Edit{% endtrans %}</button>
     <button class="btn btn-mini deletetask"><i class="icon-trash"></i> {% trans %}Delete{% endtrans %}</button>
+  </div>
   </div>
   <div class="taskbodyseparator"></div>
   <div class="taskbody hide">
@@ -91,7 +98,7 @@
   <span class="contextname"></span>
   <button class="btn btn-mini deletecontext rightbutton" title="{% trans %}Delete{% endtrans %}"><i class="icon-trash"></i></button>
   <button class="btn btn-mini editcontext rightbutton" title="{% trans %}Edit{% endtrans %}"><i class="icon-pencil"></i></button>
-  <span class="rightbutton"><span class="badge badge-info" title="{% trans %}Filtered tasks in category{% endtrans %}"><span class="contextcount"></span></span>/<span class="badge" title="{% trans %}Total active tasks in category{% endtrans %}"><span class="contexttotal"></span></span>&nbsp;</span>
+  <span class="rightbutton"><span class="badge badge-info" title="{% trans %}Filtered tasks in this context{% endtrans %}"><span class="contextcount"></span></span>/<span class="badge" title="{% trans %}Total active tasks in this context{% endtrans %}"><span class="contexttotal"></span></span>&nbsp;</span>
   </li>
 </ul>
 <div class="modal hide editdialog">
