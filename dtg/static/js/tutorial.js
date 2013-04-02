@@ -42,7 +42,8 @@ var run_featureinfo_and_tutorial = function(fidx, tidx) {
   if (step == null)
     run_tutorial(tidx);
   else {
-    var [txt, nextstep] = step;
+    var txt = step[0];
+    var nextstep = step[1];
     var popovertarget = $(".brand");
     $.ajax({
       url: $SCRIPT_ROOT + "/_translate",
@@ -78,7 +79,11 @@ var run_tutorial = function(idx) {
     return;
   }
   var step = TUTORIAL[idx];
-  var [txt, nextstep, selpopover, poplacement, opdesc] = step;
+  var txt = step[0];
+  var nextstep = step[1];
+  var selpopover = step[2];
+  var poplacement = step[3];
+  var opdesc = step[4];
   var op = opdesc[0];
   var popovertarget = $(selpopover);
   if (popovertarget.length == 0)
