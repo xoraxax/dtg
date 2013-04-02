@@ -11,11 +11,11 @@
 {% block title %}{{ workspace.name }}{% endblock %}
 {% block content %}
 <script type="text/javascript">
-  var workspace_rename_prompt = {{ _("New name of this workspace?") | tojson | safe }};
+  var workspace_rename_prompt = "{% trans %}New name of this workspace?{% endtrans %}";
   var workspace_name = {{ workspace.name | tojson | safe }};
-  var tutorial_title = "<h3>" + {{ _("Tutorial") | tojson | safe }} + "</h3>";
+var tutorial_title = "<h3>{% trans %}Tutorial{% endtrans %}</h3>";
   var tutorial_trailer = "<br><br><div class='btn-group'><button class='btn' id='skiptutorialstep'>{% trans %}Skip this step{% endtrans %}</button><button class='btn' id='stoptutorial'>{% trans %}Stop the tutorial{% endtrans %}</button></div>";
-  var feature_title = "<h3>" + {{ _("New feature") | tojson | safe }} + "</h3>";
+  var feature_title = "<h3>{% trans %}New feature{% endtrans %}</h3>";
   var feature_trailer = "<br><br><div class='btn-group'><button class='btn' id='nextfeature'>{% trans %}Cool!{% endtrans %}</button></div>";
   $(function() {
     init_mainview();
