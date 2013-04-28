@@ -9,6 +9,12 @@ License
 
 AGPL v3 or later.
 
+Test site
+---------
+
+Go to `tasks.alexanderweb.de <http://tasks.alexanderweb.de>`_ to try DTG. The username and the
+password are both `test`.
+
 Installation
 ------------
 
