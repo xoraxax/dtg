@@ -289,7 +289,7 @@ def preferences():
     form = PreferencesForm(request.form, obj=request.user)
     if form.validate():
         form.populate_obj(request.user)
-        if form.pwd1:
+        if form.pwd1.data:
             request.user.set_password(form.pwd1.data)
         have_workspace = not not getattr(request, "workspace")
         if have_workspace:
