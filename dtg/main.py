@@ -14,6 +14,7 @@ import os
 from getpass import getpass
 
 from paste.exceptions.errormiddleware import ErrorMiddleware
+from werkzeug.wsgi import DispatcherMiddleware
 
 
 def main():
@@ -26,6 +27,8 @@ def main():
             type="int", help='port to run the server on', default=5005)
     parser.add_option('-e', '--email', dest='email', action='store',
             type="string", help='e-mail address of the admin', default=None)
+    parser.add_option('-P', '--path', dest='path', action='store',
+            type="string", help='Path of DTG below the HTTP root folder (e.g. PATH in http://SERVERIP:SERVERPORT/PATH/)', default=None)
     parser.add_option('-D', '--debug', dest='debug', action='store_true',
             help='Debug mode', default=False)
     parser.add_option('-M', '--allow-migrations', dest='migrate', action='store_true',
@@ -72,6 +75,11 @@ def main():
     else:
         kwargs = {}
     app.wsgi_app = ErrorMiddleware(app.wsgi_app, **kwargs)
+    if options.path:
+        if not options.path.startswith("/"):
+            options.path = "/" + options.path
+        print "Mounting DTG under", options.path
+        app.wsgi_app = DispatcherMiddleware(lambda e, s: [s("404 Not found", []), "Not found"][1:], mounts={options.path: app.wsgi_app})
     app.run(host=options.server_ip, port=options.server_port, threaded=True, use_reloader=options.debug, passthrough_errors=True)
 
 
