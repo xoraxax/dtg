@@ -496,6 +496,8 @@ var fill_task = function(item, data) {
   var tagtmpl = $("#tagtmpl");
   item.find(".tasksummary").text(data.name);
   item.find(".taskdescription").html(data.body);
+  if (!data.body)
+    item.find(".taskdeschint").hide();
   item.find(".taskbody").hover(function() {
     $("#tasklist").sortable("disable");
   }, function() {
