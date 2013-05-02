@@ -53,8 +53,9 @@ class RecurrencePlanner(DailyBackgroundJob):
     def fire(self, is_first_run):
         from dtg.model import Task
         from dtg.webapp import db
+        today = date.today()
         for task in Task.query.filter(db.and_(db.or_(Task.recur_procedure != None, Task.recur_data != None), Task.completed, Task.recur_hardschedule)).all():
-            if task.visible_from is not None and task.compute_next_date - (task.due - task.visible_from) >= today or \
+            if task.visible_from is not None and task.compute_next_date() - (task.due - task.visible_from) >= today or \
                     task.recur_last <= today:
                 task.reschedule(False)
         db.session.commit()
