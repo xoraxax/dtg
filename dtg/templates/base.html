@@ -10,9 +10,10 @@
 <head>
   {% block head %}
   {% assets "css_all" %}
-  <link rel="stylesheet" href="{{ ASSET_URL }}" />
+  <link rel="stylesheet" href="{{ ASSET_URL }}">
+  <link rel="icon" href="{{ url_for('favicon') }}" type="image/x-icon">
   {% endassets %}
-  <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css') }}" />
+  <link rel="stylesheet" media="print" href="{{ url_for('static', filename='css/print.css') }}">
   <!--[if lt IE 10]>
     <script type="text/javascript">
       alert("Internet Explorer is not supported, please use another browser like Firefox or Chromium.");
