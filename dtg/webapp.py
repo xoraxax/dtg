@@ -12,8 +12,10 @@ import shutil
 from threading import Lock, current_thread
 from datetime import timedelta, date, time
 from time import sleep
+from hashlib import md5
 
-from flask import Flask, request, session, redirect, url_for, render_template, jsonify, send_from_directory
+from flask import Flask, request, session, redirect, url_for, render_template, jsonify, send_from_directory,\
+        Response
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment, Bundle
 from flaskext.babel import Babel, format_date
@@ -110,7 +112,9 @@ def sanitize_workspacename(name):
     if name is None:
         name = ""
     name = name.replace("/", "|")
-    if name in ("_flashes", "login", "logout", "_workspaces", "preferences", ""):
+    if name.startswith("_"):
+        name = name[1:]
+    if name in ("favicon.ico", "login", "logout", "preferences", ""):
         name += "_"
     return name
 
@@ -126,8 +130,6 @@ def flash(message):
     db.session.add(f)
 
 def get_last_flash_id():
-    if request.user is None or not getattr(request, "workspace", None):
-        return -42
     max_id = FlashMessage.query_class(db.func.max(FlashMessage.id), session=FlashMessage.query.session).filter_by(workspace=request.workspace).first()[0]
     if max_id is None:
         return 0
@@ -176,13 +178,24 @@ def errorhandler_404(e):
 @app.route('/')
 @needs_login
 def index():
-    return render_template("workspaces.html", last_flash_id=get_last_flash_id())
+    return render_template("workspaces.html")
 
 @app.route('/<workspace>')
 @needs_login
 @gets_workspace
 def index_workspace(workspace):
-    return render_template("workspace.html", workspace=workspace, last_flash_id=get_last_flash_id())
+    offline = request.args.get("offline") is not None
+    if offline:
+        contexts = [{"name": context.name, "id": context.id, "total": len([t for t in context.tasks if not t.completed]),
+                     "tasks": get_filtered_task_dicts(workspace, context.tasks, request.form),
+                    } for context in workspace.contexts]
+        for context in contexts:
+            context["count"] = len(context["tasks"])
+        data = {"contexts": contexts, "seqid": workspace.seqid}
+    else:
+        data = {}
+    return render_template("workspace.html", workspace=workspace, last_flash_id=get_last_flash_id(), offlinemode=offline,
+            offline_data=data)
 
 @app.route('/_workspaces', methods=["POST"])
 @needs_login
@@ -370,12 +383,21 @@ def workspace_contexts(workspace):
         return jsonify({"result": "OK"})
 
 
+def get_filtered_task_dicts(workspace, tasks, form):
+    return [{"name": task.summary, "id": task.id, "due_marker": task.due_marker, "is_recurring": task.master_task is not None,
+              "body": markdown.markdown(task.description, safe_mode="escape"), "completion_time": task.completion_time.isoformat() if task.completion_time else None,
+              "completed": task.completed, "master_task_id": task.master_task.id if task.master_task is not None else None,
+              "tags": [{"name": tag.name, "id": tag.id} for tag in task.tags]} for task in get_filtered_tasks(workspace, tasks, form)]
+
 def get_filtered_tasks(workspace, tasks, form):
     if form.get("tagexcl") is None:
-        return []
-    tagexcl = bool(int(form.get("tagexcl")))
-    timefilter = form.get("timefilter")
-    kindfilter = form.get("kindfilter")
+        tagexcl = True
+        timefilter = "fltall"
+        kindfilter = "flttodo"
+    else:
+        tagexcl = bool(int(form.get("tagexcl")))
+        timefilter = form.get("timefilter")
+        kindfilter = form.get("kindfilter")
     today = date.today()
     tomorrow = today + timedelta(days=1)
     dayaftertomorrow = tomorrow + timedelta(days=1)
@@ -444,11 +466,7 @@ def workspace_tasks(workspace):
     action = request.form.get("action", None)
     if action is None:
         context = Context.query.filter_by(id=int(request.form.get("selected_context")), workspace=workspace).first()
-        return jsonify({"data": [{"name": task.summary, "id": task.id, "due_marker": task.due_marker, "is_recurring": task.master_task is not None,
-                                  "body": markdown.markdown(task.description, safe_mode="escape"), "completion_time": task.completion_time.isoformat() if task.completion_time else None,
-                                  "completed": task.completed, "master_task_id": task.master_task.id if task.master_task is not None else None,
-                                  "tags": [{"name": tag.name, "id": tag.id} for tag in task.tags]} for task in get_filtered_tasks(workspace, context.tasks, request.form)],
-                        "seqid": workspace.seqid})
+        return jsonify({"data": get_filtered_task_dicts(workspace, context.tasks, request.form), "seqid": workspace.seqid})
     else:
         if action == "create":
             context = Context.query.filter_by(id=int(request.form.get("selected_context")), workspace=workspace).first()
@@ -475,7 +493,7 @@ def workspace_tasks(workspace):
             db.session.add(task)
             flash(_("Created task '%s'", task.summary))
             db.session.commit()
-            return jsonify({})
+            return jsonify({"data": task.id})
         elif action == "typeahead":
             items = []
             prefix = request.form.get("summary")
@@ -541,6 +559,11 @@ def workspace_tasks(workspace):
             task.tags.append(tag)
             db.session.commit()
             return jsonify({})
+        elif action == "rename":
+            task.summary = request.form.get("summary", "")
+            flash(_("Changed summary to '%s'", (task.summary, )))
+            db.session.commit()
+            return jsonify({})
         elif action == "togglecomplete":
             task.completed = not task.completed
             flash(_("Marked task '%s' as completed", (task.summary, )))
@@ -578,7 +601,7 @@ def login():
             return redirect(request.args['url'].encode("ascii"))
         else:
             return redirect(url_for('index'))
-    return render_template("login.html", last_flash_id=get_last_flash_id())
+    return render_template("login.html")
 
 
 @app.route('/logout')
@@ -592,6 +615,39 @@ def logout():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static', 'img'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route("/_ignore/<resourceid>")
+def ignore_route(resourceid):
+    return Response()
+
+@app.route("/<workspace>/_cache.manifest")
+@needs_login
+@gets_workspace
+def cache_manifest(workspace):
+    hash = md5()
+    hash.update("".join([bundle.get_version() for bundle in assets._named_bundles.values()]))
+    hash.update(str(os.path.getmtime(os.path.join(app.root_path, "templates"))))
+    # XXX update when updating jquery UI theme
+    manifest = """CACHE MANIFEST
+CACHE:
+/favicon.ico
+/static/img/glyphicons-halflings.png
+/static/css/cupertino/images/ui-bg_glass_80_d7ebf9_1x400.png
+/static/css/cupertino/images/ui-bg_glass_50_3baae3_1x400.png
+/static/css/print.css
+/static/img/ajaxloading.gif 
+%s
+/_ignore/RESSOURCE_HASH_%s
+/_ignore/SEQID_%i
+""" % ("\n".join("\n".join(asset.urls()) for asset in (assets["js_app"], assets["js_lib"], assets["css_all"])), 
+        hash.hexdigest(), workspace.seqid,)
+    if app.debug:
+        manifest += """
+NETWORK:
+*
+"""
+    return Response(manifest, mimetype='text/cache-manifest')
+
 
 @app.before_request
 def setup_user():

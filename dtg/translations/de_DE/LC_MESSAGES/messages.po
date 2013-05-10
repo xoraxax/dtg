@@ -7,17 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DTG v0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-04-02 14:39+0200\n"
-"PO-Revision-Date: 2013-04-11 19:28+0100\n"
+"POT-Creation-Date: 2013-05-10 02:56+0200\n"
+"PO-Revision-Date: 2013-05-10 02:57+0100\n"
 "Last-Translator: Alexander Schremmer <alex+translations@alexanderweb.de>\n"
 "Language-Team: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: dtg/backgroundjobs.py:94
+#: dtg/backgroundjobs.py:95
 msgid " – Upcoming tasks"
 msgstr " – Anstehende Aufgaben"
 
@@ -38,24 +39,33 @@ msgid "Hard scheduling"
 msgstr "Regelmäßig ansetzen"
 
 #: dtg/forms.py:114
-msgid "If ticked, tasks will be rescheduled regardless of the completion. If not ticked, rescheduling happens when a task is completed."
-msgstr "Falls ausgewählt, werden Aufgaben in einem harten Rhythmus unabhängig davon, ob sie fertiggestellt wurden, erneut angesetzt. Falls nicht ausgewählt, werden sie erst neu angesetzt, wenn die Aufgabe abgeschlossen wurde."
+msgid ""
+"If ticked, tasks will be rescheduled regardless of the completion. If not "
+"ticked, rescheduling happens when a task is completed."
+msgstr ""
+"Falls ausgewählt, werden Aufgaben in einem harten Rhythmus unabhängig davon, "
+"ob sie fertiggestellt wurden, erneut angesetzt. Falls nicht ausgewählt, "
+"werden sie erst neu angesetzt, wenn die Aufgabe abgeschlossen wurde."
 
 #: dtg/forms.py:117
 msgid "Expert scheduling code"
 msgstr "Expertenwiederholungs-Code"
 
 #: dtg/forms.py:118
-msgid "If you are an expert, you may compose a complex code that controls the schedule of this task."
-msgstr "Falls du ein Experte bist, kannst du einen komplexen Code erstellen, der den Zeitplan dieser Aufgabe steuert."
+msgid ""
+"If you are an expert, you may compose a complex code that controls the "
+"schedule of this task."
+msgstr ""
+"Falls du ein Experte bist, kannst du einen komplexen Code erstellen, der den "
+"Zeitplan dieser Aufgabe steuert."
 
-#: dtg/forms.py:119
-#: dtg/forms.py:124
+#: dtg/forms.py:119 dtg/forms.py:124
 msgid "Please enter either the easy or the expert string, but not both."
-msgstr "Bitte entweder den einfachen oder den Experten-String eingeben, aber nicht beide."
+msgstr ""
+"Bitte entweder den einfachen oder den Experten-String eingeben, aber nicht "
+"beide."
 
-#: dtg/forms.py:119
-#: dtg/forms.py:124
+#: dtg/forms.py:119 dtg/forms.py:124
 msgid "Please set a due date before setting the recurrence interval!"
 msgstr "Setze ein Fälligkeitsdatum bevor du ein Wiederholungsmuster setzt!"
 
@@ -64,8 +74,14 @@ msgid "Recurrence procedure"
 msgstr "Wiederholungsmuster"
 
 #: dtg/forms.py:123
-msgid "Here you may use your English words to describe the recurrence pattern. Supported examples include 'Every month', 'Every 3 months', 'Every Monday', 'Every 3 years', 'Every 42 weeks'."
-msgstr "Hier kannst du englische Wörter benutzen, um das Wiederholungsmuster zu beschreiben. Unterstützt werden z. B.  'Every month', 'Every 3 months', 'Every Monday', 'Every 3 years', 'Every 42 weeks'."
+msgid ""
+"Here you may use your English words to describe the recurrence pattern. "
+"Supported examples include 'Every month', 'Every 3 months', 'Every Monday', "
+"'Every 3 years', 'Every 42 weeks'."
+msgstr ""
+"Hier kannst du englische Wörter benutzen, um das Wiederholungsmuster zu "
+"beschreiben. Unterstützt werden z. B.  'Every month', 'Every 3 months', "
+"'Every Monday', 'Every 3 years', 'Every 42 weeks'."
 
 #: dtg/forms.py:127
 msgid "Whether reminders should be generated for this task"
@@ -175,147 +191,167 @@ msgstr "Ungültiges Wiederholungsmuster, siehe Beispiele"
 msgid "web browser default"
 msgstr "Vorgabe des Webbrowsers"
 
-#: dtg/webapp.py:155
+#: dtg/webapp.py:157
 msgid "Workspace not found"
 msgstr "Arbeitsplatz wurde nicht gefunden"
 
-#: dtg/webapp.py:193
+#: dtg/webapp.py:206
 msgid "Unsorted"
 msgstr "Unsortiert"
 
-#: dtg/webapp.py:199
-#: dtg/webapp.py:312
+#: dtg/webapp.py:212 dtg/webapp.py:325
 #, python-format
 msgid "Workspace '%s' already exists!"
 msgstr "Arbeitsfläche '%s' existiert schon!"
 
-#: dtg/webapp.py:244
+#: dtg/webapp.py:257
 msgid "Edit tag"
 msgstr "Ändern des Tags"
 
-#: dtg/webapp.py:244
+#: dtg/webapp.py:257
 msgid "Add tag"
 msgstr "Tag hinzufügen"
 
-#: dtg/webapp.py:268
+#: dtg/webapp.py:281
 #, python-format
 msgid "Saved tag '%s'"
 msgstr "Tag '%s' gespeichert"
 
-#: dtg/webapp.py:272
-#: dtg/webapp.py:360
+#: dtg/webapp.py:285 dtg/webapp.py:373
 msgid "Duplicate name"
 msgstr "Doppelter Name"
 
-#: dtg/webapp.py:275
+#: dtg/webapp.py:288
 #, python-format
 msgid "Deleted tag '%s'"
 msgstr "Tag '%s' gelöscht"
 
-#: dtg/webapp.py:285
-#: dtg/templates/base.html:73
+#: dtg/webapp.py:298 dtg/templates/base.html:91
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: dtg/webapp.py:296
+#: dtg/webapp.py:309
 msgid "Saved preferences"
 msgstr "Einstellungen gespeichert"
 
-#: dtg/webapp.py:326
+#: dtg/webapp.py:339
 msgid "Edit context"
 msgstr "Ändern des Kontexts"
 
-#: dtg/webapp.py:326
+#: dtg/webapp.py:339
 msgid "Add context"
 msgstr "Kontext hinzufügen"
 
-#: dtg/webapp.py:341
-#: dtg/webapp.py:495
-#: dtg/webapp.py:504
+#: dtg/webapp.py:354 dtg/webapp.py:513 dtg/webapp.py:522
 msgid "Wrong workspace"
 msgstr "Falsche Arbeitsfläche"
 
-#: dtg/webapp.py:356
+#: dtg/webapp.py:369
 #, python-format
 msgid "Saved context '%s'"
 msgstr "Kontext '%s' wurde gespeichert"
 
-#: dtg/webapp.py:364
+#: dtg/webapp.py:377
 msgid "Last context cannot be deleted"
 msgstr "Der letzte Kontext kann nicht gelöscht werden"
 
-#: dtg/webapp.py:366
+#: dtg/webapp.py:379
 #, python-format
 msgid "Deleted context '%s'"
 msgstr "Kontext '%s' wurde gelöscht"
 
-#: dtg/webapp.py:414
+#: dtg/webapp.py:436
 msgid "Invalid filter name."
 msgstr "Ungültiger Filtername."
 
-#: dtg/webapp.py:476
+#: dtg/webapp.py:494
 #, python-format
 msgid "Created task '%s'"
 msgstr "Aufgabe '%s' wurde erstellt"
 
-#: dtg/webapp.py:513
+#: dtg/webapp.py:531
 msgid "Edit task"
 msgstr "Ändern der Aufgabe"
 
-#: dtg/webapp.py:513
+#: dtg/webapp.py:531
 msgid "Add task"
 msgstr "Aufgabe hinzufügen"
 
-#: dtg/webapp.py:525
+#: dtg/webapp.py:543
 #, python-format
 msgid "Saved task '%s'"
 msgstr "Aufgabe '%s' wurde gespeichert"
 
-#: dtg/webapp.py:530
+#: dtg/webapp.py:548
 #, python-format
 msgid "Deleted task '%s'"
 msgstr "Aufgabe '%s' wurde gelöscht"
 
-#: dtg/webapp.py:546
+#: dtg/webapp.py:564
+#, python-format
+msgid "Changed summary to '%s'"
+msgstr "Zusammenfassung auf '%s' geändert"
+
+#: dtg/webapp.py:569
 #, python-format
 msgid "Marked task '%s' as completed"
 msgstr "Aufgabe '%s' wurde als erledigt markiert"
 
-#: dtg/webapp.py:553
+#: dtg/webapp.py:576
 msgid "Set due date to tomorrow"
 msgstr "Fälligkeitsdatum auf morgen gesetzt"
 
-#: dtg/webapp.py:556
+#: dtg/webapp.py:579
 msgid "Postponed task by one day"
 msgstr "Aufgabe um einen Tag aufgeschoben"
 
-#: dtg/webapp.py:561
+#: dtg/webapp.py:584
 msgid "Unknown action"
 msgstr "Unbekannte Aktion"
 
-#: dtg/webapp.py:567
+#: dtg/webapp.py:590
 msgid "You are already logged in!"
 msgstr "Du bist schon eingeloggt!"
 
-#: dtg/webapp.py:575
+#: dtg/webapp.py:598
 msgid "Invalid credentials."
 msgstr "Ungültige Zugangsdaten."
 
 #: dtg/static/js/tutorial.js:6
-msgid "Welcome to <em>Done Tasks Gone</em>! Using this tutorial, you will learn most of the nifty features of DTG. Note that even outside the tutorial, you can always hover your mouse over a particular element to see a short description. <br><a href=\"#\" class=\"btn\" id=\"continuetutorial\">Start the tutorial!</a>"
-msgstr "Willkommen zu <em>Dringende Tätigkeiten Geplant</em>! Mit dieser interaktiven Anleitung wirst du die meisten coolen Funktionen von DTG kennenlernen. Denke daran, dass du sogar außerhalb dieser Anleitung einfach die Maus über ein Element halten kannst, um eine kurze Beschreibung zu bekommen. <br><a href=\"#\" class=\"btn\" id=\"continuetutorial\">Starte die interaktive Anleitung!</a>"
+msgid ""
+"Welcome to <em>Done Tasks Gone</em>! Using this tutorial, you will learn "
+"most of the nifty features of DTG. Note that even outside the tutorial, you "
+"can always hover your mouse over a particular element to see a short "
+"description. <br><a href=\"#\" class=\"btn\" id=\"continuetutorial\">Start "
+"the tutorial!</a>"
+msgstr ""
+"Willkommen zu <em>Dringende Tätigkeiten Geplant</em>! Mit dieser "
+"interaktiven Anleitung wirst du die meisten coolen Funktionen von DTG "
+"kennenlernen. Denke daran, dass du sogar außerhalb dieser Anleitung einfach "
+"die Maus über ein Element halten kannst, um eine kurze Beschreibung zu "
+"bekommen. <br><a href=\"#\" class=\"btn\" id=\"continuetutorial\">Starte die "
+"interaktive Anleitung!</a>"
 
 #: dtg/static/js/tutorial.js:7
-msgid "Create a new task by entering its summary and pressing Return or the <em>Create</em> button."
-msgstr "Erstelle eine neue Aufgabe, indem du die Zusammenfassung eingibst und die Eingabetaste oder den <em>Erstellen</em>-Knopf drückst."
+msgid ""
+"Create a new task by entering its summary and pressing Return or the "
+"<em>Create</em> button."
+msgstr ""
+"Erstelle eine neue Aufgabe, indem du die Zusammenfassung eingibst und die "
+"Eingabetaste oder den <em>Erstellen</em>-Knopf drückst."
 
 #: dtg/static/js/tutorial.js:8
 msgid "Create a new context by clicking the <em>Add</em> button."
-msgstr "Erstelle einen Kontext, indem du den <em>Hinzufügen</em>-Knopf drückst."
+msgstr ""
+"Erstelle einen Kontext, indem du den <em>Hinzufügen</em>-Knopf drückst."
 
 #: dtg/static/js/tutorial.js:9
-msgid "Move your new task by dragging and dropping it onto your newly created context."
-msgstr "Verschiebe deine Aufgabe, indem du sie ziehst und auf dem neu erstellten Kontext fallen lässt."
+msgid ""
+"Move your new task by dragging and dropping it onto your newly created "
+"context."
+msgstr ""
+"Verschiebe deine Aufgabe, indem du sie ziehst und auf dem neu erstellten "
+"Kontext fallen lässt."
 
 #: dtg/static/js/tutorial.js:10
 msgid "Select your newly created context by clicking it."
@@ -327,7 +363,8 @@ msgstr "Erstelle ein Tag, indem du den <em>Hinzufügen</em>-Knopf drückst."
 
 #: dtg/static/js/tutorial.js:12
 msgid "Assign the new tag by dragging it and dropping it on the task"
-msgstr "Weise das neue Tag zu, indem du es ziehst und auf der Aufgabe fallen lässt."
+msgstr ""
+"Weise das neue Tag zu, indem du es ziehst und auf der Aufgabe fallen lässt."
 
 #: dtg/static/js/tutorial.js:13
 msgid "Deselect your tag to see how tasks with tags can be excluded."
@@ -338,8 +375,12 @@ msgid "Select your tag again."
 msgstr "Wähle dein Tag erneut."
 
 #: dtg/static/js/tutorial.js:15
-msgid "Postpone your task - this is useful if you do not want to complete it on the planned due date."
-msgstr "Schiebe deine Aufgabe auf - dies ist nützlich wenn du sie nicht am aktuellen Fälligkeitsdatum fertigstellen willst."
+msgid ""
+"Postpone your task - this is useful if you do not want to complete it on the "
+"planned due date."
+msgstr ""
+"Schiebe deine Aufgabe auf - dies ist nützlich wenn du sie nicht am aktuellen "
+"Fälligkeitsdatum fertigstellen willst."
 
 #: dtg/static/js/tutorial.js:16
 msgid "You are done with your task, click <em>Complete</em>."
@@ -347,44 +388,70 @@ msgstr "Du bist mit der Aufgabe fertig, klicke <em>Abschließen</em>."
 
 #: dtg/static/js/tutorial.js:17
 msgid "You want to see the completed tasks, click <em>Completed</em>."
-msgstr "Du möchtest die abgeschlossenen Aufgaben sehen, klicke <em>Abgeschlossen</em>."
+msgstr ""
+"Du möchtest die abgeschlossenen Aufgaben sehen, klicke <em>Abgeschlossen</"
+"em>."
 
 #: dtg/static/js/tutorial.js:18
 msgid "You want to see the active tasks again, click <em>To do</em>."
 msgstr "Du möchtest wieder die aktiven Aufgaben sehen, klicke <em>Zu tun</em>."
 
-#: dtg/static/js/tutorial.js:19
-#: dtg/static/js/tutorial.js:29
+#: dtg/static/js/tutorial.js:19 dtg/static/js/tutorial.js:29
 msgid "Create a new task again."
 msgstr "Erstelle eine neue Aufgabe erneut."
 
 #: dtg/static/js/tutorial.js:20
 msgid "Now you want to edit the details of the task, click <em>Edit</em>."
-msgstr "Jetzt willst du die Details der Aufgabe ändern, klicke <em>Ändern</em>."
+msgstr ""
+"Jetzt willst du die Details der Aufgabe ändern, klicke <em>Ändern</em>."
 
 #: dtg/static/js/tutorial.js:21
-msgid "Your task should be hidden until a certain day has begun. Set the <em>visible from</em> date to the future."
-msgstr "Deine Aufgabe soll versteckt werden bis ein gewisser Tag angefangen hat. Setze das Sichtbarkeitsdatum auf einen zukünftigen Tag."
+msgid ""
+"Your task should be hidden until a certain day has begun. Set the "
+"<em>visible from</em> date to the future."
+msgstr ""
+"Deine Aufgabe soll versteckt werden bis ein gewisser Tag angefangen hat. "
+"Setze das Sichtbarkeitsdatum auf einen zukünftigen Tag."
 
 #: dtg/static/js/tutorial.js:22
-msgid "Your task should also be due on some date. Set the <em>due date</em> date to the future and past the visible from date."
-msgstr "Deine Aufgabe soll auch an einem bestimmten Tag fällig werden. Setze das Fälligkeitsdatum auf einen Tag, der in der Zukunft und nach dem Sichtbarkeitsdatum liegt."
+msgid ""
+"Your task should also be due on some date. Set the <em>due date</em> date to "
+"the future and past the visible from date."
+msgstr ""
+"Deine Aufgabe soll auch an einem bestimmten Tag fällig werden. Setze das "
+"Fälligkeitsdatum auf einen Tag, der in der Zukunft und nach dem "
+"Sichtbarkeitsdatum liegt."
 
 #: dtg/static/js/tutorial.js:23
-msgid "You want to store details of the task, edit the <em>description</em>. You may use Markdown markup (look it up if you do not know it!)."
-msgstr "Du möchtest noch mehr Einzelheiten zur Aufgabe ablege, ergänze die <em>Beschreibung</em>. Du kannst dabei die Markdown-Auszeichnungssprache benutzen (schaue nach, was das ist, wenn du es nicht kennst!)."
+msgid ""
+"You want to store details of the task, edit the <em>description</em>. You "
+"may use Markdown markup (look it up if you do not know it!)."
+msgstr ""
+"Du möchtest noch mehr Einzelheiten zur Aufgabe ablege, ergänze die "
+"<em>Beschreibung</em>. Du kannst dabei die Markdown-Auszeichnungssprache "
+"benutzen (schaue nach, was das ist, wenn du es nicht kennst!)."
 
 #: dtg/static/js/tutorial.js:24
-msgid "Your task should repeat itself. Think about an interval like 'every 1 day<b>s</b>' and enter it."
-msgstr "Deine Aufgabe soll sich wiederholen. Denk dir ein Interval wie 'every 1 day<b>s</b>' aus und gib es ein."
+msgid ""
+"Your task should repeat itself. Think about an interval like 'every 1 "
+"day<b>s</b>' and enter it."
+msgstr ""
+"Deine Aufgabe soll sich wiederholen. Denk dir ein Interval wie 'every 1 "
+"day<b>s</b>' aus und gib es ein."
 
 #: dtg/static/js/tutorial.js:25
 msgid "Save your changes."
 msgstr "Speichere deine Änderungen."
 
 #: dtg/static/js/tutorial.js:26
-msgid "Now the original task was converted to a recurrence template and a slave task was created. Switch to <em>recurrence templates</em> to view your master task."
-msgstr "Jetzt wurde die originale Aufgabe in eine Wiederholungsvorlage umgewandelt und eine abhängige Aufgabe wurde erstellt. Schalte auf <em>Wiederholungsvorlagen</em> um, um die Hauptaufgabe zu sehen."
+msgid ""
+"Now the original task was converted to a recurrence template and a slave "
+"task was created. Switch to <em>recurrence templates</em> to view your "
+"master task."
+msgstr ""
+"Jetzt wurde die originale Aufgabe in eine Wiederholungsvorlage umgewandelt "
+"und eine abhängige Aufgabe wurde erstellt. Schalte auf "
+"<em>Wiederholungsvorlagen</em> um, um die Hauptaufgabe zu sehen."
 
 #: dtg/static/js/tutorial.js:27
 msgid "In order to view your assigned description, click the task."
@@ -392,78 +459,113 @@ msgstr "Um die eben angelegte Beschreibung zu sehen, klicke die Aufgabe an."
 
 #: dtg/static/js/tutorial.js:28
 msgid "Switch to <em>To Do</em> again to be able to work with new tasks."
-msgstr "Schalte wieder auf <em>Zu tun</em> zurück, um mit neuen Aufgaben arbeiten zu können."
+msgstr ""
+"Schalte wieder auf <em>Zu tun</em> zurück, um mit neuen Aufgaben arbeiten zu "
+"können."
 
 #: dtg/static/js/tutorial.js:30
 msgid "Create another task."
 msgstr "Erstelle eine weitere Aufgabe."
 
 #: dtg/static/js/tutorial.js:31
-msgid "Reorder your tasks by using drag and drop. You can also reorder tags and contexts."
-msgstr "Ändere die Reihenfolge deiner Aufgaben durch Ziehen und Fallenlassen. Du kannst auch die Reihenfolge der Tags und Kontexte ändern."
+msgid ""
+"Reorder your tasks by using drag and drop. You can also reorder tags and "
+"contexts."
+msgstr ""
+"Ändere die Reihenfolge deiner Aufgaben durch Ziehen und Fallenlassen. Du "
+"kannst auch die Reihenfolge der Tags und Kontexte ändern."
 
 #: dtg/static/js/tutorial.js:32
-msgid "Thank you for completing this tutorial! We hope that you can now enjoy DTG to a better extent."
-msgstr "Danke, dass du diese interaktive Anleitung absolviert hast. Wir hoffen, dass du dich nun an DTG in einem besseren Maße erfreuen kannst."
+msgid ""
+"Thank you for completing this tutorial! We hope that you can now enjoy DTG "
+"to a better extent."
+msgstr ""
+"Danke, dass du diese interaktive Anleitung absolviert hast. Wir hoffen, dass "
+"du dich nun an DTG in einem besseren Maße erfreuen kannst."
 
 #: dtg/static/js/tutorial.js:36
-msgid "DTG now supports a tutorial that will present the basic features to the user!"
-msgstr "DTG unterstützt nun eine interaktive Anleitung, die die grundlegenden Funktionen neuen Benutzern vorstellt."
+msgid ""
+"DTG now supports a tutorial that will present the basic features to the user!"
+msgstr ""
+"DTG unterstützt nun eine interaktive Anleitung, die die grundlegenden "
+"Funktionen neuen Benutzern vorstellt."
 
-#: dtg/templates/base.html:28
+#: dtg/static/js/tutorial.js:37
+msgid ""
+"DTG now supports an offline mode. Simply activate it using the top menu, go "
+"offline on your mobile phone etc., perform changes, and sync these later on "
+"using the top menu."
+msgstr ""
+"DTG unterstützt nun einen Offline-Modus. Aktiviere ihn einfach über das "
+"obere Menü, gehe offline mit deinem Handy etc., mache Änderungen und "
+"synchronisiere sie später über den Eintrag im oberen Menü."
+
+#: dtg/templates/base.html:30
 msgid "Notice"
 msgstr "Hinweis"
 
-#: dtg/templates/base.html:38
+#: dtg/templates/base.html:37
 msgid "This site needs JavaScript to work properly!"
 msgstr "Diese Webseite benötigt JavaScript, um zu funktionieren!"
 
-#: dtg/templates/base.html:49
-#: dtg/templates/base.html:51
+#: dtg/templates/base.html:49 dtg/templates/base.html:51
+#: dtg/templates/base.html:54
 msgid "DTG"
 msgstr "DTG"
 
-#: dtg/templates/base.html:58
+#: dtg/templates/base.html:62
 msgid "Choose workspace"
 msgstr "Arbeitsfläche wechseln"
 
-#: dtg/templates/base.html:61
-msgid "Rename this workspace"
-msgstr "Arbeitsfläche umbennen"
+#: dtg/templates/base.html:65
+msgid "Rename it"
+msgstr "... umbenennen"
 
-#: dtg/templates/base.html:64
-msgid "Delete this workspace"
-msgstr "Arbeitsfläche löschen"
+#: dtg/templates/base.html:68
+msgid "Delete it"
+msgstr "... löschen"
 
-#: dtg/templates/base.html:69
+#: dtg/templates/base.html:73
+msgid "Refresh"
+msgstr "Senden und aktualisieren"
+
+#: dtg/templates/base.html:75
+msgid "Switch to offline mode"
+msgstr "Offline-Modus"
+
+#: dtg/templates/base.html:80
+msgid "Push changes, go online"
+msgstr "Änderungen senden und online gehen"
+
+#: dtg/templates/base.html:87
 msgid "Log in"
 msgstr "Anmelden"
 
-#: dtg/templates/base.html:76
+#: dtg/templates/base.html:94
 msgid "Log out"
 msgstr "Abmelden"
 
-#: dtg/templates/base.html:89
+#: dtg/templates/base.html:108
 msgid "Done tasks gone"
 msgstr "Dringende Tätigkeiten Geplant"
 
-#: dtg/templates/base.html:90
+#: dtg/templates/base.html:109
 msgid "Version"
 msgstr "Version"
 
-#: dtg/templates/base.html:97
+#: dtg/templates/base.html:116
 msgid "Communication error"
 msgstr "Kommunikationsfehler"
 
-#: dtg/templates/base.html:100
+#: dtg/templates/base.html:119
 msgid "Communication with the server failed:"
 msgstr "Die Kommunikation mit dem Server ist fehlgeschlagen:"
 
-#: dtg/templates/base.html:103
+#: dtg/templates/base.html:122
 msgid "Dismiss"
 msgstr "Ignorieren"
 
-#: dtg/templates/base.html:104
+#: dtg/templates/base.html:123
 msgid "Reload"
 msgstr "Seite neu laden"
 
@@ -480,8 +582,26 @@ msgid "Edit the task template instead."
 msgstr "Ändere stattdessen die Aufgabenvorlage."
 
 #: dtg/templates/edit.html:59
-msgid "The expert scheduling code has the following format: <tt>TIMESPAN;INTERVAL;name=value;name=value;...</tt>. <tt>TIMESPAN</tt> can be set to Y (year), M (month), W (week), or D (day). <tt>INTERVAL</tt> is an integer. <tt>value</tt> may be any valid json literal. <tt>name</tt> may be one of the keyword arguments explained in the <a target=\"_new\" href=\"http://labix.org/python-dateutil/#head-470fa22b2db72000d7abe698a5783a46b0731b57\">Python Dateutils</a> documentation. Example: <tt>Y;2;byeaster=0</tt> defines a recurring event for every second easter sunday."
-msgstr "Der Expertenwiederholungs-Code hat das folgende Format: <tt>TIMESPAN;INTERVAL;name=value;name=value;...</tt>. <tt>TIMESPAN</tt> kann die Werte Y (Jahr), M (Monat), W (Woche) oder D (Tag) annehmen. <tt>INTERVAL</tt> ist eine Ganzzahl. <tt>value</tt> kann jedes gültige json-Literal sein. <tt>name</tt> kann eins der keyword arguments sein, die auf der Seite <a target=\"_new\" href=\"http://labix.org/python-dateutil/#head-470fa22b2db72000d7abe698a5783a46b0731b57\">der Python Dateutils Dokumentation</a> erklärt werden. Beispiel: <tt>Y;2;byeaster=0</tt> definiert eine sich wiederholende Aufgabe, die an jedem zweiten Ostersonntag stattfindet."
+msgid ""
+"The expert scheduling code has the following format: <tt>TIMESPAN;INTERVAL;"
+"name=value;name=value;...</tt>. <tt>TIMESPAN</tt> can be set to Y (year), M "
+"(month), W (week), or D (day). <tt>INTERVAL</tt> is an integer. <tt>value</"
+"tt> may be any valid json literal. <tt>name</tt> may be one of the keyword "
+"arguments explained in the <a target=\"_new\" href=\"http://labix.org/python-"
+"dateutil/#head-470fa22b2db72000d7abe698a5783a46b0731b57\">Python Dateutils</"
+"a> documentation. Example: <tt>Y;2;byeaster=0</tt> defines a recurring event "
+"for every second easter sunday."
+msgstr ""
+"Der Expertenwiederholungs-Code hat das folgende Format: <tt>TIMESPAN;"
+"INTERVAL;name=value;name=value;...</tt>. <tt>TIMESPAN</tt> kann die Werte Y "
+"(Jahr), M (Monat), W (Woche) oder D (Tag) annehmen. <tt>INTERVAL</tt> ist "
+"eine Ganzzahl. <tt>value</tt> kann jedes gültige json-Literal sein. "
+"<tt>name</tt> kann eins der keyword arguments sein, die auf der Seite <a "
+"target=\"_new\" href=\"http://labix.org/python-dateutil/"
+"#head-470fa22b2db72000d7abe698a5783a46b0731b57\">der Python Dateutils "
+"Dokumentation</a> erklärt werden. Beispiel: <tt>Y;2;byeaster=0</tt> "
+"definiert eine sich wiederholende Aufgabe, die an jedem zweiten Ostersonntag "
+"stattfindet."
 
 #: dtg/templates/edit.html:69
 msgid "Visibility and due dates"
@@ -499,8 +619,7 @@ msgstr "Fehler"
 msgid "Error:"
 msgstr "Fehler:"
 
-#: dtg/templates/login.html:10
-#: dtg/templates/login.html:12
+#: dtg/templates/login.html:10 dtg/templates/login.html:12
 #: dtg/templates/login.html:31
 msgid "Login"
 msgstr "Anmelden"
@@ -513,231 +632,255 @@ msgstr "Benutzername"
 msgid "Password"
 msgstr "Passwort"
 
-#: dtg/templates/mail.html:16
-#: dtg/templates/workspace.html:77
+#: dtg/templates/mail.html:16 dtg/templates/workspace.html:86
 msgid "Recurring"
 msgstr "Wiederkehrend"
 
-#: dtg/templates/workspace.html:14
+#: dtg/templates/workspace.html:16
 msgid "New name of this workspace?"
 msgstr "Neuer Name dieser Arbeitsfläche?"
 
-#: dtg/templates/workspace.html:16
+#: dtg/templates/workspace.html:18
 msgid "Tutorial"
 msgstr "Anleitung"
 
-#: dtg/templates/workspace.html:17
+#: dtg/templates/workspace.html:19
 msgid "Skip this step"
 msgstr "Schritt überspringen"
 
-#: dtg/templates/workspace.html:17
+#: dtg/templates/workspace.html:19
 msgid "Stop the tutorial"
 msgstr "Anleitung beenden"
 
-#: dtg/templates/workspace.html:18
+#: dtg/templates/workspace.html:20
 msgid "New feature"
 msgstr "Neue Funktion"
 
-#: dtg/templates/workspace.html:19
+#: dtg/templates/workspace.html:21
 msgid "Cool!"
 msgstr "Toll!"
 
-#: dtg/templates/workspace.html:29
-msgid "Contexts are like folders, they let you organize tasks place- and time-wise"
-msgstr "Kontexte sind wie Ordner, sie erlauben dir, Aufgaben zeit- und ortsabhängig zu organisieren"
+#: dtg/templates/workspace.html:33
+msgid ""
+"Contexts are like folders, they let you organize tasks place- and time-wise"
+msgstr ""
+"Kontexte sind wie Ordner, sie erlauben dir, Aufgaben zeit- und ortsabhängig "
+"zu organisieren"
 
-#: dtg/templates/workspace.html:29
+#: dtg/templates/workspace.html:33
 msgid "Contexts"
 msgstr "Kontexte"
 
-#: dtg/templates/workspace.html:29
-#: dtg/templates/workspace.html:33
+#: dtg/templates/workspace.html:33 dtg/templates/workspace.html:38
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: dtg/templates/workspace.html:33
-msgid "Tags let you classify tasks with different facets. Just drag the tags onto the tasks."
-msgstr "Tags erlauben dir, Aufgaben facettenreich zu annotieren. Ziehe einfach die Tags auf die Aufgaben."
+#: dtg/templates/workspace.html:38
+msgid ""
+"Tags let you classify tasks with different facets. Just drag the tags onto "
+"the tasks."
+msgstr ""
+"Tags erlauben dir, Aufgaben facettenreich zu annotieren. Ziehe einfach die "
+"Tags auf die Aufgaben."
 
-#: dtg/templates/workspace.html:33
+#: dtg/templates/workspace.html:38
 msgid "Tags"
 msgstr "Tags"
 
-#: dtg/templates/workspace.html:35
+#: dtg/templates/workspace.html:40
 msgid "Every task must have a selected tag"
 msgstr "Jede Aufgabe muss ein ausgewähltes Tag haben"
 
-#: dtg/templates/workspace.html:35
+#: dtg/templates/workspace.html:40
 msgid "Incl"
 msgstr "Inkl"
 
-#: dtg/templates/workspace.html:36
+#: dtg/templates/workspace.html:41
 msgid "Every task must have every selected tag"
 msgstr "Jede Aufgabe muss jedes ausgewählte Tag haben"
 
-#: dtg/templates/workspace.html:36
+#: dtg/templates/workspace.html:41
 msgid "Excl"
 msgstr "Exkl"
 
-#: dtg/templates/workspace.html:43
+#: dtg/templates/workspace.html:50
 msgid "Filters let you narrow down the visible tasks"
 msgstr "Filter schränken die angezeigten Aufgaben ein"
 
-#: dtg/templates/workspace.html:43
+#: dtg/templates/workspace.html:50
 msgid "Filters"
 msgstr "Filter"
 
-#: dtg/templates/workspace.html:45
+#: dtg/templates/workspace.html:52
 msgid "Tasks to be done"
 msgstr "Zu erledigende Aufgaben"
 
-#: dtg/templates/workspace.html:45
+#: dtg/templates/workspace.html:52
 msgid "To do"
 msgstr "Zu tun"
 
-#: dtg/templates/workspace.html:46
+#: dtg/templates/workspace.html:53
 msgid "Completed tasks"
 msgstr "Abgeschlossene Aufgaben"
 
-#: dtg/templates/workspace.html:46
+#: dtg/templates/workspace.html:53
 msgid "Completed"
 msgstr "Abgeschlossen"
 
-#: dtg/templates/workspace.html:47
+#: dtg/templates/workspace.html:54
 msgid "Tasks that are not yet visible"
 msgstr "Aufgaben, die noch nicht sichtbar sind"
 
-#: dtg/templates/workspace.html:47
+#: dtg/templates/workspace.html:54
 msgid "Invisible"
 msgstr "Unsichtbar"
 
-#: dtg/templates/workspace.html:48
+#: dtg/templates/workspace.html:55
 msgid "Tasks templates for the recurring tasks"
 msgstr "Aufgabenvorlagen für wiederkehrende Aufgaben"
 
-#: dtg/templates/workspace.html:48
+#: dtg/templates/workspace.html:55
 msgid "Recurrence templates"
 msgstr "Wiederholungsvorlagen"
 
-#: dtg/templates/workspace.html:52
+#: dtg/templates/workspace.html:59
 msgid "All tasks regardless of due date"
 msgstr "Alle Aufgaben unabhängig vom Fälligkeitsdatum"
 
-#: dtg/templates/workspace.html:52
+#: dtg/templates/workspace.html:59
 msgid "All"
 msgstr "Alle"
 
-#: dtg/templates/workspace.html:53
+#: dtg/templates/workspace.html:60
 msgid "Tasks due today"
 msgstr "Heute fällige Aufgaben"
 
-#: dtg/templates/workspace.html:53
+#: dtg/templates/workspace.html:60
 msgid "Today"
 msgstr "Heute"
 
-#: dtg/templates/workspace.html:54
+#: dtg/templates/workspace.html:61
 msgid "Tasks due today or tomorrow"
 msgstr "Heute oder morgen fällige Aufgaben"
 
-#: dtg/templates/workspace.html:54
+#: dtg/templates/workspace.html:61
 msgid "+1"
 msgstr "+1"
 
-#: dtg/templates/workspace.html:55
+#: dtg/templates/workspace.html:62
 msgid "Tasks due in the next 7 days"
 msgstr "In den nächsten sieben Tagen fällige Aufgaben"
 
-#: dtg/templates/workspace.html:55
+#: dtg/templates/workspace.html:62
 msgid "+7"
 msgstr "+7"
 
-#: dtg/templates/workspace.html:56
+#: dtg/templates/workspace.html:63
 msgid "Tasks without due date"
 msgstr "Aufgaben ohne Fälligkeitsdatum"
 
-#: dtg/templates/workspace.html:56
+#: dtg/templates/workspace.html:63
 msgid "No date"
 msgstr "Kein Datum"
 
-#: dtg/templates/workspace.html:62
-msgid "Type here to create a new task. You may prefix the summary by a context name and use '#' to add tags."
-msgstr "Tippe hier um neue Aufgaben zu erstellen. Du kannst den Text mit einem Kontextnamen prefixen und mit '#' Tags hinzufügen."
+#: dtg/templates/workspace.html:70
+msgid ""
+"Type here to create a new task. You may prefix the summary by a context name "
+"and use '#' to add tags."
+msgstr ""
+"Tippe hier um neue Aufgaben zu erstellen. Du kannst den Text mit einem "
+"Kontextnamen prefixen und mit '#' Tags hinzufügen."
 
-#: dtg/templates/workspace.html:62
+#: dtg/templates/workspace.html:70
 msgid "Create new task ..."
 msgstr "Erstelle eine neue Aufgabe ..."
 
-#: dtg/templates/workspace.html:63
-#: dtg/templates/workspaces.html:24
+#: dtg/templates/workspace.html:71 dtg/templates/workspaces.html:24
 msgid "Create"
 msgstr "Erstellen"
 
-#: dtg/templates/workspace.html:66
+#: dtg/templates/workspace.html:75
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: dtg/templates/workspace.html:80
+#: dtg/templates/workspace.html:89
 msgid "Complete"
 msgstr "Abschließen"
 
-#: dtg/templates/workspace.html:80
+#: dtg/templates/workspace.html:89
 msgid "Reopen"
 msgstr "Wiederaufnehmen"
 
-#: dtg/templates/workspace.html:81
-msgid "Postponing a task moves the due date to tomorrow or a day after its current due date, depending on whether it had a due date already."
-msgstr "Aufschieben einer Aufgabe ändert ihr Fälligkeitsdatum derart, dass es entweder morgen ist oder einen Tag nach dem alten Fälligkeitsdatum liegt."
+#: dtg/templates/workspace.html:90
+msgid ""
+"Postponing a task moves the due date to tomorrow or a day after its current "
+"due date, depending on whether it had a due date already."
+msgstr ""
+"Aufschieben einer Aufgabe ändert ihr Fälligkeitsdatum derart, dass es "
+"entweder morgen ist oder einen Tag nach dem alten Fälligkeitsdatum liegt."
 
-#: dtg/templates/workspace.html:81
+#: dtg/templates/workspace.html:90
 msgid "Postpone"
 msgstr "Aufschieben"
 
-#: dtg/templates/workspace.html:82
-#: dtg/templates/workspace.html:95
-#: dtg/templates/workspace.html:100
+#: dtg/templates/workspace.html:91 dtg/templates/workspace.html:104
+#: dtg/templates/workspace.html:109
 msgid "Edit"
 msgstr "Ändern"
 
-#: dtg/templates/workspace.html:83
-#: dtg/templates/workspace.html:94
-#: dtg/templates/workspace.html:99
-#: dtg/templates/workspace.html:129
+#: dtg/templates/workspace.html:92 dtg/templates/workspace.html:103
+#: dtg/templates/workspace.html:108 dtg/templates/workspace.html:138
 msgid "Delete"
 msgstr "Löschen"
 
-#: dtg/templates/workspace.html:89
+#: dtg/templates/workspace.html:98
 msgid "Completed: "
 msgstr "Abgeschlossen: "
 
-#: dtg/templates/workspace.html:101
+#: dtg/templates/workspace.html:110
 msgid "Filtered tasks in this context"
 msgstr "Gefilterte Aufgaben in diesem Kontext"
 
-#: dtg/templates/workspace.html:101
+#: dtg/templates/workspace.html:110
 msgid "Total active tasks in this context"
 msgstr "Gesamtanzahl der Aufgaben in diesem Kontext"
 
-#: dtg/templates/workspace.html:114
-#: dtg/templates/workspace.html:128
+#: dtg/templates/workspace.html:123 dtg/templates/workspace.html:137
 #: dtg/templates/workspaces.html:47
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: dtg/templates/workspace.html:115
-#: dtg/templates/workspaces.html:48
+#: dtg/templates/workspace.html:124 dtg/templates/workspaces.html:48
 msgid "Save"
 msgstr "Speichern"
 
-#: dtg/templates/workspace.html:122
+#: dtg/templates/workspace.html:131
 msgid "Delete?"
 msgstr "Löschen?"
 
-#: dtg/templates/workspace.html:125
-msgid "Do you really want to delete the item? In the case of contexts, this will delete all related tasks. In the case of workspaces, it will delete everything in them."
-msgstr "Möchtest du das Element wirklich löschen? Im Falle von Kontexten werden alle enthaltenen Aufgaben gelöscht. Im Falle von Arbeitsflächen wird alles darin gelöscht."
+#: dtg/templates/workspace.html:134
+msgid ""
+"Do you really want to delete the item? In the case of contexts, this will "
+"delete all related tasks. In the case of workspaces, it will delete "
+"everything in them."
+msgstr ""
+"Möchtest du das Element wirklich löschen? Im Falle von Kontexten werden alle "
+"enthaltenen Aufgaben gelöscht. Im Falle von Arbeitsflächen wird alles darin "
+"gelöscht."
 
-#: dtg/templates/workspaces.html:11
-#: dtg/templates/workspaces.html:20
+#: dtg/templates/workspace.html:145
+msgid "What should be the new task summary?"
+msgstr "Wie soll die neue Aufgabenzusammenfassung lauten?"
+
+#: dtg/templates/workspace.html:149
+msgid "Please wait ..."
+msgstr "Bitte warten ..."
+
+#: dtg/templates/workspace.html:152
+msgid "Your changes are being synced ..."
+msgstr "Deine Änderungen werden gesendet ..."
+
+#: dtg/templates/workspaces.html:11 dtg/templates/workspaces.html:20
 msgid "Workspaces"
 msgstr "Arbeitsflächen"
 
@@ -748,4 +891,3 @@ msgstr "Erstelle eine neue Arbeitsfläche ..."
 #: dtg/templates/workspaces.html:28
 msgid "In which workspace do you want to work?"
 msgstr "In welcher Arbeitsfläche willst du arbeiten?"
-

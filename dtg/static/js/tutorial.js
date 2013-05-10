@@ -34,7 +34,8 @@ var TUTORIAL = {
 
 var FEATURES = {
   0: [_("DTG now supports a tutorial that will present the basic features to the user!"), 1],
-  1: null,
+  1: [_("DTG now supports an offline mode. Simply activate it using the top menu, go offline on your mobile phone etc., perform changes, and sync these later on using the top menu."), 2],
+  2: null,
 };
 
 var run_featureinfo_and_tutorial = function(fidx, tidx) {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-04-02 14:39+0200\n"
+"POT-Creation-Date: 2013-05-10 02:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: dtg/backgroundjobs.py:94
+#: dtg/backgroundjobs.py:95
 msgid " – Upcoming tasks"
 msgstr ""
 
@@ -180,124 +180,129 @@ msgstr ""
 msgid "web browser default"
 msgstr ""
 
-#: dtg/webapp.py:155
+#: dtg/webapp.py:157
 msgid "Workspace not found"
 msgstr ""
 
-#: dtg/webapp.py:193
+#: dtg/webapp.py:206
 msgid "Unsorted"
 msgstr ""
 
-#: dtg/webapp.py:199 dtg/webapp.py:312
+#: dtg/webapp.py:212 dtg/webapp.py:325
 #, python-format
 msgid "Workspace '%s' already exists!"
 msgstr ""
 
-#: dtg/webapp.py:244
+#: dtg/webapp.py:257
 msgid "Edit tag"
 msgstr ""
 
-#: dtg/webapp.py:244
+#: dtg/webapp.py:257
 msgid "Add tag"
 msgstr ""
 
-#: dtg/webapp.py:268
+#: dtg/webapp.py:281
 #, python-format
 msgid "Saved tag '%s'"
 msgstr ""
 
-#: dtg/webapp.py:272 dtg/webapp.py:360
+#: dtg/webapp.py:285 dtg/webapp.py:373
 msgid "Duplicate name"
 msgstr ""
 
-#: dtg/webapp.py:275
+#: dtg/webapp.py:288
 #, python-format
 msgid "Deleted tag '%s'"
 msgstr ""
 
-#: dtg/webapp.py:285 dtg/templates/base.html:73
+#: dtg/webapp.py:298 dtg/templates/base.html:91
 msgid "Preferences"
 msgstr ""
 
-#: dtg/webapp.py:296
+#: dtg/webapp.py:309
 msgid "Saved preferences"
 msgstr ""
 
-#: dtg/webapp.py:326
+#: dtg/webapp.py:339
 msgid "Edit context"
 msgstr ""
 
-#: dtg/webapp.py:326
+#: dtg/webapp.py:339
 msgid "Add context"
 msgstr ""
 
-#: dtg/webapp.py:341 dtg/webapp.py:495 dtg/webapp.py:504
+#: dtg/webapp.py:354 dtg/webapp.py:513 dtg/webapp.py:522
 msgid "Wrong workspace"
 msgstr ""
 
-#: dtg/webapp.py:356
+#: dtg/webapp.py:369
 #, python-format
 msgid "Saved context '%s'"
 msgstr ""
 
-#: dtg/webapp.py:364
+#: dtg/webapp.py:377
 msgid "Last context cannot be deleted"
 msgstr ""
 
-#: dtg/webapp.py:366
+#: dtg/webapp.py:379
 #, python-format
 msgid "Deleted context '%s'"
 msgstr ""
 
-#: dtg/webapp.py:414
+#: dtg/webapp.py:436
 msgid "Invalid filter name."
 msgstr ""
 
-#: dtg/webapp.py:476
+#: dtg/webapp.py:494
 #, python-format
 msgid "Created task '%s'"
 msgstr ""
 
-#: dtg/webapp.py:513
+#: dtg/webapp.py:531
 msgid "Edit task"
 msgstr ""
 
-#: dtg/webapp.py:513
+#: dtg/webapp.py:531
 msgid "Add task"
 msgstr ""
 
-#: dtg/webapp.py:525
+#: dtg/webapp.py:543
 #, python-format
 msgid "Saved task '%s'"
 msgstr ""
 
-#: dtg/webapp.py:530
+#: dtg/webapp.py:548
 #, python-format
 msgid "Deleted task '%s'"
 msgstr ""
 
-#: dtg/webapp.py:546
+#: dtg/webapp.py:564
+#, python-format
+msgid "Changed summary to '%s'"
+msgstr ""
+
+#: dtg/webapp.py:569
 #, python-format
 msgid "Marked task '%s' as completed"
 msgstr ""
 
-#: dtg/webapp.py:553
+#: dtg/webapp.py:576
 msgid "Set due date to tomorrow"
 msgstr ""
 
-#: dtg/webapp.py:556
+#: dtg/webapp.py:579
 msgid "Postponed task by one day"
 msgstr ""
 
-#: dtg/webapp.py:561
+#: dtg/webapp.py:584
 msgid "Unknown action"
 msgstr ""
 
-#: dtg/webapp.py:567
+#: dtg/webapp.py:590
 msgid "You are already logged in!"
 msgstr ""
 
-#: dtg/webapp.py:575
+#: dtg/webapp.py:598
 msgid "Invalid credentials."
 msgstr ""
 
@@ -437,59 +442,79 @@ msgid ""
 "user!"
 msgstr ""
 
-#: dtg/templates/base.html:28
+#: dtg/static/js/tutorial.js:37
+msgid ""
+"DTG now supports an offline mode. Simply activate it using the top menu, "
+"go offline on your mobile phone etc., perform changes, and sync these "
+"later on using the top menu."
+msgstr ""
+
+#: dtg/templates/base.html:30
 msgid "Notice"
 msgstr ""
 
-#: dtg/templates/base.html:38
+#: dtg/templates/base.html:37
 msgid "This site needs JavaScript to work properly!"
 msgstr ""
 
 #: dtg/templates/base.html:49 dtg/templates/base.html:51
+#: dtg/templates/base.html:54
 msgid "DTG"
 msgstr ""
 
-#: dtg/templates/base.html:58
+#: dtg/templates/base.html:62
 msgid "Choose workspace"
 msgstr ""
 
-#: dtg/templates/base.html:61
-msgid "Rename this workspace"
+#: dtg/templates/base.html:65
+msgid "Rename it"
 msgstr ""
 
-#: dtg/templates/base.html:64
-msgid "Delete this workspace"
+#: dtg/templates/base.html:68
+msgid "Delete it"
 msgstr ""
 
-#: dtg/templates/base.html:69
+#: dtg/templates/base.html:73
+msgid "Refresh"
+msgstr ""
+
+#: dtg/templates/base.html:75
+msgid "Switch to offline mode"
+msgstr ""
+
+#: dtg/templates/base.html:80
+msgid "Push changes, go online"
+msgstr ""
+
+#: dtg/templates/base.html:87
 msgid "Log in"
 msgstr ""
 
-#: dtg/templates/base.html:76
+#: dtg/templates/base.html:94
 msgid "Log out"
 msgstr ""
 
-#: dtg/templates/base.html:89
+#: dtg/templates/base.html:108
 msgid "Done tasks gone"
 msgstr ""
 
-#: dtg/templates/base.html:90
+#: dtg/templates/base.html:109
 msgid "Version"
 msgstr ""
 
-#: dtg/templates/base.html:97
+#: dtg/templates/base.html:116
 msgid "Communication error"
 msgstr ""
 
-#: dtg/templates/base.html:100
+#: dtg/templates/base.html:119
 msgid "Communication with the server failed:"
 msgstr ""
 
-#: dtg/templates/base.html:103
+#: dtg/templates/base.html:122
 msgid "Dismiss"
 msgstr ""
 
-#: dtg/templates/base.html:104
+#: dtg/templates/base.html:123
 msgid "Reload"
 msgstr ""
 
@@ -547,230 +572,242 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: dtg/templates/mail.html:16 dtg/templates/workspace.html:77
+#: dtg/templates/mail.html:16 dtg/templates/workspace.html:86
 msgid "Recurring"
 msgstr ""
 
-#: dtg/templates/workspace.html:14
+#: dtg/templates/workspace.html:16
 msgid "New name of this workspace?"
 msgstr ""
 
-#: dtg/templates/workspace.html:16
+#: dtg/templates/workspace.html:18
 msgid "Tutorial"
 msgstr ""
 
-#: dtg/templates/workspace.html:17
+#: dtg/templates/workspace.html:19
 msgid "Skip this step"
 msgstr ""
 
-#: dtg/templates/workspace.html:17
+#: dtg/templates/workspace.html:19
 msgid "Stop the tutorial"
 msgstr ""
 
-#: dtg/templates/workspace.html:18
+#: dtg/templates/workspace.html:20
 msgid "New feature"
 msgstr ""
 
-#: dtg/templates/workspace.html:19
+#: dtg/templates/workspace.html:21
 msgid "Cool!"
 msgstr ""
 
-#: dtg/templates/workspace.html:29
+#: dtg/templates/workspace.html:33
 msgid ""
 "Contexts are like folders, they let you organize tasks place- and time-"
 "wise"
 msgstr ""
 
-#: dtg/templates/workspace.html:29
+#: dtg/templates/workspace.html:33
 msgid "Contexts"
 msgstr ""
 
-#: dtg/templates/workspace.html:29 dtg/templates/workspace.html:33
+#: dtg/templates/workspace.html:33 dtg/templates/workspace.html:38
 msgid "Add"
 msgstr ""
 
-#: dtg/templates/workspace.html:33
+#: dtg/templates/workspace.html:38
 msgid ""
 "Tags let you classify tasks with different facets. Just drag the tags "
 "onto the tasks."
 msgstr ""
 
-#: dtg/templates/workspace.html:33
+#: dtg/templates/workspace.html:38
 msgid "Tags"
 msgstr ""
 
-#: dtg/templates/workspace.html:35
+#: dtg/templates/workspace.html:40
 msgid "Every task must have a selected tag"
 msgstr ""
 
-#: dtg/templates/workspace.html:35
+#: dtg/templates/workspace.html:40
 msgid "Incl"
 msgstr ""
 
-#: dtg/templates/workspace.html:36
+#: dtg/templates/workspace.html:41
 msgid "Every task must have every selected tag"
 msgstr ""
 
-#: dtg/templates/workspace.html:36
+#: dtg/templates/workspace.html:41
 msgid "Excl"
 msgstr ""
 
-#: dtg/templates/workspace.html:43
+#: dtg/templates/workspace.html:50
 msgid "Filters let you narrow down the visible tasks"
 msgstr ""
 
-#: dtg/templates/workspace.html:43
+#: dtg/templates/workspace.html:50
 msgid "Filters"
 msgstr ""
 
-#: dtg/templates/workspace.html:45
+#: dtg/templates/workspace.html:52
 msgid "Tasks to be done"
 msgstr ""
 
-#: dtg/templates/workspace.html:45
+#: dtg/templates/workspace.html:52
 msgid "To do"
 msgstr ""
 
-#: dtg/templates/workspace.html:46
+#: dtg/templates/workspace.html:53
 msgid "Completed tasks"
 msgstr ""
 
-#: dtg/templates/workspace.html:46
+#: dtg/templates/workspace.html:53
 msgid "Completed"
 msgstr ""
 
-#: dtg/templates/workspace.html:47
+#: dtg/templates/workspace.html:54
 msgid "Tasks that are not yet visible"
 msgstr ""
 
-#: dtg/templates/workspace.html:47
+#: dtg/templates/workspace.html:54
 msgid "Invisible"
 msgstr ""
 
-#: dtg/templates/workspace.html:48
+#: dtg/templates/workspace.html:55
 msgid "Tasks templates for the recurring tasks"
 msgstr ""
 
-#: dtg/templates/workspace.html:48
+#: dtg/templates/workspace.html:55
 msgid "Recurrence templates"
 msgstr ""
 
-#: dtg/templates/workspace.html:52
+#: dtg/templates/workspace.html:59
 msgid "All tasks regardless of due date"
 msgstr ""
 
-#: dtg/templates/workspace.html:52
+#: dtg/templates/workspace.html:59
 msgid "All"
 msgstr ""
 
-#: dtg/templates/workspace.html:53
+#: dtg/templates/workspace.html:60
 msgid "Tasks due today"
 msgstr ""
 
-#: dtg/templates/workspace.html:53
+#: dtg/templates/workspace.html:60
 msgid "Today"
 msgstr ""
 
-#: dtg/templates/workspace.html:54
+#: dtg/templates/workspace.html:61
 msgid "Tasks due today or tomorrow"
 msgstr ""
 
-#: dtg/templates/workspace.html:54
+#: dtg/templates/workspace.html:61
 msgid "+1"
 msgstr ""
 
-#: dtg/templates/workspace.html:55
+#: dtg/templates/workspace.html:62
 msgid "Tasks due in the next 7 days"
 msgstr ""
 
-#: dtg/templates/workspace.html:55
+#: dtg/templates/workspace.html:62
 msgid "+7"
 msgstr ""
 
-#: dtg/templates/workspace.html:56
+#: dtg/templates/workspace.html:63
 msgid "Tasks without due date"
 msgstr ""
 
-#: dtg/templates/workspace.html:56
+#: dtg/templates/workspace.html:63
 msgid "No date"
 msgstr ""
 
-#: dtg/templates/workspace.html:62
+#: dtg/templates/workspace.html:70
 msgid ""
 "Type here to create a new task. You may prefix the summary by a context "
 "name and use '#' to add tags."
 msgstr ""
 
-#: dtg/templates/workspace.html:62
+#: dtg/templates/workspace.html:70
 msgid "Create new task ..."
 msgstr ""
 
-#: dtg/templates/workspace.html:63 dtg/templates/workspaces.html:24
+#: dtg/templates/workspace.html:71 dtg/templates/workspaces.html:24
 msgid "Create"
 msgstr ""
 
-#: dtg/templates/workspace.html:66
+#: dtg/templates/workspace.html:75
 msgid "Tasks"
 msgstr ""
 
-#: dtg/templates/workspace.html:80
+#: dtg/templates/workspace.html:89
 msgid "Complete"
 msgstr ""
 
-#: dtg/templates/workspace.html:80
+#: dtg/templates/workspace.html:89
 msgid "Reopen"
 msgstr ""
 
-#: dtg/templates/workspace.html:81
+#: dtg/templates/workspace.html:90
 msgid ""
 "Postponing a task moves the due date to tomorrow or a day after its "
 "current due date, depending on whether it had a due date already."
 msgstr ""
 
-#: dtg/templates/workspace.html:81
+#: dtg/templates/workspace.html:90
 msgid "Postpone"
 msgstr ""
 
-#: dtg/templates/workspace.html:82 dtg/templates/workspace.html:95
-#: dtg/templates/workspace.html:100
+#: dtg/templates/workspace.html:91 dtg/templates/workspace.html:104
+#: dtg/templates/workspace.html:109
 msgid "Edit"
 msgstr ""
 
-#: dtg/templates/workspace.html:83 dtg/templates/workspace.html:94
-#: dtg/templates/workspace.html:99 dtg/templates/workspace.html:129
+#: dtg/templates/workspace.html:92 dtg/templates/workspace.html:103
+#: dtg/templates/workspace.html:108 dtg/templates/workspace.html:138
 msgid "Delete"
 msgstr ""
 
-#: dtg/templates/workspace.html:89
+#: dtg/templates/workspace.html:98
 msgid "Completed: "
 msgstr ""
 
-#: dtg/templates/workspace.html:101
+#: dtg/templates/workspace.html:110
 msgid "Filtered tasks in this context"
 msgstr ""
 
-#: dtg/templates/workspace.html:101
+#: dtg/templates/workspace.html:110
 msgid "Total active tasks in this context"
 msgstr ""
 
-#: dtg/templates/workspace.html:114 dtg/templates/workspace.html:128
+#: dtg/templates/workspace.html:123 dtg/templates/workspace.html:137
 #: dtg/templates/workspaces.html:47
 msgid "Cancel"
 msgstr ""
 
-#: dtg/templates/workspace.html:115 dtg/templates/workspaces.html:48
+#: dtg/templates/workspace.html:124 dtg/templates/workspaces.html:48
 msgid "Save"
 msgstr ""
 
-#: dtg/templates/workspace.html:122
+#: dtg/templates/workspace.html:131
 msgid "Delete?"
 msgstr ""
 
-#: dtg/templates/workspace.html:125
+#: dtg/templates/workspace.html:134
 msgid ""
 "Do you really want to delete the item? In the case of contexts, this will"
 " delete all related tasks. In the case of workspaces, it will delete "
 "everything in them."
+msgstr ""
+
+#: dtg/templates/workspace.html:145
+msgid "What should be the new task summary?"
+msgstr ""
+
+#: dtg/templates/workspace.html:149
+msgid "Please wait ..."
+msgstr ""
+
+#: dtg/templates/workspace.html:152
+msgid "Your changes are being synced ..."
 msgstr ""
 
 #: dtg/templates/workspaces.html:11 dtg/templates/workspaces.html:20

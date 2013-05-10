@@ -25,8 +25,8 @@ var tooltip_opts = {placement: "bottom", delay: { show: 800, hide: 100 }};
 var fetch_tasks;
 var fetch_contexts;
 var fetch_tags;
-var reload_tasks = function() {
-  fetch_tasks();
+var reload_tasks = function(offline_data) {
+  fetch_tasks(offline_data);
   $(".tooltip").remove();
 };
 var nop = function() {};
@@ -44,12 +44,80 @@ var shift_tutorial_hook = function(from, to) {
 };
 
 var run_tutorial_hook = function(name) {
-  console.log("Running " + name);
-  tutorial_hooks[name]();
+  if (!offline_mode)
+    tutorial_hooks[name]();
   tutorial_hooks[name] = nop;
-  console.log("State ", tutorial_hooks);
 };
 
+var OfflineChangeManager = function (pristine_offline_data) {
+  if (sessionStorage.changes != undefined)
+    changes = JSON.parse(sessionStorage.changes);
+  else
+    changes = [];
+  this.changes = changes;
+  this.abort_replay = false;
+  var odata;
+  if (sessionStorage.offline_data != undefined)
+    offline_data = JSON.parse(sessionStorage.offline_data);
+  this.update_store = function() {
+    sessionStorage.offline_data = JSON.stringify(offline_data);
+    sessionStorage.changes = JSON.stringify(this.changes);
+  };
+  this.add_summary_change = function (id, new_summary) {
+    this.changes.push(["NEW_TASK_SUMMARY", id, new_summary]);
+    this.update_store();
+  };
+  this.add_completion = function (id) {
+    this.changes.push(["COMPLETE_TASK", id]);
+    this.update_store();
+  };
+  this.add_task_creation = function (ctx_id, summary, int_id) {
+    this.changes.push(["CREATE_TASK", ctx_id, summary, int_id]);
+    this.update_store();
+  };
+  this.fire_ajax_request = function (data) {
+    var retval;
+    $.ajax({
+      type: "POST",
+      url: create_url("tasks"),
+      data: data,
+      async: false,
+      success: function (data) {
+        retval = data.data;
+      },
+      error: function () {
+        this.abort_replay = true;
+      },
+    });
+    return retval;
+  };
+  this.replay = function () {
+    var fire = this.fire_ajax_request;
+    $("#pleasewait").modal();
+    var int2ext_map = {};
+    this.abort_replay = false;
+    $.each(this.changes, function (_, change) {
+      if (change[0] == "CREATE_TASK") {
+        int2ext_map[change[3]] = fire({action: "create", summary: change[2], selected_context: change[1]});
+      } else if (change[0] == "COMPLETE_TASK") {
+        var id = change[1];
+        if (id < 0)
+          id = int2ext_map[id];
+        fire({action: "togglecomplete", id: id});
+      } else if (change[0] == "NEW_TASK_SUMMARY") {
+        var id = change[1];
+        if (id < 0)
+          id = int2ext_map[id];
+        fire({action: "rename", id: id, summary: change[2]});
+      }
+      if (this.abort_replay)
+        return false;
+    });
+    delete sessionStorage.offline_data;
+    delete sessionStorage.changes;
+    return true;
+  };
+};
 
 var update_seqid_and_reload = function() {
   if (!in_ajax && !in_seqid_loading) {
@@ -57,7 +125,10 @@ var update_seqid_and_reload = function() {
     $.ajax({
       url: create_url("seqid") + "?seqid=" + seqid,
       global: false,
-      error: function () { in_seqid_loading = false; },
+      error: function () {
+        in_seqid_loading = false;
+        window.setTimeout(update_seqid_and_reload, 5000);
+      },
       success: function (data) {
         if (data.seqid != seqid && data.seqid != undefined && !in_ajax) {
           seqid = data.seqid;
@@ -66,10 +137,10 @@ var update_seqid_and_reload = function() {
           load_flashes();
         }
         in_seqid_loading = false;
+        window.setTimeout(update_seqid_and_reload, 5000);
       }
     });
   }
-  window.setTimeout(update_seqid_and_reload, 5000);
 };
 
 var update_radiobuttons = function() {
@@ -119,6 +190,8 @@ var compose_url = function() {
 };
 
 var load_flashes = function() {
+  if (offline_mode)
+    return;
   $.ajax({
     url: create_url("flashes") + "?id=" + last_flash_id,
     success: function (data) {
@@ -164,7 +237,8 @@ var init_history = function() {
 };
 
 var push_state = function() {
-  History.pushState(dtgstate, document.title, compose_url());
+  if (!offline_mode)
+    History.pushState(dtgstate, document.title, compose_url());
 };
 
 var create_url = function(suffix) {
@@ -173,7 +247,7 @@ var create_url = function(suffix) {
 
 
 var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpropname, changedattr, reloader, filler, multiprop, is_task_list) {
-  var func = function() {
+  var func = function(offline_data) {
     var elem = $(elemname);
     var tmplelem = $(tmplname);
     var selfreloader = func;
@@ -186,53 +260,52 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
     params = {selected_context: dtgstate.selected_context, selected_tags: sels, tagexcl: dtgstate.tagexcl, timefilter: dtgstate.timefilter,
               kindfilter: dtgstate.kindfilter};
     type = "POST";
-    $.ajax({
-      type: type,
-      url: create_url(url),
-      data: params,
-      success: function (data) {
-        seqid = data.seqid;
-        data = data.data;
-        dtgstate[propname] = data;
-        if (multiprop) {
-          var need_init = 1;
-          for (_ in dtgstate[selpropname]) {
-            need_init = 0;
-            break;
-          }
-          if (need_init) {
-            $.each(data, function(_, value) {
-              dtgstate[selpropname][value.id] = 1;
-            });
-          }
-        } else {
-          if (data && dtgstate[selpropname] == undefined && !is_task_list) {
-            dtgstate[selpropname] = data[0].id;
-          }
+    var success_func = function (data) {
+      seqid = data.seqid;
+      data = data.data;
+      dtgstate[propname] = data;
+      if (multiprop) {
+        var need_init = 1;
+        for (_ in dtgstate[selpropname]) {
+          need_init = 0;
+          break;
         }
-        elem.empty();
-        $.each(data, function(index, value) {
-          var item = tmplelem.clone();
-          if (!multiprop) {
-            item.addClass("ui-state-default");
-            if (data.length == 1)
-              item.find(".deletecontext").remove();
-          } else {
-            item.addClass(dtgstate[selpropname][value.id] ? "ui-state-active" : "ui-state-default");
-            if (is_task_list) {
-              if (dtgstate[selpropname][value.id]) {
-                item.find(".taskbody").show();
-              } else {
-                item.find(".taskbody").hide();
-              }
+        if (need_init) {
+          $.each(data, function(_, value) {
+            dtgstate[selpropname][value.id] = 1;
+          });
+        }
+      } else {
+        if (data && dtgstate[selpropname] == undefined && !is_task_list) {
+          dtgstate[selpropname] = data[0].id;
+        }
+      }
+      elem.empty();
+      $.each(data, function(index, value) {
+        if (value == undefined) // happens if an item was deleted
+          return;
+        var item = tmplelem.clone();
+        if (!multiprop) {
+          item.addClass("ui-state-default");
+          if (data.length == 1)
+            item.find(".deletecontext").remove();
+        } else {
+          item.addClass(dtgstate[selpropname][value.id] ? "ui-state-active" : "ui-state-default");
+          if (is_task_list) {
+            if (dtgstate[selpropname][value.id]) {
+              item.find(".taskbody").show();
+            } else {
+              item.find(".taskbody").hide();
             }
           }
-          item.attr("id", idprefix + value.id);
-          item.attr("internalid", value.id);
-          filler(item, value);
-          item.find("*[title]").tooltip(tooltip_opts);
-          if (!multiprop) {
-            if (!is_task_list) {
+        }
+        item.attr("id", idprefix + value.id);
+        item.attr("internalid", value.id);
+        filler(item, value);
+        item.find("*[title]").tooltip(tooltip_opts);
+        if (!multiprop) {
+          if (!is_task_list) {
+            if (!offline_mode) {
               item.droppable({
                 hoverClass: "ui-state-hover",
                 tolerance: "pointer",
@@ -271,53 +344,55 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
                 }
               });
             }
-            item.click(function(e) {
-              if (value.id != dtgstate[selpropname]) {
-                elem.children("li").each(function(i) {
-                  $(this).removeClass("ui-state-active");
-                  $(this).removeClass("ui-state-default");
-                  $(this).addClass("ui-state-default");
-                  $(this).find(".taskbody").fadeOut();
-                });
-                item.addClass("ui-state-active");
-                item.removeClass("ui-state-default");
-                dtgstate[selpropname] = value.id;
-              } else {
-                item.addClass("ui-state-active");
-                item.removeClass("ui-state-default");
-              }
-              if (is_task_list) {
-                if (dtgstate[selpropname] == value.id) {
-                  item.find(".taskbody").fadeIn();
-                } else {
-                  item.find(".taskbody").fadeOut();
-                }
-              } else {
-                reloader();
-                push_state();
-              }
-            });
-          } else {
-            item.click(function(e) {
-              if (item.data("is_dragging"))
-                return;
-              dtgstate[changedattr] = 1;
-              if (dtgstate[selpropname][value.id]) {
-                item.removeClass("ui-state-active");
-                item.addClass("ui-state-default");
-                dtgstate[selpropname][value.id] = 0;
-              } else {
-                item.addClass("ui-state-active");
-                item.removeClass("ui-state-default");
-                dtgstate[selpropname][value.id] = 1;
-              }
-              if (!is_task_list)
-                reloader();
-              push_state();
-            });
           }
-          elem.append(item);
-        });
+          item.click(function(e) {
+            if (value.id != dtgstate[selpropname]) {
+              elem.children("li").each(function(i) {
+                $(this).removeClass("ui-state-active");
+                $(this).removeClass("ui-state-default");
+                $(this).addClass("ui-state-default");
+                $(this).find(".taskbody").fadeOut();
+              });
+              item.addClass("ui-state-active");
+              item.removeClass("ui-state-default");
+              dtgstate[selpropname] = value.id;
+            } else {
+              item.addClass("ui-state-active");
+              item.removeClass("ui-state-default");
+            }
+            if (is_task_list) {
+              if (dtgstate[selpropname] == value.id) {
+                item.find(".taskbody").fadeIn();
+              } else {
+                item.find(".taskbody").fadeOut();
+              }
+            } else {
+              reloader(offline_data);
+              push_state();
+            }
+          });
+        } else {
+          item.click(function(e) {
+            if (item.data("is_dragging"))
+              return;
+            dtgstate[changedattr] = 1;
+            if (dtgstate[selpropname][value.id]) {
+              item.removeClass("ui-state-active");
+              item.addClass("ui-state-default");
+              dtgstate[selpropname][value.id] = 0;
+            } else {
+              item.addClass("ui-state-active");
+              item.removeClass("ui-state-default");
+              dtgstate[selpropname][value.id] = 1;
+            }
+            if (!is_task_list)
+              reloader(offline_data);
+            push_state();
+          });
+        }
+        elem.append(item);
+      });
+      if (!offline_mode) {
         elem.sortable({
           distance: 5,
           forcePlaceholderSize: true,
@@ -367,28 +442,47 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
             }
           }
         });
-        if (!multiprop && !is_task_list) {
-          var child;
-          child = elem.children("#" + idprefix + dtgstate[selpropname]).first();
-          child.addClass("ui-state-active");
-          child.removeClass("ui-state-default");
-          window.setTimeout(reloader, 0);
-          if (initing) {
-            dtgstate.changed_contexts = 1;
-            replaced_state = 1;
-            History.replaceState(dtgstate, document.title);
-            initing = false;
-          }
-        }
-        if (is_task_list) {
-          run_tutorial_hook("tasks_loaded");
-        } else if (multiprop) {
-          run_tutorial_hook("tags_loaded");
-        } else {
-          run_tutorial_hook("contexts_loaded");
+      }
+      if (!multiprop && !is_task_list) {
+        var child;
+        child = elem.children("#" + idprefix + dtgstate[selpropname]).first();
+        child.addClass("ui-state-active");
+        child.removeClass("ui-state-default");
+        window.setTimeout(function() { reloader(offline_data); }, 0);
+        if (initing && !offline_mode) {
+          dtgstate.changed_contexts = 1;
+          replaced_state = 1;
+          History.replaceState(dtgstate, document.title);
+          initing = false;
         }
       }
-    });
+      if (is_task_list) {
+        run_tutorial_hook("tasks_loaded");
+      } else if (multiprop) {
+        run_tutorial_hook("tags_loaded");
+      } else {
+        run_tutorial_hook("contexts_loaded");
+      }
+    };
+    if (offline_mode) {
+      var data = {seqid: offline_data.seqid};
+      if (!is_task_list)
+        data["data"] = offline_data.contexts;
+      else
+        data["data"] = $.map(offline_data.contexts, function(val, i) {
+          if (val.id == dtgstate.selected_context)
+            return val.tasks;
+          else
+            return null;
+        });
+      success_func(data);
+    } else
+      $.ajax({
+        type: type,
+        url: create_url(url),
+        data: params,
+        success: success_func
+      });
   };
   return func;
 };
@@ -473,6 +567,38 @@ var create_deleter = function(url, reloader) {
   };
 };
 
+var edit_task_offline = function(item) {
+  var internalid = item.attr("internalid");
+  var task_summary = item.find(".tasksummary");
+  var new_summary = prompt(new_task_summary_prompt, task_summary.text());
+  if (new_summary != null && new_summary != undefined) {
+    $.each(offline_data.contexts, function(i, context) {
+      $.each(context.tasks, function(i_task, task) {
+        if (task != undefined && task.id == internalid) {
+          task.name = new_summary;
+          fetch_tasks(offline_data);
+          offline_changes.add_summary_change(internalid, new_summary);
+          return;
+        }
+      });
+    });
+  }
+};
+
+var completetask_offline = function(item) {
+  var internalid = item.attr("internalid");
+  $.each(offline_data.contexts, function(i, context) {
+    $.each(context.tasks, function(i_task, task) {
+      if (task != undefined && task.id == internalid) {
+        delete context.tasks[i_task];
+        fetch_tasks(offline_data);
+        offline_changes.add_completion(internalid);
+        return;
+      }
+    });
+  });
+};
+
 var edit_context = create_editor("contexts", function() { fetch_contexts(); }, 3000);
 var edit_tag = create_editor("tags", function() { fetch_tags(); }, "selected_tags", 3000);
 var edit_task = create_editor("tasks", function() { fetch_tasks(); }, 1050);
@@ -526,85 +652,95 @@ var fill_task = function(item, data) {
   $.each(data.tags, function(_, tagitem) {
     var clone = tagtmpl.clone().attr("id", "tag-" + tag_counter++).attr("internalid", tagitem.id);
     clone.find(".tagname").text(tagitem.name);
-    clone.draggable({
-      revert: true,
-      distance: 4,
-    });
     clone.data("container", item);
-    clone.mouseup(function() {
-      if (clone.data("shouldberemoved") != undefined && clone.data("shouldberemoved") != null) {
-        $.ajax({
-          type: "POST",
-          url: create_url("tasks"),
-          data: {action: "remove_tag", id: data.id, tag_id: tagitem.id},
-          success: function (data) {
-            clone.remove();
-          }
-        });
-      }
-    });
+    if (!offline_mode) {
+      clone.draggable({
+        revert: true,
+        distance: 4,
+      });
+      clone.mouseup(function() {
+        if (clone.data("shouldberemoved") != undefined && clone.data("shouldberemoved") != null) {
+          $.ajax({
+            type: "POST",
+            url: create_url("tasks"),
+            data: {action: "remove_tag", id: data.id, tag_id: tagitem.id},
+            success: function (data) {
+              clone.remove();
+            }
+          });
+        }
+      });
+    }
     tasktags.append(clone);
   });
-  item.droppable({
-    drop: function(e, ui) {
-      if (ui.draggable.hasClass("taglistitem")) {
-        if (item.hasClass("movetarget")) {
+  if (!offline_mode) {
+    item.droppable({
+      drop: function(e, ui) {
+        if (ui.draggable.hasClass("taglistitem")) {
+          if (item.hasClass("movetarget")) {
+            item.removeClass("movetarget")
+          }
+          $.ajax({
+            type: "POST",
+            url: create_url("tasks"),
+            data: {action: "add_tag", id: data.id, tag_id: ui.draggable.attr("internalid")},
+            success: function (data) {
+              shift_tutorial_hook("assign_tag", "tasks_loaded");
+              fetch_tasks();
+            }
+          });
+        }
+      },
+      over: function(e, ui) {
+        if (ui.draggable.hasClass("taglistitem") && !item.hasClass("movetarget")) {
+          item.addClass("movetarget")
+        }
+        if (ui.draggable.hasClass("taglabel") && ui.draggable.data("shouldberemoved") == item) {
+          ui.draggable.data("shouldberemoved", null);
+        }
+      },
+      out: function(e, ui) {
+        if (ui.draggable.hasClass("taglistitem") && item.hasClass("movetarget")) {
           item.removeClass("movetarget")
         }
-        $.ajax({
-          type: "POST",
-          url: create_url("tasks"),
-          data: {action: "add_tag", id: data.id, tag_id: ui.draggable.attr("internalid")},
-          success: function (data) {
-            shift_tutorial_hook("assign_tag", "tasks_loaded");
-            fetch_tasks();
-          }
-        });
-      }
-    },
-    over: function(e, ui) {
-      if (ui.draggable.hasClass("taglistitem") && !item.hasClass("movetarget")) {
-        item.addClass("movetarget")
-      }
-      if (ui.draggable.hasClass("taglabel") && ui.draggable.data("shouldberemoved") == item) {
-        ui.draggable.data("shouldberemoved", null);
-      }
-    },
-    out: function(e, ui) {
-      if (ui.draggable.hasClass("taglistitem") && item.hasClass("movetarget")) {
-        item.removeClass("movetarget")
-      }
-      if (ui.draggable.hasClass("taglabel") && ui.draggable.data("container") == item) {
-        ui.draggable.data("shouldberemoved", item);
-      }
-    }
-  });
-  item.find(".edittask").click(make_edit_callable(item, edit_task));
-  item.find(".deletetask").click(make_edit_callable(item, delete_task));
-  item.find(".completetask").click(function(e) {
-    $.ajax({
-      type: "POST",
-      url: create_url("tasks"),
-      data: {action: "togglecomplete", id: data.id},
-      success: function (data) {
-        reload_tasks();
-        load_flashes();
+        if (ui.draggable.hasClass("taglabel") && ui.draggable.data("container") == item) {
+          ui.draggable.data("shouldberemoved", item);
+        }
       }
     });
-    e.stopPropagation();
-  });
-  item.find(".postponetask").click(function(e) {
-    $.ajax({
-      type: "POST",
-      url: create_url("tasks"),
-      data: {action: "postpone", id: data.id},
-      success: function (data) {
-        reload_tasks();
-        load_flashes();
-      }
+    item.find(".edittask").click(make_edit_callable(item, edit_task));
+    item.find(".deletetask").click(make_edit_callable(item, delete_task));
+    item.find(".completetask").click(function(e) {
+      $.ajax({
+        type: "POST",
+        url: create_url("tasks"),
+        data: {action: "togglecomplete", id: data.id},
+        success: function (data) {
+          reload_tasks();
+          load_flashes();
+        }
+      });
+      e.stopPropagation();
     });
-    e.stopPropagation();
-  });
+    item.find(".postponetask").click(function(e) {
+      $.ajax({
+        type: "POST",
+        url: create_url("tasks"),
+        data: {action: "postpone", id: data.id},
+        success: function (data) {
+          reload_tasks();
+          load_flashes();
+        }
+      });
+      e.stopPropagation();
+    });
+  } else {
+    item.find(".edittask").click(make_edit_callable(item, edit_task_offline));
+    item.find(".completetask").click(function(e) {
+      completetask_offline(item);
+      e.stopPropagation();
+    });
+  }
 }
 fetch_contexts = create_fetcher("#contextlist", "#contextrowtmpl", "contexts", "contextlist-", "contexts", "selected_context", "changed_contexts", reload_tasks, fill_context);
 fetch_tags = create_fetcher("#taglist", "#tagrowtmpl", "tags", "tagslist-", "tags", "selected_tags", "changed_tags", fetch_contexts, fill_tag, 1);
@@ -654,26 +790,65 @@ var setup_preferences_button = function() {
 
 var ajax_setup = function() {
   $.ajaxSetup({
+    timeout: 60000,
     error: function (jqXHR, status, error) {
       $("#errmsg").text(error);
       $(".errbox").modal();
     },
-    ajaxStart: function() {
-      in_ajax++;
-    },
-    ajaxStop: function() {
-      in_ajax--;
-    }
   });
   $('#ajaxloading').ajaxStart(function() {
+    in_ajax++;
     $(this).css("visibility", "visible");
-  }).ajaxComplete(function() {
+  }).ajaxStop(function() {
+    in_ajax--;
     if (!in_ajax)
       $(this).css("visibility", "hidden");
   });
 };
 
 var init_mainview = function() {
+  if (offline_mode) {
+    offline_changes = new OfflineChangeManager(offline_data);
+    window.applicationCache.addEventListener('updateready', function(e) {
+      if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+        window.applicationCache.swapCache();
+        window.location.reload();
+      }
+    }, false);
+    $("#switchtoonlinemode").click(function() {
+      if (offline_changes.replay())
+        document.location.search = "";
+    });
+    $("#refreshoffline").click(function() {
+      if (offline_changes.replay()) {
+        window.applicationCache.update();
+        window.location.reload();
+      }
+    });
+    $(".offlinehide").hide();
+    $("#newtasksummary").attr("title", "").tooltip("destroy");
+    var new_id = -1;
+    $("#newtaskform").submit(function() {
+      var value = this.newtasksummary.value;
+      if (value) {
+        $.each(offline_data.contexts, function(i, context) {
+          if (context.id == dtgstate.selected_context) {
+            var task = {"body": "", "completion_time": null, "is_recurring": false, "name": value, "tags": [], "master_task_id": null, "completed": false, "id": new_id,
+                        "due_marker": null}
+            context.tasks.unshift(task);
+            fetch_tasks(offline_data);
+            offline_changes.add_task_creation(dtgstate.selected_context, value, new_id);
+            new_id--;
+            $("#newtasksummary").val("");
+            return false;
+          }
+        });
+      }
+      return false;
+    });
+    fetch_contexts(offline_data);
+    return;
+  }
   ajax_setup();
   init_history();
   read_url(document.location.search);

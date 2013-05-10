@@ -7,6 +7,7 @@
 ################################################################################
 -->
 <!doctype html>
+<html{% block htmlattribs %}{% endblock %}>
 <head>
   {% block head %}
   {% assets "css_all" %}
@@ -27,9 +28,6 @@
   <script type="text/javascript">
     var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     var notice_title = "{% trans %}Notice{% endtrans %}";
-    var last_flash_id = {{ last_flash_id }};
-    if (last_flash_id != -42)
-      load_flashes();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %} – DTG</title>
@@ -47,7 +45,11 @@
             <span class="icon-bar"></span>
           </a>
           {% if workspace %}
+          {% if offlinemode %}
+          <span class="brand">{% trans %}DTG{% endtrans %}</span>
+          {% else %}
           <a href="{{ url_for('index_workspace', workspace=workspace.name) }}" class="brand">{% trans %}DTG{% endtrans %}</a>
+          {% endif %}
           {% else %}
           <a href="{{ url_for('index') }}" class="brand">{% trans %}DTG{% endtrans %}</a>
           {% endif %}
@@ -55,16 +57,31 @@
           <div class="nav-collapse">
             <ul class="nav">
             {% if workspace %}
+            {% if not offlinemode %}
             <li>
               <a href="{{ url_for('index') }}">{% trans %}Choose workspace{% endtrans %}</a>
             </li>
             <li>
-              <a href="#" id="workspacerename">{% trans %}Rename this workspace{% endtrans %}</a>
+              <a href="#" id="workspacerename">{% trans %}Rename it{% endtrans %}</a>
             </li>
             <li>
-              <a href="#" id="workspacedelete">{% trans %}Delete this workspace{% endtrans %}</a>
+              <a href="#" id="workspacedelete">{% trans %}Delete it{% endtrans %}</a>
             </li>
             {% endif %}
+            <li>
+            {% if offlinemode %}
+              <a href="#" id="refreshoffline">{% trans %}Refresh{% endtrans %}</a>
+            {% else %}
+              <a href="{{ url_for('index_workspace', workspace=workspace.name, offline=1) }}">{% trans %}Switch to offline mode{% endtrans %}</a>
+            {% endif %}
+            </li>
+            {% if offlinemode %}
+            <li>
+              <a href="#" id="switchtoonlinemode">{% trans %}Push changes, go online{% endtrans %}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% if not offlinemode %}
             {% if not request.user %}
             <li>
             <a href="{{ url_for('login') }}">{% trans %}Log in{% endtrans %}</a>
@@ -76,6 +93,7 @@
             <li>
               <a href="{{ url_for('logout') }}">{% trans %}Log out{% endtrans %}</a>
             </li>
+            {% endif %}
             {% endif %}
             </ul>
           </div><!--/.nav-collapse -->
@@ -106,3 +124,4 @@
     </div>
   </div>
 </body>
+</html>
