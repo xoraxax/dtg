@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-05-10 02:56+0200\n"
+"POT-Creation-Date: 2013-05-12 22:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: dtg/backgroundjobs.py:95
+#: dtg/backgroundjobs.py:97
 msgid " – Upcoming tasks"
 msgstr ""
 
@@ -281,28 +281,33 @@ msgstr ""
 msgid "Changed summary to '%s'"
 msgstr ""
 
-#: dtg/webapp.py:569
+#: dtg/webapp.py:570
 #, python-format
 msgid "Marked task '%s' as completed"
 msgstr ""
 
-#: dtg/webapp.py:576
-msgid "Set due date to tomorrow"
+#: dtg/webapp.py:572
+#, python-format
+msgid "Reopened task '%s'"
 msgstr ""
 
 #: dtg/webapp.py:579
+msgid "Set due date to tomorrow"
+msgstr ""
+
+#: dtg/webapp.py:582
 msgid "Postponed task by one day"
 msgstr ""
 
-#: dtg/webapp.py:584
+#: dtg/webapp.py:587
 msgid "Unknown action"
 msgstr ""
 
-#: dtg/webapp.py:590
+#: dtg/webapp.py:593
 msgid "You are already logged in!"
 msgstr ""
 
-#: dtg/webapp.py:598
+#: dtg/webapp.py:601
 msgid "Invalid credentials."
 msgstr ""
 
@@ -798,15 +803,15 @@ msgid ""
 "everything in them."
 msgstr ""
 
-#: dtg/templates/workspace.html:145
+#: dtg/templates/workspace.html:146
 msgid "What should be the new task summary?"
 msgstr ""
 
-#: dtg/templates/workspace.html:149
+#: dtg/templates/workspace.html:150
 msgid "Please wait ..."
 msgstr ""
 
-#: dtg/templates/workspace.html:152
+#: dtg/templates/workspace.html:153
 msgid "Your changes are being synced ..."
 msgstr ""
 

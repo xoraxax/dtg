@@ -566,7 +566,10 @@ def workspace_tasks(workspace):
             return jsonify({})
         elif action == "togglecomplete":
             task.completed = not task.completed
-            flash(_("Marked task '%s' as completed", (task.summary, )))
+            if task.completed:
+                flash(_("Marked task '%s' as completed", (task.summary, )))
+            else:
+                flash(_("Reopened task '%s'", (task.summary, )))
             db.session.commit()
             return jsonify({})
         elif action == "postpone":

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DTG v0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-05-10 02:56+0200\n"
-"PO-Revision-Date: 2013-05-10 02:57+0100\n"
+"POT-Creation-Date: 2013-05-12 22:52+0200\n"
+"PO-Revision-Date: 2013-05-12 22:53+0100\n"
 "Last-Translator: Alexander Schremmer <alex+translations@alexanderweb.de>\n"
 "Language-Team: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Generated-By: Babel 0.9.6\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: dtg/backgroundjobs.py:95
+#: dtg/backgroundjobs.py:97
 msgid " – Upcoming tasks"
 msgstr " – Anstehende Aufgaben"
 
@@ -292,28 +292,33 @@ msgstr "Aufgabe '%s' wurde gelöscht"
 msgid "Changed summary to '%s'"
 msgstr "Zusammenfassung auf '%s' geändert"
 
-#: dtg/webapp.py:569
+#: dtg/webapp.py:570
 #, python-format
 msgid "Marked task '%s' as completed"
 msgstr "Aufgabe '%s' wurde als erledigt markiert"
 
-#: dtg/webapp.py:576
+#: dtg/webapp.py:572
+#, python-format
+msgid "Reopened task '%s'"
+msgstr "Aufgabe '%s' wurde wieder geöffnet"
+
+#: dtg/webapp.py:579
 msgid "Set due date to tomorrow"
 msgstr "Fälligkeitsdatum auf morgen gesetzt"
 
-#: dtg/webapp.py:579
+#: dtg/webapp.py:582
 msgid "Postponed task by one day"
 msgstr "Aufgabe um einen Tag aufgeschoben"
 
-#: dtg/webapp.py:584
+#: dtg/webapp.py:587
 msgid "Unknown action"
 msgstr "Unbekannte Aktion"
 
-#: dtg/webapp.py:590
+#: dtg/webapp.py:593
 msgid "You are already logged in!"
 msgstr "Du bist schon eingeloggt!"
 
-#: dtg/webapp.py:598
+#: dtg/webapp.py:601
 msgid "Invalid credentials."
 msgstr "Ungültige Zugangsdaten."
 
@@ -868,15 +873,15 @@ msgstr ""
 "enthaltenen Aufgaben gelöscht. Im Falle von Arbeitsflächen wird alles darin "
 "gelöscht."
 
-#: dtg/templates/workspace.html:145
+#: dtg/templates/workspace.html:146
 msgid "What should be the new task summary?"
 msgstr "Wie soll die neue Aufgabenzusammenfassung lauten?"
 
-#: dtg/templates/workspace.html:149
+#: dtg/templates/workspace.html:150
 msgid "Please wait ..."
 msgstr "Bitte warten ..."
 
-#: dtg/templates/workspace.html:152
+#: dtg/templates/workspace.html:153
 msgid "Your changes are being synced ..."
 msgstr "Deine Änderungen werden gesendet ..."
 
