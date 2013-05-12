@@ -141,6 +141,7 @@
 {% if offlinemode %}
 <script type="text/javascript">
   var offline_data = {{ offline_data | tojson | safe }};
+  var workspace_name = {{ workspace.name | tojson | safe }};
   var offline_changes;
   var new_task_summary_prompt = "{% trans %}What should be the new task summary?{% endtrans %}";
 </script>

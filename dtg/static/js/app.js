@@ -50,18 +50,19 @@ var run_tutorial_hook = function(name) {
 };
 
 var OfflineChangeManager = function (pristine_offline_data) {
-  if (sessionStorage.changes != undefined)
-    changes = JSON.parse(sessionStorage.changes);
+  var mk_key = function (typ) { return workspace_name + "_" + typ; };
+  if (localStorage[mk_key("changes")] != undefined)
+    changes = JSON.parse(localStorage[mk_key("changes")]);
   else
     changes = [];
   this.changes = changes;
   this.abort_replay = false;
   var odata;
-  if (sessionStorage.offline_data != undefined)
-    offline_data = JSON.parse(sessionStorage.offline_data);
+  if (localStorage[mk_key("offline_data")] != undefined)
+    offline_data = JSON.parse(localStorage[mk_key("offline_data")]);
   this.update_store = function() {
-    sessionStorage.offline_data = JSON.stringify(offline_data);
-    sessionStorage.changes = JSON.stringify(this.changes);
+    localStorage[mk_key("offline_data")] = JSON.stringify(offline_data);
+    localStorage[mk_key("changes")] = JSON.stringify(this.changes);
   };
   this.add_summary_change = function (id, new_summary) {
     this.changes.push(["NEW_TASK_SUMMARY", id, new_summary]);
@@ -113,10 +114,11 @@ var OfflineChangeManager = function (pristine_offline_data) {
       if (this.abort_replay)
         return false;
     });
-    delete sessionStorage.offline_data;
-    delete sessionStorage.changes;
+    delete localStorage[mk_key("offline_data")];
+    delete localStorage[mk_key("changes")];
     return true;
   };
+  this.update_store();
 };
 
 var update_seqid_and_reload = function() {
