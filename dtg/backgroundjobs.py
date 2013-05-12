@@ -59,7 +59,7 @@ class RecurrencePlanner(DailyBackgroundJob):
                     task.recur_last <= today:
                 task.reschedule(False)
         db.session.commit()
-    
+
 
 class NightlyMailer(DailyBackgroundJob):
     """
@@ -90,9 +90,12 @@ class NightlyMailer(DailyBackgroundJob):
                             tasks.append({"name": task.summary, "id": task.id, "due_marker": task.due_marker, "is_recurring": task.master_task is not None,
                                   "body": markdown.markdown(task.description, safe_mode="escape"),
                                   "tags": ", ".join(tag.name for tag in task.tags)})
-                    contexts.append({"name": context.name, "tasks": tasks})
-                mail_body = render_template("mail.html", contexts=contexts, workspace_name=workspace.name)
-                send_html_message(u"⌚ DTG – " + workspace.name + _(u" – Upcoming tasks"), "DTG <" + user.email + ">", user.email, mail_body, [], "localhost")
+                    if tasks:
+                        contexts.append({"name": context.name, "tasks": tasks})
+                if contexts:
+                    mail_body = render_template("mail.html", contexts=contexts, workspace_name=workspace.name)
+                    send_html_message(u"⌚ DTG – " + workspace.name + _(u" – Upcoming tasks"), "DTG <" + user.email + ">", user.email, mail_body, [], "localhost")
+
 
 class FlashesCleaner(DailyBackgroundJob):
     """
@@ -105,5 +108,18 @@ class FlashesCleaner(DailyBackgroundJob):
             db.session.delete(flashmsg)
         db.session.commit()
 
-JOBS = [RecurrencePlanner, NightlyMailer, FlashesCleaner]
+
+class SeqidAdvancer(DailyBackgroundJob):
+    """
+    Advances the seq id nightly in order to update the due labels.
+    """
+    def fire(self, is_first_run):
+        from dtg.model import Workspace
+        from dtg.webapp import db
+        for workspace in Workspace.query.all():
+            workspace.seqid += 1
+        db.session.commit()
+
+
+JOBS = [RecurrencePlanner, NightlyMailer, FlashesCleaner, SeqidAdvancer]
 
