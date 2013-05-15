@@ -824,7 +824,6 @@ var init_mainview = function() {
     $("#refreshoffline").click(function() {
       if (offline_changes.replay()) {
         window.applicationCache.update();
-        window.location.reload();
       }
     });
     $(".offlinehide").hide();
