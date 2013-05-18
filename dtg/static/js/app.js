@@ -94,7 +94,6 @@ var OfflineChangeManager = function (pristine_offline_data) {
   };
   this.replay = function () {
     var fire = this.fire_ajax_request;
-    $("#pleasewait").modal();
     var int2ext_map = {};
     this.abort_replay = false;
     $.each(this.changes, function (_, change) {
@@ -818,12 +817,15 @@ var init_mainview = function() {
       }
     }, false);
     $("#switchtoonlinemode").click(function() {
+      $("#pleasewait").modal();
       if (offline_changes.replay())
         document.location.search = "";
     });
     $("#refreshoffline").click(function() {
+      $("#pleasewait").modal();
       if (offline_changes.replay()) {
         window.applicationCache.update();
+        window.setTimeout(function () { document.location.reload() }, 5000);
       }
     });
     $(".offlinehide").hide();

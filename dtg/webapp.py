@@ -390,8 +390,9 @@ def get_filtered_task_dicts(workspace, tasks, form):
               "tags": [{"name": tag.name, "id": tag.id} for tag in task.tags]} for task in get_filtered_tasks(workspace, tasks, form)]
 
 def get_filtered_tasks(workspace, tasks, form):
+    ignore_tag_flt = False
     if form.get("tagexcl") is None:
-        tagexcl = True
+        ignore_tag_flt = True
         timefilter = "fltall"
         kindfilter = "flttodo"
     else:
@@ -435,7 +436,10 @@ def get_filtered_tasks(workspace, tasks, form):
     else:
         return render_error(_("Invalid filter name."), True)
     tags = set(Tag.query.filter_by(id=int(key), workspace=workspace).first() for key in form.getlist("selected_tags[]"))
-    func = tags.__ge__ if tagexcl else lambda tasktags: not tags or (tags & tasktags)
+    if ignore_tag_flt:
+        func = lambda x: True
+    else:
+        func = tags.__ge__ if tagexcl else lambda tasktags: not tags or (tags & tasktags)
     return [task for task in tasks if fltr(task) and fltr2(task) and func(set(task.tags))]
 
 
