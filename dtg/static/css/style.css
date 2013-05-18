@@ -31,7 +31,7 @@
 .inclexcl { float: right; }
 .eightypercent { width: 80%; }
 .hundredpercent { width: 99%; }
-.workspacename { display: none; }
+.printonly { display: none; }
 .btn-separated { border-left-width: 2px; border-left-color: rgba(0, 0, 0, 0.2); }
 
 .tasktags { display: inline; margin-left: 0; }

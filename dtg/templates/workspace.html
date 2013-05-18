@@ -70,9 +70,9 @@
     <input type="text" class="eightypercent" title="{% trans %}Type here to create a new task. You may prefix the summary by a context name and use '#' to add tags.{% endtrans %}" autofocus autocomplete="off" placeholder="{% trans %}Create new task ...{% endtrans %}" id="newtasksummary">
     <button type="submit" class="btn" id="createtaskbtn">{% trans %}Create{% endtrans %}</button>
   </form>
-  <h1 class="workspacename">{{ workspace.name }}</h1>
+  <h2 id="contextprintheading" class="printonly">{{ workspace.contexts[0].name }}</h2>
   </div>
-  <h3>{% trans %}Tasks{% endtrans %}</h3>
+  <h3 class="screenonly">{% trans %}Tasks{% endtrans %}</h3>
     
   <ul id="tasklist" class="selsortlist">
   </ul>

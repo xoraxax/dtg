@@ -347,6 +347,9 @@ var create_fetcher = function(elemname, tmplname, url, idprefix, propname, selpr
             }
           }
           item.click(function(e) {
+            if (!is_task_list) {
+              $("#contextprintheading").text(value.name);
+            }
             if (value.id != dtgstate[selpropname]) {
               elem.children("li").each(function(i) {
                 $(this).removeClass("ui-state-active");

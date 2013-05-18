@@ -6,4 +6,5 @@
 .row-fluid .settingsblock { display: none; }
 #newtaskform { display: none; }
 body { padding-top: 0; }
-.workspacename { display: block; }
+.printonly { display: block !important; }
+.screenonly { display: none !important; }
