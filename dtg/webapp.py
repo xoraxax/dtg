@@ -35,6 +35,7 @@ from dtg.version import __version__
 app = Flask("dtg")
 app.config['SQLALCHEMY_DATABASE_URI'] = sys.dtg_db_path("main")
 app.config["SQLALCHEMY_ECHO"] = sys.dtg_debug
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app.config['ASSETS_DEBUG'] = sys.dtg_debug
 app.config['SESSION_COOKIE_NAME'] = "dtgsession"
