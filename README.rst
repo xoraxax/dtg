@@ -33,9 +33,6 @@ Installation
 
       virtualenv --system-site-packages env
 
-      (Or call virtualenv without the '--system-site-packages' argument and manually
-      add a symlink for OpenSSL: ln -s /usr/lib/python2.7/dist-packages/OpenSSL/ env/lib/python2.7/site-packages/OpenSSL)
-
  5. Active the environment::
 
       . env/bin/activate
