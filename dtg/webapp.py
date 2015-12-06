@@ -18,8 +18,8 @@ from flask import Flask, request, session, redirect, url_for, render_template, j
         Response
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.assets import Environment, Bundle
-from flaskext.babel import Babel, format_date
-import flaskext.babel
+from flask.ext.babel import Babel, format_date
+import flask.ext.babel
 from sqlalchemy import event
 from sqlalchemy.exc import IntegrityError
 from migrate.versioning import genmodel, schemadiff
@@ -42,9 +42,11 @@ SEQID_SLEEP = 10 # seconds
 NIGHTLY_RUNTIME = time(1, 42), time(2, 42)
 
 # initialize DB
-db = SQLAlchemy(app)
+db = SQLAlchemy(app, session_options=dict(autoflush=False))
 generate_db_model(db)
 from dtg.model import *
+from dtg.forms import generate_forms
+generate_forms(app, db)
 from dtg.forms import *
 db.create_all()
 if not SystemInfo.query.first():
@@ -97,7 +99,7 @@ def finalizer(x):
     return unicode(x)
 app.jinja_env.finalize = finalizer
 # monkeypatch flask-babel
-flaskext.babel.get_translations = get_translations
+flask.ext.babel.get_translations = get_translations
 
 @babel.localeselector
 def get_locale():

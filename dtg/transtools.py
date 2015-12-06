@@ -11,7 +11,7 @@ import gettext
 from StringIO import StringIO
 
 from flask import _request_ctx_stack
-from flaskext.babel import get_locale
+from flask.ext.babel import get_locale
 from babel.support import Translations
 from babel.messages.pofile import read_po
 from babel.messages.mofile import write_mo
@@ -78,7 +78,7 @@ def get_translations():
             catalog = read_po(file(transfilename, "r"))
             write_mo(mo_file, catalog)
             mo_file.seek(0)
-            translations = Translations(fileobj=mo_file)
+            translations = Translations(fp=mo_file)
         else:
             translations = gettext.NullTranslations()
         translations_dict[locale] = translations
@@ -92,4 +92,5 @@ def ngettext(sing, plu, n, args=None):
 
 
 locale_choices = [("", _("web browser default")), ("de_DE", "Deutsch"), ("en_US", "English")]
+idem_gettext = lambda x, *args: x % args
 
