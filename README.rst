@@ -17,7 +17,7 @@ password are both `test`.
 Installation
 ------------
 
- 1. Install virtualenv, mercurial, and pip::
+ 1. Install Python 2.7, virtualenv, mercurial, and pip::
 
       sudo apt-get install python-pip python-virtualenv mercurial python-dev
 
@@ -29,7 +29,7 @@ Installation
 
       cd dtg
 
- 4. Create a virtual environment::
+ 4. Create a virtual environment using Python 2.7::
 
       virtualenv --system-site-packages env
 
@@ -44,11 +44,11 @@ Installation
  7. Edit the file start_dtg.sh to suit your needs. You can get information about
     options by calling::
 
-      PYTHONPATH=. python dtg/main.py -h
+      PYTHONPATH=. python2 dtg/main.py -h
 
  8. Create a new user::
 
-      PYTHONPATH=. python dtg/main.py --add-user=admin
+      PYTHONPATH=. python2 dtg/main.py --add-user=admin
 
  9. Run::
 
